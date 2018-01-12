@@ -1,0 +1,359 @@
+﻿span.POS {
+    border-bottom: 1px dotted black;
+    font-weight: bold;
+}
+.td-pos {
+    width: 100%; 
+    border-bottom: 1px solid rgb(237, 237, 237);
+    padding: 0px;
+    margin: 0px;
+    text-align: left;
+}
+
+span.Noun {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: maroon;
+}
+span.Verb, span.Predicate, span.Infinitive, span.AdverbialParticiple, span.AuxiliaryVerb, span.Participle {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: green;
+}
+span.Pronoun, span.AdjectivePronoun, span.PossessivePronoun, span.AdverbialPronoun {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: blue;
+}
+span.Numeral {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #FF9900;
+}
+span.Adjective {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #990099;
+}
+span.Adverb {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #009999;
+}
+span.Preposition {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #996633;
+}
+span.Conjunction {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #336666;
+}
+span.Interjection {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #003333;
+}
+span.Particle {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #663366;
+}
+span.Article {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #CC66CC;
+}
+span.Punctuation {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: gray;
+}
+
+span.Noun-1 {
+    font-weight: bold;
+    color: maroon;
+}
+span.Verb-1, span.Predicate-1, span.Infinitive-1, span.AdverbialParticiple-1, span.AuxiliaryVerb-1, span.Participle-1 {
+    font-weight: bold;
+    color: green;
+}
+span.Pronoun-1, span.AdjectivePronoun-1, span.PossessivePronoun-1, span.AdverbialPronoun-1 {
+    font-weight: bold;
+    color: blue;
+}
+span.Numeral-1 {
+    font-weight: bold;
+    color: #FF9900;
+}
+span.Adjective-1 {
+    font-weight: bold;
+    color: #990099;
+}
+span.Adverb-1 {
+    font-weight: bold;
+    color: #009999;
+}
+span.Preposition-1 {
+    font-weight: bold;
+    color: #996633;
+}
+span.Conjunction-1 {
+    font-weight: bold;
+    color: #336666;
+}
+span.Interjection-1 {
+    font-weight: bold;
+    color: #003333;
+}
+span.Particle-1 {    
+    font-weight: bold;
+    color: #663366;
+}
+span.Article-1 {
+    font-weight: bold;
+    color: #CC66CC;
+}
+span.Punctuation-1 {
+    font-weight: bold;
+    color: gray;
+}
+
+span.Noun-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: maroon;
+    margin-left: 5px;
+}
+span.Verb-2, span.Predicate-2, span.Infinitive-2, span.AdverbialParticiple-2, span.AuxiliaryVerb-2, span.Participle-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: green;
+    margin-left: 5px;
+}
+span.Pronoun-2, span.AdjectivePronoun-2, span.PossessivePronoun-2, span.AdverbialPronoun-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: blue;
+    margin-left: 5px;
+}
+span.Numeral-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #FF9900;
+    margin-left: 5px;
+}
+span.Adjective-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #990099;
+    margin-left: 5px;
+}
+span.Adverb-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #009999;
+    margin-left: 5px;
+}
+span.Preposition-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #996633;
+    margin-left: 5px;
+}
+span.Conjunction-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #336666;
+    margin-left: 5px;
+}
+span.Interjection-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #003333;
+    margin-left: 5px;
+}
+span.Particle-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #663366;
+    margin-left: 5px;
+}
+span.Article-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: #CC66CC;
+    margin-left: 5px;
+}
+span.Punctuation-2 {
+    border: 1px dotted silver;
+    font-weight: bold;
+    color: gray;
+    margin-left: 5px;
+}
+
+span.__UNDEFINED__, span.__UNKNOWN__ {
+    border: 1px dotted #b10a0a;
+    font-weight: bold;
+    color: #b10a0a;
+    margin-left: 5px;
+}
+span.O, span.Other,
+span.O-1, span.Other-1,
+span.O-2, span.Other-2 {
+    margin-left: 5px;
+    /*font-weight: bold;
+    color: red;*/
+}
+span.O-debug  , span.Other-debug,
+span.O-debug-1, span.Other-debug-1,
+span.O-debug-2, span.Other-debug-2 {
+    border: 1px dotted silver;
+    /*font-weight: bold;
+    color: red;*/
+}
+span.pos-type {
+    font-weight: normal;
+    font-size: 11px;
+    font-family: monospace;
+    color: darkgrey;
+}
+
+span.sent-number {
+    color: silver;
+    font-size: small;
+}
+    span.sent-number i {
+        color: gray;
+    }
+td.caption {
+    color: silver;
+    font-size: larger;
+    text-align: center !important;
+    background-color: lightslategrey;  
+    font-family: tahoma;
+}
+span.font-small {
+    color: gray;
+    font-size: smaller;
+}
+
+div.even, tr.even {
+    background-color: white;
+    line-height: 1.4em;
+    font-size: 14px;
+}
+div.uneven, div.odd, 
+tr.uneven, tr.odd {
+    background-color: cornsilk;
+    line-height: 1.4em;
+    font-size: 14px;
+}
+
+div.even   span, tr.even   span, 
+div.uneven span, tr.uneven span, 
+div.odd    span, tr.odd    span {
+    display: inline-block; 
+    vertical-align: top;
+}
+
+div.even table {
+    border-spacing: 0px;    
+}
+div.even table td {
+    padding: 0px;
+}
+div.even table td.word, 
+tr.even        td.word {
+    border: 1px solid silver;
+}
+div.uneven table, div.odd table {
+    border-spacing: 0px;
+}
+div.uneven table td, div.odd table td, 
+tr.uneven        td, tr.odd        td {
+    padding: 0px;
+}
+div.uneven table td.word, div.odd table td.word,
+tr.uneven        td.word, tr.odd        td.word {
+    border: 1px solid silver;
+}
+
+tr.morpho-ambiguity {
+    font-weight: bold;
+}
+td.morpho-ambiguity {
+    text-align: right;
+    color: silver;
+}
+span.morpho-ambiguity {
+    border: 1px dotted silver;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-style: italic;
+    font-size: xx-small;
+    font-weight: normal;
+    color: silver;
+}
+span.tr-morpho-ambiguity {
+    font-weight: bold;
+}
+span.MA { /*MorphoAttributeEnum*/
+    margin-left: 5px;
+}
+
+div.input-text {
+    width: 100%; 
+    height: 220px; 
+    overflow-y: scroll;
+    background-color: wheat;
+}
+div.morphomodel-loading-errors {
+    font-size: small;
+    color: red;
+    height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+div.morphomodel-loading-errors > span {
+    font-style: italic;
+    text-decoration: underline;
+    color: gray;
+}
+div.caption {
+    font-size: small;
+}
+.hr-elapced {
+    margin-top: 0.2em;
+    margin-bottom: 0px;
+}
+
+#splitBySmilesCheckBox, label[for='splitBySmilesCheckBox'],
+#debugOutputCheckBox, label[for='debugOutputCheckBox'],
+#mergeChainsCheckBox, label[for='mergeChainsCheckBox'],
+#showMorphologyCheckBox, label[for='showMorphologyCheckBox'],
+#viewMorphologyTypeDropDownList, label[for='viewMorphologyTypeDropDownList'],
+#morphoAmbiguityModelTypeDropDownList, label[for='morphoAmbiguityModelTypeDropDownList'],
+#applyMorphoAmbiguityPreProcessCheckBox, label[for='applyMorphoAmbiguityPreProcessCheckBox'] {
+    cursor: pointer;
+}
+
+/*
+#descriptionDiv::-webkit-scrollbar {
+    width: 0.7em;
+    height: 0.7em;
+}
+#descriptionDiv::-webkit-scrollbar-button {
+    background: #ccc;
+}
+#descriptionDiv::-webkit-scrollbar-track-piece {
+    background: #888;
+}
+#descriptionDiv::-webkit-scrollbar-thumb {
+    background: #eee;
+}
+*/

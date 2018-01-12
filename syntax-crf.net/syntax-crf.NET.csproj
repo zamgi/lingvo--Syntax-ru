@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{12ABBE81-48E0-4F47-BA3B-A1E740872592}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>lingvo.syntax</RootNamespace>
+    <AssemblyName>syntax-crf.net</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;XLAT_CHARTYPE_MAP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;XLAT_CHARTYPE_MAP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infrastructure\Extensions.cs" />
+    <Compile Include="SyntaxProcessorConfig.cs" />
+    <Compile Include="SyntaxScriber.cs" />
+    <Compile Include="SyntaxProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\crfsuite.net\crfsuite.net.csproj">
+      <Project>{0e34915b-130f-40f4-b0bc-f543abe52cef}</Project>
+      <Name>crfsuite.net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lingvo.core\lingvo.core.csproj">
+      <Project>{a64092d5-b7cc-4aab-8cc2-571882da64d8}</Project>
+      <Name>lingvo.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\morphology\morphology.csproj">
+      <Project>{94def3aa-46b3-477d-8874-a2f90297a743}</Project>
+      <Name>morphology</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pos-tagger-crf.net\pos-tagger-crf.NET.csproj">
+      <Project>{97b9b41c-dabf-4d93-b111-85b8d86acba6}</Project>
+      <Name>pos-tagger-crf.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SentSplitter\SentSplitter.csproj">
+      <Project>{945a3caa-ef28-4344-8dbb-7ebeb4be0301}</Project>
+      <Name>SentSplitter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

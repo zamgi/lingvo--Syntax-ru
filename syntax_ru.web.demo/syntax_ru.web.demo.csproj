@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C08F0DB-8834-49D9-ABE7-1F61BD4EE41A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>lingvo.syntax</RootNamespace>
+    <AssemblyName>syntax_ru.web.demo</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\[lib]\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\[lib]\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\crfsuite_x64.dll" />
+    <Content Include="bin\crfsuite_x86.dll" />
+    <Content Include="Captcha.aspx" />
+    <Content Include="index.html" />
+    <Content Include="rc\css\syntax.css" />
+    <Content Include="rc\css\pos-tagger.css" />
+    <Content Include="rc\css\style.css" />
+    <Content Include="rc\javascript\jquery-1.9.1.js" />
+    <Content Include="rc\javascript\main.js" />
+    <Content Include="[resources]\crfsuite-tokenizer-resources.xml" />
+    <Content Include="[resources]\morphology\dsf_pa_%28morpho_ambiguity%29_5g.txt" />
+    <Content Include="[resources]\morphology\ENG\dic_nominal.txt" />
+    <Content Include="[resources]\morphology\ENG\dic_proper.txt" />
+    <Content Include="[resources]\morphology\ENG\MorphoTypes.txt" />
+    <Content Include="[resources]\morphology\RUS\dic_nominal.txt" />
+    <Content Include="[resources]\morphology\RUS\dic_proper.txt" />
+    <Content Include="[resources]\morphology\RUS\MorphoTypes.txt" />
+    <Content Include="[resources]\morphology\templateMorphoAmbiguity_3g.txt" />
+    <Content Include="[resources]\morphology\templateMorphoAmbiguity_5g.txt" />
+    <Content Include="[resources]\pos-tagger-resources.xml" />
+    <Content Include="[resources]\sent-splitter-resources.xml" />
+    <Content Include="[resources]\syntax\templateSyntax_5g_no_words.txt" />
+    <Content Include="[resources]\syntax\templateSyntax_5g_words.txt" />
+    <Content Include="[resources]\templatePosTagger_ru.txt" />
+    <Content Include="[resources]\url-detector-resources.xml" />
+    <Content Include="description.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="[resources]\model_ap_%28minfreq-1%29_ru" />
+    <Content Include="bin\libcrfsuite.so" />
+    <Content Include="CaptchaImageHandler.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Code\AntiBotHelper.cs" />
+    <Compile Include="App_Code\Config.cs" />
+    <Compile Include="App_Code\Extensions.cs" />
+    <Compile Include="App_Code\Log.cs" />
+    <Compile Include="Captcha.aspx.cs">
+      <DependentUpon>Captcha.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Captcha.aspx.designer.cs">
+      <DependentUpon>Captcha.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Code\ConcurrentFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RESTProcessHandler.ashx.cs">
+      <DependentUpon>RESTProcessHandler.ashx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RESTProcessHandler.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\captcha\captcha.csproj">
+      <Project>{ada45b0d-9218-4e16-880d-825d022a5684}</Project>
+      <Name>captcha</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\crfsuite.net\crfsuite.net.csproj">
+      <Project>{0e34915b-130f-40f4-b0bc-f543abe52cef}</Project>
+      <Name>crfsuite.net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lingvo.core\lingvo.core.csproj">
+      <Project>{a64092d5-b7cc-4aab-8cc2-571882da64d8}</Project>
+      <Name>lingvo.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\morphology\morphology.csproj">
+      <Project>{94def3aa-46b3-477d-8874-a2f90297a743}</Project>
+      <Name>morphology</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pos-tagger-crf.net\pos-tagger-crf.NET.csproj">
+      <Project>{97b9b41c-dabf-4d93-b111-85b8d86acba6}</Project>
+      <Name>pos-tagger-crf.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SentSplitter\SentSplitter.csproj">
+      <Project>{945a3caa-ef28-4344-8dbb-7ebeb4be0301}</Project>
+      <Name>SentSplitter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\syntax-crf.net\syntax-crf.net.csproj">
+      <Project>{12abbe81-48e0-4f47-ba3b-a1e740872592}</Project>
+      <Name>syntax-crf.net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="[resources]\syntax\model_ap_5g_no_words" />
+    <Content Include="[resources]\syntax\model_ap_5g_words" />
+    <Content Include="[resources]\syntax\model_pa_5g_no_words" />
+    <Content Include="[resources]\syntax\model_pa_5g_words" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1176</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1198/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>

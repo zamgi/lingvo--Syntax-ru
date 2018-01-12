@@ -1,0 +1,4632 @@
+Article, MORPHO_TYPE:a
+	_: Indefinite 
+
+Article, MORPHO_TYPE:the
+	_: Definite 
+
+Noun, MORPHO_TYPE:aa
+	_: Singular 
+	s: Plural 
+
+Verb, MORPHO_TYPE:abort
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:aardwolf
+	f: Singular 
+	ves: Plural 
+
+Adjective, MORPHO_TYPE:aaronic
+	_:
+
+Adverb, MORPHO_TYPE:aback
+	_:
+
+Noun, MORPHO_TYPE:abacus
+	us: Singular 
+	i: Plural 
+
+Preposition, MORPHO_TYPE:about
+	_:
+
+Verb, MORPHO_TYPE:abduct
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:abase
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:abash
+	_: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:absquatulate
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:abatis
+	_: Singular 
+	es: Plural 
+
+Noun, MORPHO_TYPE:abbacy
+	y: Singular 
+	ies: Plural 
+
+Noun, MORPHO_TYPE:abbess
+	_: Animate, Singular 
+	es: Animate, Plural 
+
+Noun, MORPHO_TYPE:abbot
+	_: Animate, Singular 
+	s: Animate, Plural 
+
+Noun, MORPHO_TYPE:abdomen
+	en: Singular 
+	ens: Plural 
+	ina: Plural 
+
+Verb, MORPHO_TYPE:abet
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ted: Past, Transitive, Personal
+	ting: Present, Transitive, Participle
+	ted: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:abhor
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	red: Past, Transitive, Personal
+	ring: Present, Transitive, Participle
+	red: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:abide
+	ide: Transitive, Infinitive
+	ides: Singular, Third, Present, Transitive, Personal
+	ode: Past, Transitive, Personal
+	iding: Present, Transitive, Participle
+	ode: Past, Transitive, Participle
+	ide: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:abide-21
+	ide: Intransitive, Infinitive
+	ides: Singular, Third, Present, Intransitive, Personal
+	ode: Past, Intransitive, Personal
+	iding: Present, Intransitive, Participle
+	ode: Past, Intransitive, Participle
+	ide: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:abiogenesis
+	is: Singular 
+	es: Plural 
+
+Adjective, MORPHO_TYPE:able
+	_:
+	r: Comparative 
+	st: Superlative 
+
+Noun, MORPHO_TYPE:aboideau
+	_: Singular 
+	x: Plural 
+
+Noun, MORPHO_TYPE:abomasum
+	um: Singular 
+	a: Plural 
+
+Verb, MORPHO_TYPE:aboutship
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ped: Past, Personal
+	ping: Present, Participle
+	ped: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:aggress
+	_: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:abscissa
+	_: Singular 
+	e: Plural 
+
+Verb, MORPHO_TYPE:chat
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ted: Past, Intransitive, Personal
+	ting: Present, Intransitive, Participle
+	ted: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:aby
+	y: Infinitive
+	ies: Singular, Third, Present, Personal
+	ought: Past, Personal
+	ying: Present, Participle
+	ought: Past, Participle
+	y: Present, Personal
+
+Verb, MORPHO_TYPE:abye
+	ye: Infinitive
+	yes: Singular, Third, Present, Personal
+	ought: Past, Personal
+	ying: Present, Participle
+	ought: Past, Participle
+	ye: Present, Personal
+
+Noun, MORPHO_TYPE:accessory
+	y: Animate, General, Singular 
+	ies: Animate, General, Plural 
+
+Noun, MORPHO_TYPE:acciaccatura
+	a: Singular 
+	e: Plural 
+
+Verb, MORPHO_TYPE:accompany
+	y: Transitive, Infinitive
+	ies: Singular, Third, Present, Transitive, Personal
+	ied: Past, Transitive, Personal
+	ying: Present, Transitive, Participle
+	ied: Past, Transitive, Participle
+	y: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:berry
+	y: Intransitive, Infinitive
+	ies: Singular, Third, Present, Intransitive, Personal
+	ied: Past, Intransitive, Personal
+	ying: Present, Intransitive, Participle
+	ied: Past, Intransitive, Participle
+	y: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:accomplice
+	_: Animate, General, Singular 
+	s: Animate, General, Plural 
+
+Noun, MORPHO_TYPE:achaemenid
+	_: Singular 
+	es: Plural 
+	ae: Plural 
+
+Adjective, MORPHO_TYPE:achy
+	y:
+	ier: Comparative 
+	iest: Superlative 
+
+Noun, MORPHO_TYPE:acrefoot
+	oot: Singular 
+	eet: Plural 
+
+Noun, MORPHO_TYPE:acromion
+	on: Singular 
+	a: Plural 
+
+Noun, MORPHO_TYPE:actinozoan
+	n: Singular 
+	_: Plural 
+
+Noun, MORPHO_TYPE:actuary
+	y: Animate, Singular 
+	ies: Animate, Plural 
+
+Noun, MORPHO_TYPE:adenocarcinoma
+	_: Singular 
+	ta: Plural 
+
+Verb, MORPHO_TYPE:adlib
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	bed: Past, Personal
+	bing: Present, Participle
+	bed: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:adman
+	an: Animate, Masculine, Singular 
+	en: Animate, Masculine, Plural 
+
+Noun, MORPHO_TYPE:adwoman
+	an: Animate, Feminine, Singular 
+	en: Animate, Feminine, Plural 
+
+Verb, MORPHO_TYPE:aerify
+	y: Infinitive
+	ies: Singular, Third, Present, Personal
+	ied: Past, Personal
+	ying: Present, Participle
+	ied: Past, Participle
+	y: Present, Personal
+
+Conjunction, MORPHO_TYPE:also
+	_:
+
+Conjunction, MORPHO_TYPE:albeit
+	_: Subordinating 
+
+Noun, MORPHO_TYPE:afterlife
+	fe: Singular 
+	ves: Plural 
+
+Adjective, MORPHO_TYPE:ag
+	_:
+	ger: Comparative 
+	gest: Superlative 
+
+Noun, MORPHO_TYPE:aggiornamento
+	o: Singular 
+	i: Plural 
+
+Adjective, MORPHO_TYPE:aglow
+	_:
+	er: Comparative 
+	est: Superlative 
+
+Noun, MORPHO_TYPE:agnomen
+	en: Singular 
+	ina: Plural 
+
+Verb, MORPHO_TYPE:agree
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	d: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	d: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:chasse
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	d: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	d: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:ain
+	_:
+	ner: Comparative 
+	nest: Superlative 
+
+Adjective, MORPHO_TYPE:air
+	_:
+	rer: Comparative 
+	rest: Superlative 
+
+Noun, MORPHO_TYPE:airbus
+	_: Singular 
+	ses: Plural 
+
+Verb, MORPHO_TYPE:airdrop
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ped: Past, Transitive, Personal
+	ping: Present, Transitive, Participle
+	ped: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:backflip
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ped: Past, Intransitive, Personal
+	ping: Present, Intransitive, Participle
+	ped: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:airfreight
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ed: Past, Personal
+	ing: Present, Participle
+	ed: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:boatman
+	an: Animate, Singular 
+	en: Animate, Plural 
+
+Noun, MORPHO_TYPE:alewyfe
+	fe: Animate, Singular 
+	ves: Animate, Plural 
+
+Noun, MORPHO_TYPE:alga
+	_: Singular 
+	s: Plural 
+	e: Plural 
+
+Verb, MORPHO_TYPE:alight
+	ght: Intransitive, Infinitive
+	ghts: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ghting: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	ght: Present, Intransitive, Impersonal
+
+Pronoun, MORPHO_TYPE:all
+	_: Indefinitive1 
+
+Pronoun, MORPHO_TYPE:all-68
+	_: 
+
+Noun, MORPHO_TYPE:allseed
+	_: Singular 
+	_: Plural 
+	s: Plural 
+
+Noun, MORPHO_TYPE:alms
+	_: Plural 
+
+Noun, MORPHO_TYPE:amora
+	_: Singular 
+	im: Plural 
+
+Verb, MORPHO_TYPE:analyse
+	e: Infinitive
+	es: Singular, Third, Present, Personal
+	ed: Past, Personal
+	ing: Present, Participle
+	ed: Past, Participle
+	e: Present, Personal
+
+Noun, MORPHO_TYPE:anaptyxis
+	ptyxis: Singular 
+	tyxes: Plural 
+
+Conjunction, MORPHO_TYPE:and
+	_: Coordinating 
+
+Noun, MORPHO_TYPE:androsphinx
+	x: Singular 
+	ges: Plural 
+
+Noun, MORPHO_TYPE:anlage
+	_: Singular 
+	n: Plural 
+
+Verb, MORPHO_TYPE:annul
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	led: Past, Transitive, Personal
+	ling: Present, Transitive, Participle
+	led: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:annum
+	um: Singular 
+	ums: Plural 
+	i: Plural 
+
+Pronoun, MORPHO_TYPE:another
+	_: Indefinitive1
+	_: Indefinitive1 
+
+Verb, MORPHO_TYPE:ante-80
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	d: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	d: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:ante-81
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	d: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	d: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:antefix
+	_: Singular 
+	a: Plural 
+
+Noun, MORPHO_TYPE:anthelix
+	x: Singular 
+	ces: Plural 
+
+Noun, MORPHO_TYPE:anus
+	_: Singular 
+	_: Plural 
+
+Noun, MORPHO_TYPE:apex
+	ex: Singular 
+	ices: Plural 
+
+Noun, MORPHO_TYPE:aphis
+	s: Singular 
+	des: Plural 
+
+Verb, MORPHO_TYPE:appal
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	led: Past, Personal
+	ling: Present, Participle
+	led: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:apparatus
+	_: Singular 
+	_: Plural 
+	es: Plural 
+
+Verb, MORPHO_TYPE:arc
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ked: Past, Intransitive, Personal
+	king: Present, Intransitive, Participle
+	ked: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:argali
+	gali: Singular 
+	aglis: Plural 
+	gali: Plural 
+
+Verb, MORPHO_TYPE:arise
+	ise: Intransitive, Infinitive
+	ises: Singular, Third, Present, Intransitive, Personal
+	ose: Past, Intransitive, Personal
+	ising: Present, Intransitive, Participle
+	isen: Past, Intransitive, Participle
+	ise: Present, Intransitive, Impersonal
+
+Pronoun, MORPHO_TYPE:everwhich
+	_:
+
+Noun, MORPHO_TYPE:ashkenazi
+	_: Singular 
+	m: Plural 
+
+Noun, MORPHO_TYPE:assagai
+	agai: Singular 
+	egais: Plural 
+
+Noun, MORPHO_TYPE:asynapsis
+	is: Singular 
+	ides: Plural 
+	es: Plural 
+
+Noun, MORPHO_TYPE:avgas
+	_: Singular 
+	ses: Plural 
+	es: Plural 
+
+Verb, MORPHO_TYPE:awake
+	ake: Transitive, Infinitive
+	akes: Singular, Third, Present, Transitive, Personal
+	oke: Past, Transitive, Personal
+	aking: Present, Transitive, Participle
+	oken: Past, Transitive, Participle
+	ake: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:awake-98
+	ake: Intransitive, Infinitive
+	akes: Singular, Third, Present, Intransitive, Personal
+	oke: Past, Intransitive, Personal
+	aking: Present, Intransitive, Participle
+	oken: Past, Intransitive, Participle
+	ake: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:babysit
+	it: Transitive, Infinitive
+	its: Singular, Third, Present, Transitive, Personal
+	at: Past, Transitive, Personal
+	itting: Present, Transitive, Participle
+	at: Past, Transitive, Participle
+	it: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:housesit
+	it: Intransitive, Infinitive
+	its: Singular, Third, Present, Intransitive, Personal
+	at: Past, Intransitive, Personal
+	itting: Present, Intransitive, Participle
+	at: Past, Intransitive, Participle
+	it: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:backbite
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	_: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ten: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:backbite-102
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	_: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ten: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:backhoe
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	d: Past, Personal
+	ing: Present, Participle
+	d: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:backlash
+	_: Infinitive
+	es: Singular, Third, Present, Personal
+	ed: Past, Personal
+	ing: Present, Participle
+	ed: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:backlight
+	ght: Transitive, Infinitive
+	ghts: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ghting: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	ght: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:backlog
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ged: Past, Transitive, Personal
+	ging: Present, Transitive, Participle
+	ged: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:dogleg
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ged: Past, Intransitive, Personal
+	ging: Present, Intransitive, Participle
+	ged: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:backpedal
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	led: Past, Intransitive, Personal
+	ling: Present, Intransitive, Participle
+	led: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:backslide
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	_: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	den: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:backstab
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	bed: Past, Transitive, Personal
+	bing: Present, Transitive, Participle
+	bed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Adjective, MORPHO_TYPE:bad
+	bad:
+	worse: Comparative 
+	worser: Comparative 
+	worst: Superlative 
+	worsest: Superlative 
+
+Adverb, MORPHO_TYPE:badly
+	badly:
+	worse: Comparative 
+	worser: Comparative 
+	worst: Superlative 
+	worsest: Superlative 
+
+Noun, MORPHO_TYPE:bahaman
+	an: Singular 
+	en: Plural 
+
+Noun, MORPHO_TYPE:bailiff
+	f: Animate, Singular 
+	ves: Animate, Plural 
+
+Noun, MORPHO_TYPE:bakufu
+	_: Inanimate, Singular 
+	s: Inanimate, Plural 
+
+Noun, MORPHO_TYPE:ban
+	_: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:bin
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ned: Past, Transitive, Personal
+	ning: Present, Transitive, Participle
+	ned: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:aunt
+	_: Animate, Feminine, Singular 
+	s: Animate, Feminine, Plural 
+
+Noun, MORPHO_TYPE:barklouse
+	ouse: Singular 
+	ice: Plural 
+
+Noun, MORPHO_TYPE:basileus
+	us: Singular 
+	is: Plural 
+
+Noun, MORPHO_TYPE:batboy
+	_: Animate, Masculine, Singular 
+	s: Animate, Masculine, Plural 
+
+Verb, MORPHO_TYPE:be
+	be: Intransitive, Infinitive, AuxiliaryVerb 
+	is: Singular, Third, Present, Intransitive, Personal, AuxiliaryVerb 
+	are: Plural, Present, Intransitive, Personal, AuxiliaryVerb 
+	am: Singular, First, Present, Intransitive, Personal, AuxiliaryVerb 
+	was: Singular, Past, Intransitive, Personal, AuxiliaryVerb 
+	being: Present, Intransitive, Participle, AuxiliaryVerb 
+	were: Plural, Past, Intransitive, Personal, AuxiliaryVerb 
+	been: Past, Intransitive, Participle, AuxiliaryVerb 
+	be: Present, Intransitive, Impersonal, AuxiliaryVerb 
+
+Verb, MORPHO_TYPE:be-123
+	be: Intransitive, Infinitive
+	is: Singular, Third, Present, Intransitive, Personal
+	are: Plural, Present, Intransitive, Personal
+	am: Singular, First, Present, Intransitive, Personal
+	was: Singular, Past, Intransitive, Personal
+	being: Present, Intransitive, Participle
+	were: Plural, Past, Intransitive, Personal
+	been: Past, Intransitive, Participle
+	be: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bear-124
+	ear: Transitive, Infinitive
+	ears: Singular, Third, Present, Transitive, Personal
+	ore: Past, Transitive, Personal
+	earing: Present, Transitive, Participle
+	orne: Past, Transitive, Participle
+	ear: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bear-125
+	ear: Intransitive, Infinitive
+	ears: Singular, Third, Present, Intransitive, Personal
+	ore: Past, Intransitive, Personal
+	earing: Present, Intransitive, Participle
+	orne: Past, Intransitive, Participle
+	ear: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:beat
+	_:
+	ter: Comparative 
+	test: Superlative 
+
+Verb, MORPHO_TYPE:browbeat
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	en: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	en: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:farebeat
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	en: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	en: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:become
+	ome: Transitive, Infinitive
+	omes: Singular, Third, Present, Transitive, Personal
+	ame: Past, Transitive, Personal
+	oming: Present, Transitive, Participle
+	ame: Past, Transitive, Participle
+	ome: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:come
+	ome: Intransitive, Infinitive
+	omes: Singular, Third, Present, Intransitive, Personal
+	ame: Past, Intransitive, Personal
+	oming: Present, Intransitive, Participle
+	ome: Past, Intransitive, Participle
+	ome: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bed
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ded: Past, Transitive, Personal
+	ding: Present, Transitive, Participle
+	ded: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:featherbed
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ded: Past, Intransitive, Personal
+	ding: Present, Intransitive, Participle
+	ded: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:bedesman
+	desman: Singular 
+	adsmen: Plural 
+
+Verb, MORPHO_TYPE:bedim
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	med: Past, Transitive, Personal
+	ming: Present, Transitive, Participle
+	med: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:befall
+	all: Transitive, Infinitive
+	alls: Singular, Third, Present, Transitive, Personal
+	ell: Past, Transitive, Personal
+	alling: Present, Transitive, Participle
+	allen: Past, Transitive, Participle
+	all: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:befall-136
+	all: Intransitive, Infinitive
+	alls: Singular, Third, Present, Intransitive, Personal
+	ell: Past, Intransitive, Personal
+	alling: Present, Intransitive, Participle
+	allen: Past, Intransitive, Participle
+	all: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:beget
+	et: Transitive, Infinitive
+	ets: Singular, Third, Present, Transitive, Personal
+	ot: Past, Transitive, Personal
+	at: Past, Transitive, Personal
+	etting: Present, Transitive, Participle
+	otten: Past, Transitive, Participle
+	ot: Past, Transitive, Participle
+	et: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:begin
+	in: Transitive, Infinitive
+	ins: Singular, Third, Present, Transitive, Personal
+	an: Past, Transitive, Personal
+	inning: Present, Transitive, Participle
+	un: Past, Transitive, Participle
+	in: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:begin-139
+	in: Intransitive, Infinitive
+	ins: Singular, Third, Present, Intransitive, Personal
+	an: Past, Intransitive, Personal
+	inning: Present, Intransitive, Participle
+	un: Past, Intransitive, Participle
+	in: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:begird
+	d: Transitive, Infinitive
+	ds: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ding: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	d: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:behold
+	old: Transitive, Infinitive
+	olds: Singular, Third, Present, Transitive, Personal
+	eld: Past, Transitive, Personal
+	olding: Present, Transitive, Participle
+	olden: Past, Transitive, Participle
+	old: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:behold-142
+	old: Intransitive, Infinitive
+	olds: Singular, Third, Present, Intransitive, Personal
+	eld: Past, Intransitive, Personal
+	olding: Present, Intransitive, Participle
+	olden: Past, Intransitive, Participle
+	old: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:belie
+	ie: Transitive, Infinitive
+	ies: Singular, Third, Present, Transitive, Personal
+	ied: Past, Transitive, Personal
+	ying: Present, Transitive, Participle
+	ied: Past, Transitive, Participle
+	ie: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bename
+	ame: Infinitive
+	ames: Singular, Third, Present, Personal
+	empt: Past, Personal
+	aming: Present, Participle
+	empt: Past, Participle
+	ame: Present, Personal
+
+Verb, MORPHO_TYPE:bend-145
+	d: Intransitive, Infinitive
+	ds: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ding: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	d: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:benefit
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ted: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ting: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	ted: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:benefit-147
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ted: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ting: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	ted: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bereave
+	ave: Transitive, Infinitive
+	aves: Singular, Third, Present, Transitive, Personal
+	ft: Past, Transitive, Personal
+	aved: Past, Transitive, Personal
+	aving: Present, Transitive, Participle
+	ft: Past, Transitive, Participle
+	aved: Past, Transitive, Participle
+	ave: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:bersagliere
+	e: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:beseech
+	eech: Transitive, Infinitive
+	eeches: Singular, Third, Present, Transitive, Personal
+	ought: Past, Transitive, Personal
+	eeching: Present, Transitive, Participle
+	ought: Past, Transitive, Participle
+	eech: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:beset
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	_: Past, Transitive, Personal
+	ting: Present, Transitive, Participle
+	_: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bespeak
+	eak: Transitive, Infinitive
+	eaks: Singular, Third, Present, Transitive, Personal
+	oke: Past, Transitive, Personal
+	ake: Past, Transitive, Personal
+	eaking: Present, Transitive, Participle
+	oken: Past, Transitive, Participle
+	eak: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bestrew
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	n: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	n: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bestride
+	ide: Transitive, Infinitive
+	ides: Singular, Third, Present, Transitive, Personal
+	ode: Past, Transitive, Personal
+	id: Past, Transitive, Personal
+	iding: Present, Transitive, Participle
+	idden: Past, Transitive, Participle
+	ode: Past, Transitive, Participle
+	id: Past, Transitive, Participle
+	ide: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:betake
+	ake: Transitive, Infinitive
+	akes: Singular, Third, Present, Transitive, Personal
+	ook: Past, Transitive, Personal
+	aking: Present, Transitive, Participle
+	aken: Past, Transitive, Participle
+	ake: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bethink
+	ink: Transitive, Infinitive
+	inks: Singular, Third, Present, Transitive, Personal
+	ought: Past, Transitive, Personal
+	inking: Present, Transitive, Participle
+	ought: Past, Transitive, Participle
+	ink: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bethink-157
+	ink: Intransitive, Infinitive
+	inks: Singular, Third, Present, Intransitive, Personal
+	ought: Past, Intransitive, Personal
+	inking: Present, Intransitive, Participle
+	ought: Past, Intransitive, Participle
+	ink: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:bheesty
+	eesty: Singular 
+	ishties: Plural 
+
+Adjective, MORPHO_TYPE:bias
+	_:
+	ser: Comparative 
+	sest: Superlative 
+
+Verb, MORPHO_TYPE:hocus
+	_: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	sed: Past, Transitive, Personal
+	sing: Present, Transitive, Participle
+	sed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:cab
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	bed: Past, Intransitive, Personal
+	bing: Present, Intransitive, Participle
+	bed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:bicentenary
+	tenary: Singular 
+	naries: Plural 
+
+Noun, MORPHO_TYPE:bicentennial
+	tennial: Singular 
+	naries: Plural 
+
+Verb, MORPHO_TYPE:bid
+	id: Transitive, Infinitive
+	ids: Singular, Third, Present, Transitive, Personal
+	ade: Past, Transitive, Personal
+	id: Past, Transitive, Personal
+	ad: Past, Transitive, Personal
+	idding: Present, Transitive, Participle
+	idden: Past, Transitive, Participle
+	id: Past, Transitive, Participle
+	ad: Past, Transitive, Participle
+	id: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bid-165
+	id: Intransitive, Infinitive
+	ids: Singular, Third, Present, Intransitive, Personal
+	ade: Past, Intransitive, Personal
+	id: Past, Intransitive, Personal
+	ad: Past, Intransitive, Personal
+	idding: Present, Intransitive, Participle
+	idden: Past, Intransitive, Participle
+	id: Past, Intransitive, Participle
+	ad: Past, Intransitive, Participle
+	id: Present, Intransitive, Impersonal
+
+Adverb, MORPHO_TYPE:big-166
+	_:
+	ger: Comparative 
+	gest: Superlative 
+
+Noun, MORPHO_TYPE:bimillennium
+	um: Singular 
+	ums: Plural 
+	a: Plural 
+
+Verb, MORPHO_TYPE:bind
+	ind: Transitive, Infinitive
+	inds: Singular, Third, Present, Transitive, Personal
+	ound: Past, Transitive, Personal
+	inding: Present, Transitive, Participle
+	ound: Past, Transitive, Participle
+	ind: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:wind
+	ind: Intransitive, Infinitive
+	inds: Singular, Third, Present, Intransitive, Personal
+	ound: Past, Intransitive, Personal
+	inding: Present, Intransitive, Participle
+	ound: Past, Intransitive, Participle
+	ind: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bing
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	_: Past, Personal
+	_: Present, Participle
+	_: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:blackleg
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ged: Past, Personal
+	ging: Present, Participle
+	ged: Past, Participle
+	_: Present, Personal
+
+Adjective, MORPHO_TYPE:blah
+	_:
+	her: Comparative 
+	hest: Superlative 
+
+Verb, MORPHO_TYPE:bleed
+	ed: Transitive, Infinitive
+	eds: Singular, Third, Present, Transitive, Personal
+	d: Past, Transitive, Personal
+	eding: Present, Transitive, Participle
+	d: Past, Transitive, Participle
+	ed: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bleed-176
+	ed: Intransitive, Infinitive
+	eds: Singular, Third, Present, Intransitive, Personal
+	d: Past, Intransitive, Personal
+	eding: Present, Intransitive, Participle
+	d: Past, Intransitive, Participle
+	ed: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:blend
+	d: Transitive, Infinitive
+	ds: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ded: Past, Transitive, Personal
+	ding: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	ded: Past, Transitive, Participle
+	d: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:blend-178
+	d: Intransitive, Infinitive
+	ds: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ded: Past, Intransitive, Personal
+	ding: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	ded: Past, Intransitive, Participle
+	d: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bless
+	s: Transitive, Infinitive
+	ses: Singular, Third, Present, Transitive, Personal
+	sed: Past, Transitive, Personal
+	t: Past, Transitive, Personal
+	sing: Present, Transitive, Participle
+	sed: Past, Transitive, Participle
+	t: Past, Transitive, Participle
+	s: Present, Transitive, Impersonal
+
+Adjective, MORPHO_TYPE:blond
+	_:
+	e:
+	er: Comparative 
+	est: Superlative 
+
+Verb, MORPHO_TYPE:blow
+	ow: Transitive, Infinitive
+	ows: Singular, Third, Present, Transitive, Personal
+	ew: Past, Transitive, Personal
+	owing: Present, Transitive, Participle
+	own: Past, Transitive, Participle
+	ow: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:blow-182
+	ow: Intransitive, Infinitive
+	ows: Singular, Third, Present, Intransitive, Personal
+	ew: Past, Intransitive, Personal
+	owing: Present, Intransitive, Participle
+	own: Past, Intransitive, Participle
+	ow: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:concur
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	red: Past, Intransitive, Personal
+	ring: Present, Intransitive, Participle
+	red: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:boogie
+	ie: Intransitive, Infinitive
+	ies: Singular, Third, Present, Intransitive, Personal
+	ied: Past, Intransitive, Personal
+	ying: Present, Intransitive, Participle
+	ied: Past, Intransitive, Participle
+	ie: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:book
+	_:
+	ker: Comparative 
+	kest: Superlative 
+
+Noun, MORPHO_TYPE:boschbok
+	oschbok: Singular 
+	ushboks: Plural 
+	ushbok: Plural 
+	ok: Plural 
+
+Noun, MORPHO_TYPE:grouch
+	_: Animate, General, Singular 
+	es: Animate, General, Plural 
+
+Verb, MORPHO_TYPE:bottlefeed
+	ed: Infinitive
+	eds: Singular, Third, Present, Personal
+	d: Past, Personal
+	eding: Present, Participle
+	d: Past, Participle
+	ed: Present, Personal
+
+Noun, MORPHO_TYPE:brainchild
+	_: Singular 
+	ren: Plural 
+
+Verb, MORPHO_TYPE:break
+	eak: Transitive, Infinitive
+	eaks: Singular, Third, Present, Transitive, Personal
+	oke: Past, Transitive, Personal
+	eaking: Present, Transitive, Participle
+	oken: Past, Transitive, Participle
+	eak: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:break-191
+	eak: Intransitive, Infinitive
+	eaks: Singular, Third, Present, Intransitive, Personal
+	oke: Past, Intransitive, Personal
+	eaking: Present, Intransitive, Participle
+	oken: Past, Intransitive, Participle
+	eak: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:brent
+	ent: Singular 
+	ants: Plural 
+
+Noun, MORPHO_TYPE:brethren
+	_: Animate, Masculine, Plural 
+
+Verb, MORPHO_TYPE:clam
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	med: Past, Intransitive, Personal
+	ming: Present, Intransitive, Participle
+	med: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bring
+	ing: Transitive, Infinitive
+	ings: Singular, Third, Present, Transitive, Personal
+	ung: Past, Transitive, Personal
+	ought: Past, Transitive, Personal
+	inging: Present, Transitive, Participle
+	ung: Past, Transitive, Participle
+	ought: Past, Transitive, Participle
+	ing: Present, Transitive, Impersonal
+
+Adjective, MORPHO_TYPE:brood
+	_:
+	der: Comparative 
+	dest: Superlative 
+
+Noun, MORPHO_TYPE:bucktooth
+	ooth: Singular 
+	eeth: Plural 
+
+Noun, MORPHO_TYPE:Zachary
+	y: Animate, Masculine, Singular 
+	ies: Animate, Masculine, Plural 
+
+Verb, MORPHO_TYPE:bulldog
+	ldog: Transitive, Infinitive
+	ldogs: Singular, Third, Present, Transitive, Personal
+	doggeded: Past, Transitive, Personal
+	ldogging: Present, Transitive, Participle
+	doggeded: Past, Transitive, Participle
+	ldog: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bullshit
+	it: Transitive, Infinitive
+	its: Singular, Third, Present, Transitive, Personal
+	itted: Past, Transitive, Personal
+	at: Past, Transitive, Personal
+	itting: Present, Transitive, Participle
+	itted: Past, Transitive, Participle
+	at: Past, Transitive, Participle
+	it: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:bullshit-201
+	it: Intransitive, Infinitive
+	its: Singular, Third, Present, Intransitive, Personal
+	itted: Past, Intransitive, Personal
+	at: Past, Intransitive, Personal
+	itting: Present, Intransitive, Participle
+	itted: Past, Intransitive, Participle
+	at: Past, Intransitive, Participle
+	it: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:cream
+	_:
+	mer: Comparative 
+	mest: Superlative 
+
+Noun, MORPHO_TYPE:bureau
+	_: Singular 
+	s: Plural 
+	x: Plural 
+
+Verb, MORPHO_TYPE:burn
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	t: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	t: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:burn-205
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:burst
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	_: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	_: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:narrowcast
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	_: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	_: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:bus-208
+	_: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	sed: Past, Intransitive, Personal
+	sing: Present, Intransitive, Participle
+	sed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:businesspeople
+	_: Animate, General, Plural 
+
+Verb, MORPHO_TYPE:buy
+	uy: Transitive, Infinitive
+	uys: Singular, Third, Present, Transitive, Personal
+	ought: Past, Transitive, Personal
+	uying: Present, Transitive, Participle
+	ought: Past, Transitive, Participle
+	uy: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:buy-211
+	uy: Intransitive, Infinitive
+	uys: Singular, Third, Present, Intransitive, Personal
+	ought: Past, Intransitive, Personal
+	uying: Present, Intransitive, Participle
+	ought: Past, Intransitive, Participle
+	uy: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:cabal
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	led: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	led: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:cablecast
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	_: Past, Personal
+	ing: Present, Participle
+	_: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:caestus
+	aestus: Singular 
+	estuses: Plural 
+
+Adjective, MORPHO_TYPE:cagey
+	ey:
+	ier: Comparative 
+	iest: Superlative 
+
+Noun, MORPHO_TYPE:calcaneum
+	um: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:can
+	an: Present, Intransitive, Impersonal
+	ould: Past, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:cancel
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	led: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ling: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	led: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:quarrel
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	led: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ling: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	led: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:cannot
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:capriccio
+	o: Singular 
+	_: Plural 
+
+Noun, MORPHO_TYPE:caput
+	ut: Singular 
+	ita: Plural 
+
+Verb, MORPHO_TYPE:carillon
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ned: Past, Intransitive, Personal
+	ning: Present, Intransitive, Participle
+	ned: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:caryatid
+	yatid: Singular 
+	ides: Plural 
+
+Verb, MORPHO_TYPE:catch
+	tch: Transitive, Infinitive
+	tches: Singular, Third, Present, Transitive, Personal
+	ught: Past, Transitive, Personal
+	tching: Present, Transitive, Participle
+	ught: Past, Transitive, Participle
+	tch: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:catch-226
+	tch: Intransitive, Infinitive
+	tches: Singular, Third, Present, Intransitive, Personal
+	ught: Past, Intransitive, Personal
+	tching: Present, Intransitive, Participle
+	ught: Past, Intransitive, Participle
+	tch: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:catchpenny
+	ny: Singular 
+	ce: Plural 
+
+Noun, MORPHO_TYPE:cercaria
+	a: Singular 
+	iae: Plural 
+	ae: Plural 
+
+Noun, MORPHO_TYPE:challah
+	ah: Singular 
+	oth: Plural 
+	ot: Plural 
+
+Adverb, MORPHO_TYPE:cheap
+	_:
+	er: Comparative 
+	est: Superlative 
+
+Noun, MORPHO_TYPE:cheder
+	eder: Singular 
+	edarim: Plural 
+	adarim: Plural 
+
+Verb, MORPHO_TYPE:cheerlead
+	ad: Intransitive, Infinitive
+	ads: Singular, Third, Present, Intransitive, Personal
+	d: Past, Intransitive, Personal
+	ading: Present, Intransitive, Participle
+	d: Past, Intransitive, Participle
+	ad: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:chide-233
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	_: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	den: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Adjective, MORPHO_TYPE:def
+	_:
+	fer: Comparative 
+	fest: Superlative 
+
+Verb, MORPHO_TYPE:chiv
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ved: Past, Personal
+	ving: Present, Participle
+	ved: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:chlamys
+	s: Singular 
+	ses: Plural 
+	des: Plural 
+
+Verb, MORPHO_TYPE:choose
+	ose: Transitive, Infinitive
+	oses: Singular, Third, Present, Transitive, Personal
+	se: Past, Transitive, Personal
+	osing: Present, Transitive, Participle
+	sen: Past, Transitive, Participle
+	ose: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:choose-238
+	ose: Intransitive, Infinitive
+	oses: Singular, Third, Present, Intransitive, Personal
+	se: Past, Intransitive, Personal
+	osing: Present, Intransitive, Participle
+	sen: Past, Intransitive, Participle
+	ose: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:clad
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	_: Past, Transitive, Personal
+	ding: Present, Transitive, Participle
+	_: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:clarino
+	rino: Singular 
+	nos: Plural 
+	ni: Plural 
+
+Verb, MORPHO_TYPE:cleave
+	eave: Transitive, Infinitive
+	eaves: Singular, Third, Present, Transitive, Personal
+	eaved: Past, Transitive, Personal
+	ove: Past, Transitive, Personal
+	eft: Past, Transitive, Personal
+	eaving: Present, Transitive, Participle
+	eaved: Past, Transitive, Participle
+	oven: Past, Transitive, Participle
+	eft: Past, Transitive, Participle
+	eave: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:cleave-242
+	eave: Intransitive, Infinitive
+	eaves: Singular, Third, Present, Intransitive, Personal
+	eaved: Past, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	eft: Past, Intransitive, Personal
+	eaving: Present, Intransitive, Participle
+	eaved: Past, Intransitive, Participle
+	oven: Past, Intransitive, Participle
+	eft: Past, Intransitive, Participle
+	eave: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:clem
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	med: Past, Personal
+	ming: Present, Participle
+	med: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:clepe
+	clepe: Transitive, Infinitive
+	clepes: Singular, Third, Present, Transitive, Personal
+	cleped: Past, Transitive, Personal
+	cleping: Present, Transitive, Participle
+	ycleped: Past, Transitive, Participle
+	yclept: Past, Transitive, Participle
+	clept: Past, Transitive, Participle
+	clepe: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:cling
+	ing: Intransitive, Infinitive
+	ings: Singular, Third, Present, Intransitive, Personal
+	ung: Past, Intransitive, Personal
+	inging: Present, Intransitive, Participle
+	ung: Past, Intransitive, Participle
+	ing: Present, Intransitive, Impersonal
+
+Adverb, MORPHO_TYPE:close
+	_:
+	r: Comparative 
+	st: Superlative 
+
+Verb, MORPHO_TYPE:clothe
+	othe: Transitive, Infinitive
+	othes: Singular, Third, Present, Transitive, Personal
+	othed: Past, Transitive, Personal
+	ad: Past, Transitive, Personal
+	othing: Present, Transitive, Participle
+	othed: Past, Transitive, Participle
+	ad: Past, Transitive, Participle
+	othe: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:cod
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ded: Past, Personal
+	ding: Present, Participle
+	ded: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:coif
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	fed: Past, Transitive, Personal
+	fing: Present, Transitive, Participle
+	fed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:colon
+	on: Singular 
+	ones: Plural 
+	a: Plural 
+
+Noun, MORPHO_TYPE:comedo
+	_: Singular 
+	nes: Plural 
+
+Verb, MORPHO_TYPE:complot
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ted: Past, Personal
+	ting: Present, Participle
+	ted: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:corpus
+	us: Singular 
+	ora: Plural 
+
+Verb, MORPHO_TYPE:countersink
+	ink: Transitive, Infinitive
+	inks: Singular, Third, Present, Transitive, Personal
+	ank: Past, Transitive, Personal
+	inking: Present, Transitive, Participle
+	unk: Past, Transitive, Participle
+	ink: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:cowrite
+	ite: Transitive, Infinitive
+	ites: Singular, Third, Present, Transitive, Personal
+	ote: Past, Transitive, Personal
+	iting: Present, Transitive, Participle
+	itten: Past, Transitive, Participle
+	ite: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:creep
+	ep: Intransitive, Infinitive
+	eps: Singular, Third, Present, Intransitive, Personal
+	pt: Past, Intransitive, Personal
+	eping: Present, Intransitive, Participle
+	pt: Past, Intransitive, Participle
+	ep: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:uppercut
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	_: Past, Intransitive, Personal
+	ting: Present, Intransitive, Participle
+	_: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:cruel
+	_:
+	er: Comparative 
+	ler: Comparative 
+	est: Superlative 
+	lest: Superlative 
+
+Noun, MORPHO_TYPE:crus
+	s: Singular 
+	ra: Plural 
+
+Verb, MORPHO_TYPE:curet
+	_: Infinitive
+	tes: Singular, Third, Present, Personal
+	ted: Past, Personal
+	ting: Present, Participle
+	ted: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:curse
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:curse-262
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:cyclops
+	s: Singular 
+	es: Plural 
+
+Noun, MORPHO_TYPE:cylix
+	x: Singular 
+	kes: Plural 
+	ces: Plural 
+
+Noun, MORPHO_TYPE:daimio
+	imio: Singular 
+	ymios: Plural 
+	ymio: Plural 
+
+Verb, MORPHO_TYPE:dare
+	_: Present, Intransitive
+
+Verb, MORPHO_TYPE:daresay
+	y: Transitive, Infinitive
+	ys: Singular, Third, Present, Transitive, Personal
+	id: Past, Transitive, Personal
+	ying: Present, Transitive, Participle
+	id: Past, Transitive, Participle
+	y: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:soothsay
+	y: Intransitive, Infinitive
+	ys: Singular, Third, Present, Intransitive, Personal
+	id: Past, Intransitive, Personal
+	ying: Present, Intransitive, Participle
+	id: Past, Intransitive, Participle
+	y: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:daydream
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Particle, MORPHO_TYPE:de
+	_:
+
+Verb, MORPHO_TYPE:overleap
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:debus
+	_: Infinitive
+	ses: Singular, Third, Present, Personal
+	sed: Past, Personal
+	sing: Present, Participle
+	sed: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:definiens
+	s: Singular 
+	tia: Plural 
+
+Verb, MORPHO_TYPE:degas
+	_: Transitive, Infinitive
+	ses: Singular, Third, Present, Transitive, Personal
+	sed: Past, Transitive, Personal
+	sing: Present, Transitive, Participle
+	sed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:diaeresis
+	esis: Singular 
+	eses: Plural 
+	ses: Plural 
+
+Noun, MORPHO_TYPE:diathesis
+	esis: Singular 
+	ses: Plural 
+
+Noun, MORPHO_TYPE:dibbuk
+	_: Singular 
+	kim: Plural 
+
+Verb, MORPHO_TYPE:dig
+	ig: Transitive, Infinitive
+	igs: Singular, Third, Present, Transitive, Personal
+	ug: Past, Transitive, Personal
+	igging: Present, Transitive, Participle
+	ug: Past, Transitive, Participle
+	ig: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:dig-279
+	ig: Intransitive, Infinitive
+	igs: Singular, Third, Present, Intransitive, Personal
+	ug: Past, Intransitive, Personal
+	igging: Present, Intransitive, Participle
+	ug: Past, Intransitive, Participle
+	ig: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:discobolos
+	os: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:disenthral
+	_: Infinitive
+	ls: Singular, Third, Present, Personal
+	led: Past, Personal
+	ling: Present, Participle
+	led: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:disenthrall
+	l: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	led: Past, Transitive, Personal
+	ling: Present, Transitive, Participle
+	led: Past, Transitive, Participle
+	l: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:dive
+	ive: Transitive, Infinitive
+	ives: Singular, Third, Present, Transitive, Personal
+	ove: Past, Transitive, Personal
+	iving: Present, Transitive, Participle
+	ove: Past, Transitive, Participle
+	ive: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:skydive
+	ive: Intransitive, Infinitive
+	ives: Singular, Third, Present, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	iving: Present, Intransitive, Participle
+	ove: Past, Intransitive, Participle
+	ive: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:djinni
+	i: Singular 
+	_: Plural 
+
+Noun, MORPHO_TYPE:djinny
+	y: Singular 
+	_: Plural 
+
+Verb, MORPHO_TYPE:do
+	o: Intransitive, Infinitive, AuxiliaryVerb 
+	oes: Singular, Third, Present, Intransitive, Personal, AuxiliaryVerb 
+	id: Past, Intransitive, Personal, AuxiliaryVerb 
+	oing: Present, Intransitive, Participle, AuxiliaryVerb 
+	one: Past, Intransitive, Participle, AuxiliaryVerb 
+	o: Present, Intransitive, Impersonal, AuxiliaryVerb 
+
+Verb, MORPHO_TYPE:fordo
+	o: Transitive, Infinitive
+	oes: Singular, Third, Present, Transitive, Personal
+	id: Past, Transitive, Personal
+	oing: Present, Transitive, Participle
+	one: Past, Transitive, Participle
+	o: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:do-289
+	o: Intransitive, Infinitive
+	oes: Singular, Third, Present, Intransitive, Personal
+	id: Past, Intransitive, Personal
+	oing: Present, Intransitive, Participle
+	one: Past, Intransitive, Participle
+	o: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:dogfight
+	ight: Transitive, Infinitive
+	ights: Singular, Third, Present, Transitive, Personal
+	ought: Past, Transitive, Personal
+	ighting: Present, Transitive, Participle
+	ought: Past, Transitive, Participle
+	ight: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:dogfight-291
+	ight: Intransitive, Infinitive
+	ights: Singular, Third, Present, Intransitive, Personal
+	ought: Past, Intransitive, Personal
+	ighting: Present, Intransitive, Participle
+	ought: Past, Intransitive, Participle
+	ight: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:dogma
+	_: Singular 
+	s: Plural 
+	ta: Plural 
+
+Verb, MORPHO_TYPE:dow
+	w: Infinitive
+	ws: Singular, Third, Present, Personal
+	ught: Past, Personal
+	wing: Present, Participle
+	ught: Past, Participle
+	w: Present, Personal
+
+Adjective, MORPHO_TYPE:fab
+	_:
+	ber: Comparative 
+	best: Superlative 
+
+Verb, MORPHO_TYPE:draw
+	aw: Transitive, Infinitive
+	aws: Singular, Third, Present, Transitive, Personal
+	ew: Past, Transitive, Personal
+	awing: Present, Transitive, Participle
+	awn: Past, Transitive, Participle
+	aw: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:draw-296
+	aw: Intransitive, Infinitive
+	aws: Singular, Third, Present, Intransitive, Personal
+	ew: Past, Intransitive, Personal
+	awing: Present, Intransitive, Participle
+	awn: Past, Intransitive, Participle
+	aw: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:drink-297
+	ink: Intransitive, Infinitive
+	inks: Singular, Third, Present, Intransitive, Personal
+	ank: Past, Intransitive, Personal
+	inking: Present, Intransitive, Participle
+	unk: Past, Intransitive, Participle
+	ink: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:drive
+	ive: Transitive, Infinitive
+	ives: Singular, Third, Present, Transitive, Personal
+	ove: Past, Transitive, Personal
+	iving: Present, Transitive, Participle
+	iven: Past, Transitive, Participle
+	ive: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:strive
+	ive: Intransitive, Infinitive
+	ives: Singular, Third, Present, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	iving: Present, Intransitive, Participle
+	iven: Past, Intransitive, Participle
+	ive: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:dry
+	y:
+	yer: Comparative 
+	ier: Comparative 
+	yest: Superlative 
+	iest: Superlative 
+
+Noun, MORPHO_TYPE:duodenum
+	denum: Singular 
+	nas: Plural 
+	na: Plural 
+
+Verb, MORPHO_TYPE:dwell
+	l: Intransitive, Infinitive
+	ls: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ling: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	l: Present, Intransitive, Impersonal
+
+Adverb, MORPHO_TYPE:early
+	y:
+	ier: Comparative 
+	iest: Superlative 
+
+Verb, MORPHO_TYPE:eat
+	eat: Transitive, Infinitive
+	eats: Singular, Third, Present, Transitive, Personal
+	ate: Past, Transitive, Personal
+	eating: Present, Transitive, Participle
+	eaten: Past, Transitive, Participle
+	eat: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:overeat
+	eat: Intransitive, Infinitive
+	eats: Singular, Third, Present, Intransitive, Personal
+	ate: Past, Intransitive, Personal
+	eating: Present, Intransitive, Participle
+	eaten: Past, Intransitive, Participle
+	eat: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:edema
+	edema: Singular 
+	oedemata: Plural 
+	edemata: Plural 
+
+Noun, MORPHO_TYPE:eisteddfod
+	_: Singular 
+	au: Plural 
+
+Noun, MORPHO_TYPE:emeetate
+	tate: Singular 
+	rates: Plural 
+
+Pronoun, MORPHO_TYPE:enough
+	_: Indefinitive2 
+
+Pronoun, MORPHO_TYPE:few
+	_: Indefinitive2
+
+Verb, MORPHO_TYPE:equip
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ped: Past, Transitive, Personal
+	ping: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	ped: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:esophagus
+	esophagus: Singular 
+	oesophagi: Plural 
+	esophagi: Plural 
+
+Noun, MORPHO_TYPE:eupatrid
+	_: Singular 
+	ae: Plural 
+
+Noun, MORPHO_TYPE:eyrir
+	eyrir: Singular 
+	aurar: Plural 
+
+Noun, MORPHO_TYPE:facility
+	y: Singular 
+	es: Plural 
+	ies: Plural 
+
+Adjective, MORPHO_TYPE:far
+	ar:
+	arther: Comparative 
+	urther: Comparative 
+	arthest: Superlative 
+	urthest: Superlative 
+
+Adverb, MORPHO_TYPE:far-319
+	ar:
+	arther: Comparative 
+	urther: Comparative 
+	arthest: Superlative 
+	urthest: Superlative 
+
+Adjective, MORPHO_TYPE:faux
+	_:
+	xer: Comparative 
+	xest: Superlative 
+
+Verb, MORPHO_TYPE:feel
+	el: Transitive, Infinitive
+	els: Singular, Third, Present, Transitive, Personal
+	lt: Past, Transitive, Personal
+	eling: Present, Transitive, Participle
+	lt: Past, Transitive, Participle
+	el: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:kneel
+	el: Intransitive, Infinitive
+	els: Singular, Third, Present, Intransitive, Personal
+	lt: Past, Intransitive, Personal
+	eling: Present, Intransitive, Participle
+	lt: Past, Intransitive, Participle
+	el: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:fellah
+	_: Singular 
+	een: Plural 
+	in: Plural 
+
+Noun, MORPHO_TYPE:femur
+	ur: Singular 
+	ora: Plural 
+
+Noun, MORPHO_TYPE:ferroconcrete
+	e: Singular 
+	ia: Plural 
+
+Noun, MORPHO_TYPE:festschrift
+	_: Singular 
+	en: Plural 
+
+Pronoun, MORPHO_TYPE:few-327
+	_: Indefinitive2 
+	er: Indefinitive2 
+	est: Indefinitive2 
+
+Noun, MORPHO_TYPE:fez
+	_: Singular 
+	zes: Plural 
+
+Noun, MORPHO_TYPE:filaria
+	a: Singular 
+	iae: Plural 
+
+Verb, MORPHO_TYPE:finedraw
+	aw: Infinitive
+	aws: Singular, Third, Present, Personal
+	ew: Past, Personal
+	awing: Present, Participle
+	awn: Past, Participle
+	aw: Present, Personal
+
+Verb, MORPHO_TYPE:fingerspell
+	l: Infinitive
+	ls: Singular, Third, Present, Personal
+	t: Past, Personal
+	ling: Present, Participle
+	t: Past, Participle
+	l: Present, Personal
+
+Noun, MORPHO_TYPE:flagstaff
+	ff: Singular 
+	ves: Plural 
+
+Noun, MORPHO_TYPE:flamen
+	en: Singular 
+	ines: Plural 
+
+Adverb, MORPHO_TYPE:flat-335
+	_:
+	ter: Comparative 
+	test: Superlative 
+
+Verb, MORPHO_TYPE:flee
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	d: Past, Transitive, Personal
+	eing: Present, Transitive, Participle
+	d: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:flee-337
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	d: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	d: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:hamstring
+	ing: Transitive, Infinitive
+	ings: Singular, Third, Present, Transitive, Personal
+	ung: Past, Transitive, Personal
+	inging: Present, Transitive, Participle
+	ung: Past, Transitive, Participle
+	ing: Present, Transitive, Impersonal
+
+Adjective, MORPHO_TYPE:hep
+	_:
+	per: Comparative 
+	pest: Superlative 
+
+Noun, MORPHO_TYPE:floreat
+	t: Singular 
+	nt: Plural 
+
+Verb, MORPHO_TYPE:fly
+	y: Transitive, Infinitive
+	ies: Singular, Third, Present, Transitive, Personal
+	ew: Past, Transitive, Personal
+	ying: Present, Transitive, Participle
+	own: Past, Transitive, Participle
+	y: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:fly-342
+	y: Intransitive, Infinitive
+	ies: Singular, Third, Present, Intransitive, Personal
+	ew: Past, Intransitive, Personal
+	ying: Present, Intransitive, Participle
+	own: Past, Intransitive, Participle
+	y: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:focus
+	us: Singular 
+	uses: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:forbear
+	ear: Transitive, Infinitive
+	ears: Singular, Third, Present, Transitive, Personal
+	ore: Past, Transitive, Personal
+	earing: Present, Transitive, Participle
+	orne: Past, Transitive, Participle
+	ear: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:forbear-345
+	ear: Intransitive, Infinitive
+	ears: Singular, Third, Present, Intransitive, Personal
+	ore: Past, Intransitive, Personal
+	earing: Present, Intransitive, Participle
+	orne: Past, Intransitive, Participle
+	ear: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:forbid
+	id: Transitive, Infinitive
+	ids: Singular, Third, Present, Transitive, Personal
+	ade: Past, Transitive, Personal
+	ad: Past, Transitive, Personal
+	idding: Present, Transitive, Participle
+	iding: Present, Transitive, Participle
+	idden: Past, Transitive, Participle
+	id: Past, Transitive, Participle
+	id: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:forego
+	go: Transitive, Infinitive
+	goes: Singular, Third, Present, Transitive, Personal
+	went: Past, Transitive, Personal
+	going: Present, Transitive, Participle
+	gone: Past, Transitive, Participle
+	go: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:forerun
+	un: Transitive, Infinitive
+	uns: Singular, Third, Present, Transitive, Personal
+	an: Past, Transitive, Personal
+	unning: Present, Transitive, Participle
+	an: Past, Transitive, Participle
+	un: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:foresee
+	ee: Transitive, Infinitive
+	ees: Singular, Third, Present, Transitive, Personal
+	aw: Past, Transitive, Personal
+	eing: Present, Transitive, Participle
+	een: Past, Transitive, Participle
+	ee: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:foreswear
+	ear: Transitive, Infinitive
+	ears: Singular, Third, Present, Transitive, Personal
+	ore: Past, Transitive, Personal
+	earing: Present, Transitive, Participle
+	orn: Past, Transitive, Participle
+	ear: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:foreswear-351
+	ear: Intransitive, Infinitive
+	ears: Singular, Third, Present, Intransitive, Personal
+	ore: Past, Intransitive, Personal
+	earing: Present, Intransitive, Participle
+	orn: Past, Intransitive, Participle
+	ear: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:foretell
+	ell: Transitive, Infinitive
+	ells: Singular, Third, Present, Transitive, Personal
+	old: Past, Transitive, Personal
+	elling: Present, Transitive, Participle
+	old: Past, Transitive, Participle
+	ell: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:forget
+	et: Transitive, Infinitive
+	ets: Singular, Third, Present, Transitive, Personal
+	ot: Past, Transitive, Personal
+	etting: Present, Transitive, Participle
+	otten: Past, Transitive, Participle
+	et: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:forget-354
+	et: Intransitive, Infinitive
+	ets: Singular, Third, Present, Intransitive, Personal
+	ot: Past, Intransitive, Personal
+	etting: Present, Intransitive, Participle
+	otten: Past, Intransitive, Participle
+	et: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:forgive
+	ive: Transitive, Infinitive
+	ives: Singular, Third, Present, Transitive, Personal
+	ave: Past, Transitive, Personal
+	iving: Present, Transitive, Participle
+	iven: Past, Transitive, Participle
+	ive: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:forgive-356
+	ive: Intransitive, Infinitive
+	ives: Singular, Third, Present, Intransitive, Personal
+	ave: Past, Intransitive, Personal
+	iving: Present, Intransitive, Participle
+	iven: Past, Intransitive, Participle
+	ive: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:forspeak
+	eak: Infinitive
+	eaks: Singular, Third, Present, Personal
+	oke: Past, Personal
+	eaking: Present, Participle
+	oken: Past, Participle
+	eak: Present, Personal
+
+Noun, MORPHO_TYPE:forum
+	um: Singular 
+	a: Plural 
+	ums: Plural 
+
+Verb, MORPHO_TYPE:freeze
+	eeze: Transitive, Infinitive
+	eezes: Singular, Third, Present, Transitive, Personal
+	oze: Past, Transitive, Personal
+	eezing: Present, Transitive, Participle
+	ozen: Past, Transitive, Participle
+	eeze: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:freeze-360
+	eeze: Intransitive, Infinitive
+	eezes: Singular, Third, Present, Intransitive, Personal
+	oze: Past, Intransitive, Personal
+	eezing: Present, Intransitive, Participle
+	ozen: Past, Intransitive, Participle
+	eeze: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:frons
+	s: Singular 
+	tes: Plural 
+
+Verb, MORPHO_TYPE:gan
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ned: Past, Personal
+	ning: Present, Participle
+	ned: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:garlic
+	_: Transitive, Infinitive
+	ks: Singular, Third, Present, Transitive, Personal
+	ked: Past, Transitive, Personal
+	king: Present, Transitive, Participle
+	ked: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:gas-364
+	_: Intransitive, Infinitive
+	ses: Singular, Third, Present, Intransitive, Personal
+	sed: Past, Intransitive, Personal
+	sing: Present, Intransitive, Participle
+	sed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:gemsbok
+	sbok: Singular 
+	boks: Plural 
+
+Noun, MORPHO_TYPE:gemsbuck
+	sbuck: Singular 
+	bucks: Plural 
+
+Noun, MORPHO_TYPE:genius
+	us: Singular 
+	uses: Plural 
+	i: Plural 
+
+Noun, MORPHO_TYPE:genus
+	us: Singular 
+	era: Plural 
+	us: Plural 
+
+Verb, MORPHO_TYPE:ghostwrite-369
+	ite: Intransitive, Infinitive
+	ites: Singular, Third, Present, Intransitive, Personal
+	ote: Past, Intransitive, Personal
+	iting: Present, Intransitive, Participle
+	itten: Past, Intransitive, Participle
+	ite: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:gin
+	in: Transitive, Infinitive
+	ins: Singular, Third, Present, Transitive, Personal
+	inned: Past, Transitive, Personal
+	an: Past, Transitive, Personal
+	ining: Present, Transitive, Participle
+	inning: Present, Transitive, Participle
+	inned: Past, Transitive, Participle
+	un: Past, Transitive, Participle
+	in: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:git
+	it: Infinitive
+	ets: Singular, Third, Present, Personal
+	ot: Past, Personal
+	etting: Present, Participle
+	otten: Past, Participle
+	it: Present, Personal
+
+Noun, MORPHO_TYPE:glochidium
+	ium: Singular 
+	cia: Plural 
+	ia: Plural 
+
+Verb, MORPHO_TYPE:gnaw-373
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	n: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	n: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:go-374
+	go: Intransitive, Infinitive
+	goes: Singular, Third, Present, Intransitive, Personal
+	went: Past, Intransitive, Personal
+	going: Present, Intransitive, Participle
+	gone: Past, Intransitive, Participle
+	go: Present, Intransitive, Impersonal
+
+Adjective, MORPHO_TYPE:good
+	good:
+	better: Comparative 
+	best: Superlative 
+
+Noun, MORPHO_TYPE:goose
+	oose: Singular 
+	eese: Plural 
+
+Noun, MORPHO_TYPE:gospodin
+	din: Singular 
+	poda: Plural 
+
+Verb, MORPHO_TYPE:lade
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	en: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	en: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:grip
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ped: Past, Transitive, Personal
+	t: Past, Transitive, Personal
+	ping: Present, Transitive, Participle
+	ped: Past, Transitive, Participle
+	t: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:grip-380
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ped: Past, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ping: Present, Intransitive, Participle
+	ped: Past, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:grok
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ked: Past, Transitive, Personal
+	king: Present, Transitive, Participle
+	ked: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:grosz
+	_: Singular 
+	y: Plural 
+
+Noun, MORPHO_TYPE:guilde
+	_: Singular 
+	rs: Plural 
+	r: Plural 
+
+Noun, MORPHO_TYPE:gurnar
+	_: Singular 
+	ds: Plural 
+	d: Plural 
+
+Noun, MORPHO_TYPE:gynecium
+	ium: Singular 
+	ia: Plural 
+	ea: Plural 
+
+Verb, MORPHO_TYPE:hacksaw
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	n: Past, Personal
+	ing: Present, Participle
+	n: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:hae
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ieng: Present, Transitive, Participle
+	en: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:haftarah
+	ah: Singular 
+	oth: Plural 
+
+Noun, MORPHO_TYPE:haggada
+	a: Singular 
+	oth: Plural 
+	as: Plural 
+
+Noun, MORPHO_TYPE:haggadah
+	h: Singular 
+	s: Plural 
+
+Verb, MORPHO_TYPE:hagride
+	ide: Transitive, Infinitive
+	ides: Singular, Third, Present, Transitive, Personal
+	ode: Past, Transitive, Personal
+	iding: Present, Transitive, Participle
+	idden: Past, Transitive, Participle
+	ide: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:hairweave
+	eave: Infinitive
+	eaves: Singular, Third, Present, Personal
+	ove: Past, Personal
+	eaving: Present, Participle
+	oven: Past, Participle
+	eave: Present, Personal
+
+Noun, MORPHO_TYPE:haler
+	_: Singular 
+	u: Plural 
+
+Noun, MORPHO_TYPE:hallah
+	hallah: Singular 
+	challoth: Plural 
+	halloth: Plural 
+	hallot: Plural 
+
+Verb, MORPHO_TYPE:hang
+	ang: Transitive, Infinitive
+	angs: Singular, Third, Present, Transitive, Personal
+	ung: Past, Transitive, Personal
+	anged: Past, Transitive, Personal
+	anging: Present, Transitive, Participle
+	ung: Past, Transitive, Participle
+	anged: Past, Transitive, Participle
+	ang: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:hang-396
+	ang: Intransitive, Infinitive
+	angs: Singular, Third, Present, Intransitive, Personal
+	ung: Past, Intransitive, Personal
+	anged: Past, Intransitive, Personal
+	anging: Present, Intransitive, Participle
+	ung: Past, Intransitive, Participle
+	anged: Past, Intransitive, Participle
+	ang: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:have
+	ve: Intransitive, Infinitive, AuxiliaryVerb 
+	s: Singular, Third, Present, Intransitive, Personal, AuxiliaryVerb 
+	d: Past, Intransitive, Personal, AuxiliaryVerb 
+	ving: Present, Intransitive, Participle, AuxiliaryVerb 
+	d: Past, Intransitive, Participle, AuxiliaryVerb 
+	ve: Present, Intransitive, Impersonal, AuxiliaryVerb 
+
+Verb, MORPHO_TYPE:have-398
+	ve: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	d: Past, Transitive, Personal
+	ving: Present, Transitive, Participle
+	d: Past, Transitive, Participle
+	ve: Present, Transitive, Impersonal
+
+Pronoun, MORPHO_TYPE:he
+	e: Nominative, Masculine, Singular, Third, Personal
+	is: Genitive, Masculine, Singular, Third, Possessive 
+	is: Genitive, Masculine, Singular, Third, Possessive
+	imself: Accusative, Masculine, Singular, Third, Reflexive
+	im: Accusative, Masculine, Singular, Third, Personal
+
+Verb, MORPHO_TYPE:heave
+	eave: Transitive, Infinitive
+	eaves: Singular, Third, Present, Transitive, Personal
+	ove: Past, Transitive, Personal
+	eaving: Present, Transitive, Participle
+	ove: Past, Transitive, Participle
+	eave: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:heave-401
+	eave: Intransitive, Infinitive
+	eaves: Singular, Third, Present, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	eaving: Present, Intransitive, Participle
+	ove: Past, Intransitive, Participle
+	eave: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:heder
+	eder: Singular 
+	adarim: Plural 
+
+Noun, MORPHO_TYPE:herma
+	_: Singular 
+	i: Plural 
+	e: Plural 
+
+Verb, MORPHO_TYPE:hocuspocus
+	_: Infinitive
+	es: Singular, Third, Present, Personal
+	sed: Past, Personal
+	sing: Present, Participle
+	sed: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:hold
+	old: Transitive, Infinitive
+	olds: Singular, Third, Present, Transitive, Personal
+	eld: Past, Transitive, Personal
+	olding: Present, Transitive, Participle
+	eld: Past, Transitive, Participle
+	old: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:hold-406
+	old: Intransitive, Infinitive
+	olds: Singular, Third, Present, Intransitive, Personal
+	eld: Past, Intransitive, Personal
+	olding: Present, Intransitive, Participle
+	eld: Past, Intransitive, Participle
+	old: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:honey
+	ey: Transitive, Infinitive
+	eys: Singular, Third, Present, Transitive, Personal
+	ied: Past, Transitive, Personal
+	eying: Present, Transitive, Participle
+	ied: Past, Transitive, Participle
+	ey: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:housekeep
+	ep: Infinitive
+	eps: Singular, Third, Present, Personal
+	pt: Past, Personal
+	eping: Present, Participle
+	pt: Past, Participle
+	ep: Present, Personal
+
+Adverb, MORPHO_TYPE:how
+	_: InterrogativeRelative
+
+Adverb, MORPHO_TYPE:how-410
+	_: InterrogativeRelative
+
+Noun, MORPHO_TYPE:hymenium
+	menium: Singular 
+	niums: Plural 
+	nia: Plural 
+
+Pronoun, MORPHO_TYPE:i
+	i: Nominative, General, Singular, First, Personal
+	we: Nominative, General, Plural, First, Personal
+	me: Accusative, General, Singular, First, Personal
+	us: Accusative, General, Plural, First, Personal
+	mine: Genitive, General, Singular, First, Possessive
+	ours: Genitive, General, Plural, First, Possessive
+	myself: Accusative, General, Singular, First, Reflexive
+	ourselves: Accusative, General, Plural, First, Reflexive
+	my: Genitive, General, Singular, First, Possessive 
+	our: Genitive, General, Plural, First, Possessive 	
+	own: Genitive, General, Singular, Possessive 	
+	own: Genitive, General, Plural, Possessive 
+Noun, MORPHO_TYPE:ichthyosaur
+	_: Singular 
+	uses: Plural 
+
+Noun, MORPHO_TYPE:igbo
+	gbo: Singular 
+	bo: Plural 
+
+Noun, MORPHO_TYPE:igorrote
+	te: Singular 
+	rote: Plural 
+
+Noun, MORPHO_TYPE:imago
+	o: Singular 
+	ines: Plural 
+	oes: Plural 
+
+Verb, MORPHO_TYPE:respell
+	l: Transitive, Infinitive
+	ls: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ling: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	l: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:infrahuman
+	an: Animate, General, Singular 
+	en: Animate, General, Plural 
+
+Verb, MORPHO_TYPE:interlay
+	y: Infinitive
+	ys: Singular, Third, Present, Personal
+	id: Past, Personal
+	ying: Present, Participle
+	id: Past, Participle
+	y: Present, Personal
+
+Noun, MORPHO_TYPE:internet
+	_: Inanimate, Singular 
+	s: Inanimate, Genitive, Singular 
+
+Noun, MORPHO_TYPE:interpellation
+	interpellation: Singular 
+	 sinterpellation: Plural 
+
+Verb, MORPHO_TYPE:interweave
+	eave: Transitive, Infinitive
+	eaves: Singular, Third, Present, Transitive, Personal
+	ove: Past, Transitive, Personal
+	eaving: Present, Transitive, Participle
+	oven: Past, Transitive, Participle
+	eave: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:interweave-423
+	eave: Intransitive, Infinitive
+	eaves: Singular, Third, Present, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	eaving: Present, Intransitive, Participle
+	oven: Past, Intransitive, Participle
+	eave: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:involucre
+	e: Singular 
+	a: Plural 
+
+Pronoun, MORPHO_TYPE:it
+	_: Nominative, Singular, Third, Personal
+	_: Accusative, Singular, Third, Personal
+	s: Accusative, Singular, Third, Possessive
+	s: Genitive, Singular, Third, Possessive 
+	self: Accusative, Singular, Third, Reflexive
+
+Noun, MORPHO_TYPE:jackaroo
+	aroo: Singular 
+	eroos: Plural 
+
+Verb, MORPHO_TYPE:jerrybuild
+	d: Infinitive
+	ds: Singular, Third, Present, Personal
+	t: Past, Personal
+	ding: Present, Participle
+	t: Past, Participle
+	d: Present, Personal
+
+Verb, MORPHO_TYPE:joyride
+	ide: Infinitive
+	ides: Singular, Third, Present, Personal
+	ode: Past, Personal
+	iding: Present, Participle
+	idden: Past, Participle
+	ide: Present, Personal
+
+Noun, MORPHO_TYPE:kalmuc
+	_: Singular 
+	ks: Plural 
+	k: Plural 
+
+Verb, MORPHO_TYPE:upsweep
+	ep: Transitive, Infinitive
+	eps: Singular, Third, Present, Transitive, Personal
+	pt: Past, Transitive, Personal
+	eping: Present, Transitive, Participle
+	pt: Past, Transitive, Participle
+	ep: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:ken
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ned: Past, Transitive, Personal
+	t: Past, Transitive, Personal
+	ning: Present, Transitive, Participle
+	ned: Past, Transitive, Participle
+	t: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:ken-432
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ned: Past, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ning: Present, Intransitive, Participle
+	ned: Past, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:ko
+	_: Transitive, Infinitive
+	's: Singular, Third, Present, Transitive, Personal
+	'd: Past, Transitive, Personal
+	'ing: Present, Transitive, Participle
+	'd: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:krona
+	a: Singular 
+	ur: Plural 
+
+Noun, MORPHO_TYPE:krone
+	_: Singular 
+	r: Plural 
+	n: Plural 
+
+Noun, MORPHO_TYPE:kylix
+	x: Singular 
+	kes: Plural 
+
+Noun, MORPHO_TYPE:lacunar
+	_: Singular 
+	ia: Plural 
+
+Verb, MORPHO_TYPE:lade-438
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	en: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	en: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:ladify
+	ify: Infinitive
+	yfies: Singular, Third, Present, Personal
+	yfied: Past, Personal
+	yfying: Present, Participle
+	yfied: Past, Participle
+	ify: Present, Personal
+
+Adjective, MORPHO_TYPE:laic
+	_:
+	cer: Comparative 
+	cest: Superlative 
+
+Noun, MORPHO_TYPE:lat
+	_: Singular 
+	u: Plural 
+	i: Plural 
+
+Verb, MORPHO_TYPE:mislead
+	ad: Transitive, Infinitive
+	ads: Singular, Third, Present, Transitive, Personal
+	d: Past, Transitive, Personal
+	ading: Present, Transitive, Participle
+	d: Past, Transitive, Participle
+	ad: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:leave
+	ave: Transitive, Infinitive
+	aves: Singular, Third, Present, Transitive, Personal
+	ft: Past, Transitive, Personal
+	aving: Present, Transitive, Participle
+	ft: Past, Transitive, Participle
+	ave: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:leave-444
+	ave: Intransitive, Infinitive
+	aves: Singular, Third, Present, Intransitive, Personal
+	ft: Past, Intransitive, Personal
+	aving: Present, Intransitive, Participle
+	ft: Past, Intransitive, Participle
+	ave: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:lentigo
+	o: Singular 
+	ines: Plural 
+
+Noun, MORPHO_TYPE:leu
+	u: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:lie
+	ie: Transitive, Infinitive
+	ies: Singular, Third, Present, Transitive, Personal
+	ay: Past, Transitive, Personal
+	ying: Present, Transitive, Participle
+	ain: Past, Transitive, Participle
+	ie: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:lie-448
+	ie: Intransitive, Infinitive
+	ies: Singular, Third, Present, Intransitive, Personal
+	ay: Past, Intransitive, Personal
+	ying: Present, Intransitive, Participle
+	ain: Past, Intransitive, Participle
+	ie: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:lied
+	_: Singular 
+	er: Plural 
+
+Verb, MORPHO_TYPE:green-light
+	ght: Transitive, Infinitive
+	ghts: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ghted: Past, Transitive, Personal
+	ghting: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	ghted: Past, Transitive, Participle
+	ght: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:light-451
+	ght: Intransitive, Infinitive
+	ghts: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ghted: Past, Intransitive, Personal
+	ghting: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	ghted: Past, Intransitive, Participle
+	ght: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:likuta
+	likuta: Singular 
+	makuta: Plural 
+
+Noun, MORPHO_TYPE:limes
+	es: Singular 
+	ites: Plural 
+
+Noun, MORPHO_TYPE:lit-454
+	_: Singular 
+	ai: Plural 
+
+Noun, MORPHO_TYPE:litas
+	as: Singular 
+	ai: Plural 
+	u: Plural 
+
+Adjective, MORPHO_TYPE:little
+	ittle:
+	ess: Comparative 
+	esser: Comparative 
+	ittler: Comparative 
+	east: Superlative 
+	ittlest: Superlative 
+
+Adverb, MORPHO_TYPE:little-457
+	ittle:
+	ess: Comparative 
+	esser: Comparative 
+	east: Superlative 
+	ittlest: Superlative 
+
+Pronoun, MORPHO_TYPE:little-458
+	ittle: Indefinitive2
+	east: Indefinitive2
+
+Pronoun, MORPHO_TYPE:little-459
+	ittle: Indefinitive2 
+	ess: Indefinitive2 
+	east: Indefinitive2 
+
+Noun, MORPHO_TYPE:loti
+	loti: Singular 
+	maloti: Plural 
+
+Adjective, MORPHO_TYPE:skew
+	_:
+	er: Comparative 
+	est: Superlative 
+
+Adjective, MORPHO_TYPE:loyal
+	_:
+	ler: Comparative 
+	lest: Superlative 
+
+Noun, MORPHO_TYPE:lumbi
+	i: Singular 
+	us: Plural 
+
+Noun, MORPHO_TYPE:madame
+	adame: Singular 
+	esdames: Plural 
+
+Noun, MORPHO_TYPE:mademoiselle
+	ademoiselle: Singular 
+	esdemoiselles: Plural 
+
+Noun, MORPHO_TYPE:madrono
+	rono: Singular 
+	ornos: Plural 
+
+Verb, MORPHO_TYPE:make
+	ke: Transitive, Infinitive
+	kes: Singular, Third, Present, Transitive, Personal
+	de: Past, Transitive, Personal
+	king: Present, Transitive, Participle
+	de: Past, Transitive, Participle
+	ke: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:make-468
+	ke: Intransitive, Infinitive
+	kes: Singular, Third, Present, Intransitive, Personal
+	de: Past, Intransitive, Personal
+	king: Present, Intransitive, Participle
+	de: Past, Intransitive, Participle
+	ke: Present, Intransitive, Impersonal
+
+Pronoun, MORPHO_TYPE:many-469
+	any: Indefinitive2 
+	ore: Indefinitive2 
+	ost: Indefinitive2 
+
+Noun, MORPHO_TYPE:matzo
+	_: Singular 
+	th: Plural 
+
+Verb, MORPHO_TYPE:may
+	ay: Present, Intransitive, Impersonal
+	ight: Past, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:meet-472
+	et: Transitive, Infinitive
+	ets: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	eting: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	et: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:meet-473
+	et: Intransitive, Infinitive
+	ets: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	eting: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	et: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:megalopolis
+	is: Singular 
+	eis: Plural 
+
+Verb, MORPHO_TYPE:melt
+	elt: Transitive, Infinitive
+	elts: Singular, Third, Present, Transitive, Personal
+	elted: Past, Transitive, Personal
+	elting: Present, Transitive, Participle
+	elted: Past, Transitive, Participle
+	olten: Past, Transitive, Participle
+	elt: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:melt-476
+	elt: Intransitive, Infinitive
+	elts: Singular, Third, Present, Intransitive, Personal
+	elted: Past, Intransitive, Personal
+	elting: Present, Intransitive, Participle
+	elted: Past, Intransitive, Participle
+	olten: Past, Intransitive, Participle
+	elt: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:meseems
+	s: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	sing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	s: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:mestizo
+	_: Animate, Singular 
+	s: Animate, Plural 
+	es: Animate, Plural 
+
+Noun, MORPHO_TYPE:metanephros
+	s: Singular 
+	i: Plural 
+
+Verb, MORPHO_TYPE:methink
+	ink: Infinitive
+	inks: Singular, Third, Present, Personal
+	ought: Past, Personal
+	inking: Present, Participle
+	ought: Past, Participle
+	ink: Present, Personal
+
+Noun, MORPHO_TYPE:mishna
+	_: Singular 
+	yoth: Plural 
+
+Noun, MORPHO_TYPE:mishnah
+	h: Singular 
+	yoth: Plural 
+
+Verb, MORPHO_TYPE:misplead
+	ad: Infinitive
+	ads: Singular, Third, Present, Personal
+	d: Past, Personal
+	ading: Present, Participle
+	d: Past, Participle
+	ad: Present, Personal
+
+Noun, MORPHO_TYPE:miss
+	_: Animate, Feminine, Singular 
+	es: Animate, Feminine, Plural 
+
+Verb, MORPHO_TYPE:misspell
+	l: Transitive, Infinitive
+	ls: Singular, Third, Present, Transitive, Personal
+	led: Past, Transitive, Personal
+	t: Past, Transitive, Personal
+	ling: Present, Transitive, Participle
+	led: Past, Transitive, Participle
+	t: Past, Transitive, Participle
+	l: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:mistake-486
+	ake: Intransitive, Infinitive
+	akes: Singular, Third, Present, Intransitive, Personal
+	ook: Past, Intransitive, Personal
+	aking: Present, Intransitive, Participle
+	aken: Past, Intransitive, Participle
+	ake: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:misunderstand
+	and: Transitive, Infinitive
+	ands: Singular, Third, Present, Transitive, Personal
+	ood: Past, Transitive, Personal
+	anding: Present, Transitive, Participle
+	ood: Past, Transitive, Participle
+	and: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:monarch
+	_: Singular 
+	s: Plural 
+	es: Plural 
+
+Noun, MORPHO_TYPE:monseigneur
+	onseigneur: Singular 
+	esseigneurs: Plural 
+
+Noun, MORPHO_TYPE:monsieur
+	onsieur: Singular 
+	essieurs: Plural 
+
+Noun, MORPHO_TYPE:moslem
+	em: Singular 
+	ims: Plural 
+	im: Plural 
+
+Verb, MORPHO_TYPE:mow
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	n: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:mow-493
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	n: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Adverb, MORPHO_TYPE:much
+	uch:
+	ore: Comparative 
+	ost: Superlative 
+
+Pronoun, MORPHO_TYPE:much-495
+	uch: Indefinitive2 
+	ore: Indefinitive2 
+	ost: Indefinitive2 
+
+Pronoun, MORPHO_TYPE:much-496
+	uch: Indefinitive2
+	ore: Indefinitive2
+	ost: Indefinitive2
+
+Noun, MORPHO_TYPE:mujahid
+	id: Animate, Singular 
+	edeen: Animate, Plural 
+	idin: Animate, Plural 
+
+Noun, MORPHO_TYPE:muskellunge
+	ellunge: Singular 
+	allunge: Plural 
+
+Noun, MORPHO_TYPE:news
+	_: Singular 
+
+Noun, MORPHO_TYPE:oaf
+	f: Animate, General, Singular 
+	ves: Animate, General, Plural 
+
+Noun, MORPHO_TYPE:ochrea
+	hrea: Singular 
+	hreae: Plural 
+	reae: Plural 
+
+Noun, MORPHO_TYPE:onager
+	er: Singular 
+	ri: Plural 
+
+Pronoun, MORPHO_TYPE:one-505
+	_: Indefinitive1
+	s: Indefinitive1
+
+Noun, MORPHO_TYPE:organa
+	a: Singular 
+	ums: Plural 
+
+Noun, MORPHO_TYPE:os
+	s: Singular 
+	ssa: Plural 
+	sar: Plural 
+	ra: Plural 
+
+Pronoun, MORPHO_TYPE:other
+	_: Singular, Indefinitive1 
+	s: Plural, Indefinitive1
+
+Verb, MORPHO_TYPE:outbid
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	den: Past, Transitive, Personal
+	ding: Present, Transitive, Participle
+	den: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:outfight
+	ight: Infinitive
+	ights: Singular, Third, Present, Personal
+	ought: Past, Personal
+	ighting: Present, Participle
+	ought: Past, Participle
+	ight: Present, Personal
+
+Verb, MORPHO_TYPE:outshine
+	ine: Transitive, Infinitive
+	ines: Singular, Third, Present, Transitive, Personal
+	one: Past, Transitive, Personal
+	ining: Present, Transitive, Participle
+	one: Past, Transitive, Participle
+	ine: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:outshine-512
+	ine: Intransitive, Infinitive
+	ines: Singular, Third, Present, Intransitive, Personal
+	one: Past, Intransitive, Personal
+	ining: Present, Intransitive, Participle
+	one: Past, Intransitive, Participle
+	ine: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:outshoot
+	ot: Transitive, Infinitive
+	ots: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	oting: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	ot: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:outstand
+	and: Intransitive, Infinitive
+	ands: Singular, Third, Present, Intransitive, Personal
+	ood: Past, Intransitive, Personal
+	anding: Present, Intransitive, Participle
+	ood: Past, Intransitive, Participle
+	and: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:outwork
+	ork: Transitive, Infinitive
+	orks: Singular, Third, Present, Transitive, Personal
+	rought: Past, Transitive, Personal
+	orking: Present, Transitive, Participle
+	rought: Past, Transitive, Participle
+	ork: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:overbid
+	id: Transitive, Infinitive
+	ids: Singular, Third, Present, Transitive, Personal
+	idden: Past, Transitive, Personal
+	ade: Past, Transitive, Personal
+	id: Past, Transitive, Personal
+	idding: Present, Transitive, Participle
+	idden: Past, Transitive, Participle
+	id: Past, Transitive, Participle
+	id: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:overbid-517
+	id: Intransitive, Infinitive
+	ids: Singular, Third, Present, Intransitive, Personal
+	idden: Past, Intransitive, Personal
+	ade: Past, Intransitive, Personal
+	id: Past, Intransitive, Personal
+	idding: Present, Intransitive, Participle
+	idden: Past, Intransitive, Participle
+	id: Past, Intransitive, Participle
+	id: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:overhang
+	ang: Transitive, Infinitive
+	angs: Singular, Third, Present, Transitive, Personal
+	ung: Past, Transitive, Personal
+	anging: Present, Transitive, Participle
+	ung: Past, Transitive, Participle
+	ang: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:straphang
+	ang: Intransitive, Infinitive
+	angs: Singular, Third, Present, Intransitive, Personal
+	ung: Past, Intransitive, Personal
+	anging: Present, Intransitive, Participle
+	ung: Past, Intransitive, Participle
+	ang: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:overpass
+	s: Transitive, Infinitive
+	ses: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	sing: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	s: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:overrun-521
+	un: Intransitive, Infinitive
+	uns: Singular, Third, Present, Intransitive, Personal
+	an: Past, Intransitive, Personal
+	unning: Present, Intransitive, Participle
+	an: Past, Intransitive, Participle
+	un: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:oversee
+	ee: Transitive, Infinitive
+	ees: Singular, Third, Present, Transitive, Personal
+	aw: Past, Transitive, Personal
+	eeing: Present, Transitive, Participle
+	een: Past, Transitive, Participle
+	ee: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:overshoot-523
+	ot: Intransitive, Infinitive
+	ots: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	oting: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	ot: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:overspill
+	l: Intransitive, Infinitive
+	ls: Singular, Third, Present, Intransitive, Personal
+	led: Past, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ling: Present, Intransitive, Participle
+	led: Past, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	l: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:overstride-525
+	ide: Intransitive, Infinitive
+	ides: Singular, Third, Present, Intransitive, Personal
+	ode: Past, Intransitive, Personal
+	iding: Present, Intransitive, Participle
+	idden: Past, Intransitive, Participle
+	ide: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:paralipsis
+	ipsis: Singular 
+	eipses: Plural 
+
+Noun, MORPHO_TYPE:paraselene
+	e: Singular 
+	ae: Plural 
+
+Noun, MORPHO_TYPE:partiya
+	ya: Inanimate, Singular 
+	yas: Inanimate, Plural 
+	i: Inanimate, Plural 
+	yi: Inanimate, Plural 
+
+Noun, MORPHO_TYPE:paterfamilias
+	erfamilias: Singular 
+	resfamilias: Plural 
+
+Noun, MORPHO_TYPE:pea
+	_: Singular 
+	s: Plural 
+	se: Plural 
+
+Noun, MORPHO_TYPE:pekinese
+	ese: Singular 
+	gese: Plural 
+
+Noun, MORPHO_TYPE:penetralia
+	a: Singular 
+	um: Plural 
+
+Noun, MORPHO_TYPE:people
+	_: Plural 
+	s: Plural 
+
+Adjective, MORPHO_TYPE:peppy
+	py:
+	ier: Comparative 
+	pier: Comparative 
+	iest: Superlative 
+	piest: Superlative 
+
+Noun, MORPHO_TYPE:phlyctaena
+	aena: Singular 
+	enae: Plural 
+
+Verb, MORPHO_TYPE:pinchhit
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	_: Past, Personal
+	ting: Present, Participle
+	_: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:plead-537
+	ad: Transitive, Infinitive
+	ads: Singular, Third, Present, Transitive, Personal
+	aded: Past, Transitive, Personal
+	d: Past, Transitive, Personal
+	ading: Present, Transitive, Participle
+	aded: Past, Transitive, Participle
+	d: Past, Transitive, Participle
+	ad: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:prologue
+	ue: Infinitive
+	s: Singular, Third, Present, Personal
+	ed: Past, Personal
+	ing: Present, Participle
+	ed: Past, Participle
+	ue: Present, Personal
+
+Noun, MORPHO_TYPE:pronephros
+	os: Singular 
+	oi: Plural 
+	a: Plural 
+
+Verb, MORPHO_TYPE:prove
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	en: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:prove-541
+	e: Intransitive, Infinitive
+	es: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	en: Past, Intransitive, Participle
+	e: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:quickfreeze
+	eeze: Infinitive
+	eezes: Singular, Third, Present, Personal
+	oze: Past, Personal
+	eezing: Present, Participle
+	ozen: Past, Participle
+	eeze: Present, Personal
+
+Verb, MORPHO_TYPE:whiz
+	_: Transitive, Infinitive
+	zes: Singular, Third, Present, Transitive, Personal
+	zed: Past, Transitive, Personal
+	zing: Present, Transitive, Participle
+	zed: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:rachis
+	achis: Singular 
+	hachises: Plural 
+
+Noun, MORPHO_TYPE:real
+	al: Singular 
+	ales: Plural 
+	is: Plural 
+
+Noun, MORPHO_TYPE:rearmouse
+	armouse: Singular 
+	remice: Plural 
+	armice: Plural 
+
+Noun, MORPHO_TYPE:rebato
+	ebato: Singular 
+	abatos: Plural 
+
+Verb, MORPHO_TYPE:rebid
+	id: Transitive, Infinitive
+	ids: Singular, Third, Present, Transitive, Personal
+	ade: Past, Transitive, Personal
+	id: Past, Transitive, Personal
+	idding: Present, Transitive, Participle
+	idden: Past, Transitive, Participle
+	id: Past, Transitive, Participle
+	id: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:rebid-549
+	id: Intransitive, Infinitive
+	ids: Singular, Third, Present, Intransitive, Personal
+	ade: Past, Intransitive, Personal
+	id: Past, Intransitive, Personal
+	idding: Present, Intransitive, Participle
+	idden: Past, Intransitive, Participle
+	id: Past, Intransitive, Participle
+	id: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:reeve
+	eeve: Transitive, Infinitive
+	eeves: Singular, Third, Present, Transitive, Personal
+	ove: Past, Transitive, Personal
+	eeving: Present, Transitive, Participle
+	ove: Past, Transitive, Participle
+	eeve: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:remex
+	ex: Singular 
+	iges: Plural 
+
+Verb, MORPHO_TYPE:rent
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	rd: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:resit
+	it: Infinitive
+	its: Singular, Third, Present, Personal
+	at: Past, Personal
+	itting: Present, Participle
+	at: Past, Participle
+	it: Present, Personal
+
+Verb, MORPHO_TYPE:restrike
+	ike: Infinitive
+	ikes: Singular, Third, Present, Personal
+	uck: Past, Personal
+	iking: Present, Participle
+	uck: Past, Participle
+	ike: Present, Personal
+
+Verb, MORPHO_TYPE:retread
+	ead: Transitive, Infinitive
+	eads: Singular, Third, Present, Transitive, Personal
+	od: Past, Transitive, Personal
+	eading: Present, Transitive, Participle
+	odden: Past, Transitive, Participle
+	ead: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:rev
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ved: Past, Transitive, Personal
+	ving: Present, Transitive, Participle
+	ved: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:rev-557
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ved: Past, Intransitive, Personal
+	ving: Present, Intransitive, Participle
+	ved: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:rhachis
+	hachis: Singular 
+	hachises: Plural 
+	hachides: Plural 
+	achides: Plural 
+
+Noun, MORPHO_TYPE:ricercare
+	re: Singular 
+	cari: Plural 
+	ri: Plural 
+
+Verb, MORPHO_TYPE:ring
+	ing: Transitive, Infinitive
+	ings: Singular, Third, Present, Transitive, Personal
+	ang: Past, Transitive, Personal
+	inging: Present, Transitive, Participle
+	ung: Past, Transitive, Participle
+	ing: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:upspring
+	ing: Intransitive, Infinitive
+	ings: Singular, Third, Present, Intransitive, Personal
+	ang: Past, Intransitive, Personal
+	inging: Present, Intransitive, Participle
+	ung: Past, Intransitive, Participle
+	ing: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:rise-562
+	ise: Transitive, Infinitive
+	ises: Singular, Third, Present, Transitive, Personal
+	ose: Past, Transitive, Personal
+	ising: Present, Transitive, Participle
+	isen: Past, Transitive, Participle
+	ise: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:rotl
+	rotl: Singular 
+	artel: Plural 
+	artal: Plural 
+
+Noun, MORPHO_TYPE:sahuaro
+	huaro: Singular 
+	guaros: Plural 
+
+Noun, MORPHO_TYPE:schatchen
+	chatchen: Singular 
+	chatchonim: Plural 
+	hadchans: Plural 
+
+Noun, MORPHO_TYPE:scolex
+	ex: Singular 
+	ices: Plural 
+	eces: Plural 
+
+Verb, MORPHO_TYPE:see-567
+	ee: Intransitive, Infinitive
+	ees: Singular, Third, Present, Intransitive, Personal
+	aw: Past, Intransitive, Personal
+	eeing: Present, Intransitive, Participle
+	een: Past, Intransitive, Participle
+	ee: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:seek
+	eek: Transitive, Infinitive
+	eeks: Singular, Third, Present, Transitive, Personal
+	ought: Past, Transitive, Personal
+	eeking: Present, Transitive, Participle
+	ought: Past, Transitive, Participle
+	eek: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:seek-569
+	eek: Intransitive, Infinitive
+	eeks: Singular, Third, Present, Intransitive, Personal
+	ought: Past, Intransitive, Personal
+	eeking: Present, Intransitive, Participle
+	ought: Past, Intransitive, Participle
+	eek: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:sell-570
+	ell: Intransitive, Infinitive
+	ells: Singular, Third, Present, Intransitive, Personal
+	old: Past, Intransitive, Personal
+	elling: Present, Intransitive, Participle
+	old: Past, Intransitive, Participle
+	ell: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:sente
+	sente: Singular 
+	listente: Plural 
+
+Noun, MORPHO_TYPE:senusi
+	i: Singular 
+	sis: Plural 
+
+Noun, MORPHO_TYPE:shadchan
+	hadchan: Singular 
+	chatchonim: Plural 
+	hadchanim: Plural 
+	hadchans: Plural 
+
+Verb, MORPHO_TYPE:shall
+	all: Present, Intransitive, Impersonal, AuxiliaryVerb 
+	ould: Past, Intransitive, Impersonal, AuxiliaryVerb 
+
+Noun, MORPHO_TYPE:shammas
+	as: Singular 
+	osim: Plural 
+
+Noun, MORPHO_TYPE:shammes
+	es: Singular 
+	osim: Plural 
+
+Pronoun, MORPHO_TYPE:she
+	she: Nominative, Feminine, Singular, Third, Personal
+	her: Accusative, Feminine, Singular, Third, Personal
+	hers: Genitive, Feminine, Singular, Third, Possessive
+	herself: Accusative, Feminine, Singular, Third, Reflexive
+	her: Genitive, Feminine, Singular, Third, Possessive 
+
+Verb, MORPHO_TYPE:shed-578
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	_: Past, Intransitive, Personal
+	ding: Present, Intransitive, Participle
+	_: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:shikar
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	red: Past, Personal
+	ring: Present, Participle
+	red: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:shit
+	it: Transitive, Infinitive
+	its: Singular, Third, Present, Transitive, Personal
+	itted: Past, Transitive, Personal
+	it: Past, Transitive, Personal
+	at: Past, Transitive, Personal
+	itting: Present, Transitive, Participle
+	itted: Past, Transitive, Participle
+	it: Past, Transitive, Participle
+	at: Past, Transitive, Participle
+	it: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:shit-581
+	it: Intransitive, Infinitive
+	its: Singular, Third, Present, Intransitive, Personal
+	itted: Past, Intransitive, Personal
+	it: Past, Intransitive, Personal
+	at: Past, Intransitive, Personal
+	itting: Present, Intransitive, Participle
+	itted: Past, Intransitive, Participle
+	it: Past, Intransitive, Participle
+	at: Past, Intransitive, Participle
+	it: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:shittah
+	ah: Singular 
+	im: Plural 
+
+Verb, MORPHO_TYPE:shoe
+	e: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	d: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	d: Past, Transitive, Participle
+	e: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:shofar
+	ar: Singular 
+	roth: Plural 
+
+Noun, MORPHO_TYPE:shophar
+	phar: Singular 
+	phroth: Plural 
+	froth: Plural 
+
+Verb, MORPHO_TYPE:shrink
+	ink: Transitive, Infinitive
+	inks: Singular, Third, Present, Transitive, Personal
+	unk: Past, Transitive, Personal
+	ank: Past, Transitive, Personal
+	inking: Present, Transitive, Participle
+	unken: Past, Transitive, Participle
+	unk: Past, Transitive, Participle
+	ink: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:shrink-587
+	ink: Intransitive, Infinitive
+	inks: Singular, Third, Present, Intransitive, Personal
+	unk: Past, Intransitive, Personal
+	ank: Past, Intransitive, Personal
+	inking: Present, Intransitive, Participle
+	unken: Past, Intransitive, Participle
+	unk: Past, Intransitive, Participle
+	ink: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:sightsee
+	ee: Intransitive, Infinitive
+	ees: Singular, Third, Present, Intransitive, Personal
+	aw: Past, Intransitive, Personal
+	eing: Present, Intransitive, Participle
+	een: Past, Intransitive, Participle
+	ee: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:signior
+	ior: Singular 
+	ori: Plural 
+
+Verb, MORPHO_TYPE:ski
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	'd: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	'd: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:ski-591
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	'd: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	'd: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:skywrite
+	ite: Infinitive
+	ites: Singular, Third, Present, Personal
+	ote: Past, Personal
+	iting: Present, Participle
+	itten: Past, Participle
+	ite: Present, Personal
+
+Verb, MORPHO_TYPE:slay
+	ay: Transitive, Infinitive
+	ays: Singular, Third, Present, Transitive, Personal
+	ew: Past, Transitive, Personal
+	aying: Present, Transitive, Participle
+	ain: Past, Transitive, Participle
+	ay: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:slink
+	ink: Transitive, Infinitive
+	inks: Singular, Third, Present, Transitive, Personal
+	unk: Past, Transitive, Personal
+	inking: Present, Transitive, Participle
+	unk: Past, Transitive, Participle
+	ink: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:slink-595
+	ink: Intransitive, Infinitive
+	inks: Singular, Third, Present, Intransitive, Personal
+	unk: Past, Intransitive, Personal
+	inking: Present, Intransitive, Participle
+	unk: Past, Intransitive, Participle
+	ink: Present, Intransitive, Impersonal
+
+Adverb, MORPHO_TYPE:slowly
+	ly:
+	er: Comparative 
+	est: Superlative 
+
+Verb, MORPHO_TYPE:smit
+	it: Infinitive
+	its: Singular, Third, Present, Personal
+	ote: Past, Personal
+	iting: Present, Participle
+	itten: Past, Participle
+	it: Present, Personal
+
+Verb, MORPHO_TYPE:sneak-598
+	eak: Transitive, Infinitive
+	eaks: Singular, Third, Present, Transitive, Personal
+	uck: Past, Transitive, Personal
+	eaking: Present, Transitive, Participle
+	uck: Past, Transitive, Participle
+	eak: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:sneak-599
+	eak: Intransitive, Infinitive
+	eaks: Singular, Third, Present, Intransitive, Personal
+	uck: Past, Intransitive, Personal
+	eaking: Present, Intransitive, Participle
+	uck: Past, Intransitive, Participle
+	eak: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:spaz
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	zed: Past, Intransitive, Personal
+	zing: Present, Intransitive, Participle
+	zed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:speak-601
+	eak: Intransitive, Infinitive
+	eaks: Singular, Third, Present, Intransitive, Personal
+	oke: Past, Intransitive, Personal
+	ake: Past, Intransitive, Personal
+	eaking: Present, Intransitive, Participle
+	oken: Past, Intransitive, Participle
+	eak: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:spec-602
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ced: Past, Transitive, Personal
+	cing: Present, Transitive, Participle
+	ced: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:speed
+	ed: Transitive, Infinitive
+	eds: Singular, Third, Present, Transitive, Personal
+	eded: Past, Transitive, Personal
+	d: Past, Transitive, Personal
+	eding: Present, Transitive, Participle
+	eded: Past, Transitive, Participle
+	d: Past, Transitive, Participle
+	ed: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:speed-604
+	ed: Intransitive, Infinitive
+	eds: Singular, Third, Present, Intransitive, Personal
+	eded: Past, Intransitive, Personal
+	d: Past, Intransitive, Personal
+	eding: Present, Intransitive, Participle
+	eded: Past, Intransitive, Participle
+	d: Past, Intransitive, Participle
+	ed: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:spin
+	in: Transitive, Infinitive
+	ins: Singular, Third, Present, Transitive, Personal
+	un: Past, Transitive, Personal
+	inning: Present, Transitive, Participle
+	un: Past, Transitive, Participle
+	in: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:spin-606
+	in: Intransitive, Infinitive
+	ins: Singular, Third, Present, Intransitive, Personal
+	un: Past, Intransitive, Personal
+	inning: Present, Intransitive, Participle
+	un: Past, Intransitive, Participle
+	in: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:springhaas
+	as: Singular 
+	se: Plural 
+
+Verb, MORPHO_TYPE:squeegee
+	eegee: Transitive, Infinitive
+	eegees: Singular, Third, Present, Transitive, Personal
+	ilgee: Past, Transitive, Personal
+	eegeing: Present, Transitive, Participle
+	ilgee: Past, Transitive, Participle
+	eegee: Present, Transitive, Impersonal
+
+Noun, MORPHO_TYPE:starets
+	ets: Singular 
+	tsy: Plural 
+
+Verb, MORPHO_TYPE:stave
+	ave: Transitive, Infinitive
+	aves: Singular, Third, Present, Transitive, Personal
+	ove: Past, Transitive, Personal
+	aving: Present, Transitive, Participle
+	ove: Past, Transitive, Participle
+	ave: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:stave-611
+	ave: Intransitive, Infinitive
+	aves: Singular, Third, Present, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	aving: Present, Intransitive, Participle
+	ove: Past, Intransitive, Participle
+	ave: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:steal
+	eal: Transitive, Infinitive
+	eals: Singular, Third, Present, Transitive, Personal
+	ole: Past, Transitive, Personal
+	ealing: Present, Transitive, Participle
+	olen: Past, Transitive, Participle
+	eal: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:steal-613
+	eal: Intransitive, Infinitive
+	eals: Singular, Third, Present, Intransitive, Personal
+	ole: Past, Intransitive, Personal
+	ealing: Present, Intransitive, Participle
+	olen: Past, Intransitive, Participle
+	eal: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:stick
+	ick: Transitive, Infinitive
+	icks: Singular, Third, Present, Transitive, Personal
+	uck: Past, Transitive, Personal
+	icking: Present, Transitive, Participle
+	uck: Past, Transitive, Participle
+	ick: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:stick-615
+	ick: Intransitive, Infinitive
+	icks: Singular, Third, Present, Intransitive, Personal
+	uck: Past, Intransitive, Personal
+	icking: Present, Intransitive, Participle
+	uck: Past, Intransitive, Participle
+	ick: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:stiletto
+	_: Infinitive
+	es: Singular, Third, Present, Personal
+	ed: Past, Personal
+	eing: Present, Participle
+	ed: Past, Participle
+	_: Present, Personal
+
+Verb, MORPHO_TYPE:sting
+	ing: Transitive, Infinitive
+	ings: Singular, Third, Present, Transitive, Personal
+	ung: Past, Transitive, Personal
+	ang: Past, Transitive, Personal
+	inging: Present, Transitive, Participle
+	ung: Past, Transitive, Participle
+	ing: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:sting-618
+	ing: Intransitive, Infinitive
+	ings: Singular, Third, Present, Intransitive, Personal
+	ung: Past, Intransitive, Personal
+	ang: Past, Intransitive, Personal
+	inging: Present, Intransitive, Participle
+	ung: Past, Intransitive, Participle
+	ing: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:stotinka
+	inka: Singular 
+	kini: Plural 
+	inki: Plural 
+
+Verb, MORPHO_TYPE:strike
+	ike: Transitive, Infinitive
+	ikes: Singular, Third, Present, Transitive, Personal
+	uck: Past, Transitive, Personal
+	iking: Present, Transitive, Participle
+	uck: Past, Transitive, Participle
+	ike: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:strike-621
+	ike: Intransitive, Infinitive
+	ikes: Singular, Third, Present, Intransitive, Personal
+	uck: Past, Intransitive, Personal
+	iking: Present, Intransitive, Participle
+	uck: Past, Intransitive, Participle
+	ike: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:subgenus
+	us: Singular 
+	era: Plural 
+
+Noun, MORPHO_TYPE:substratum
+	tum: Singular 
+	sta: Plural 
+
+Verb, MORPHO_TYPE:swap
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ped: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ped: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:swap-625
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ped: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ped: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:sware
+	are: Infinitive
+	ears: Singular, Third, Present, Personal
+	ore: Past, Personal
+	earing: Present, Participle
+	orn: Past, Participle
+	are: Present, Personal
+
+Verb, MORPHO_TYPE:swell
+	ell: Transitive, Infinitive
+	ells: Singular, Third, Present, Transitive, Personal
+	elled: Past, Transitive, Personal
+	elling: Present, Transitive, Participle
+	elled: Past, Transitive, Participle
+	ollen: Past, Transitive, Participle
+	ell: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:swell-628
+	ell: Intransitive, Infinitive
+	ells: Singular, Third, Present, Intransitive, Personal
+	elled: Past, Intransitive, Personal
+	elling: Present, Intransitive, Participle
+	elled: Past, Intransitive, Participle
+	ollen: Past, Intransitive, Participle
+	ell: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:swim-629
+	im: Transitive, Infinitive
+	ims: Singular, Third, Present, Transitive, Personal
+	am: Past, Transitive, Personal
+	imming: Present, Transitive, Participle
+	um: Past, Transitive, Participle
+	im: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:swim-630
+	im: Intransitive, Infinitive
+	ims: Singular, Third, Present, Intransitive, Personal
+	am: Past, Intransitive, Personal
+	imming: Present, Intransitive, Participle
+	um: Past, Intransitive, Participle
+	im: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:swop
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ped: Past, Personal
+	ing: Present, Participle
+	ped: Past, Participle
+	_: Present, Personal
+
+Noun, MORPHO_TYPE:tallith
+	ith: Singular 
+	itoth: Plural 
+	ithes: Plural 
+	aisim: Plural 
+
+Verb, MORPHO_TYPE:taxi
+	i: Transitive, Infinitive
+	ies: Singular, Third, Present, Transitive, Personal
+	is: Singular, Third, Present, Transitive, Personal
+	ied: Past, Transitive, Personal
+	iing: Present, Transitive, Participle
+	ying: Present, Transitive, Participle
+	ied: Past, Transitive, Participle
+	i: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:taxi-634
+	i: Intransitive, Infinitive
+	ies: Singular, Third, Present, Intransitive, Personal
+	is: Singular, Third, Present, Intransitive, Personal
+	ied: Past, Intransitive, Personal
+	iing: Present, Intransitive, Participle
+	ying: Present, Intransitive, Participle
+	ied: Past, Intransitive, Participle
+	i: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:teach
+	each: Transitive, Infinitive
+	eaches: Singular, Third, Present, Transitive, Personal
+	aught: Past, Transitive, Personal
+	eaching: Present, Transitive, Participle
+	aught: Past, Transitive, Participle
+	each: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:teach-636
+	each: Intransitive, Infinitive
+	eaches: Singular, Third, Present, Intransitive, Personal
+	aught: Past, Intransitive, Personal
+	eaching: Present, Intransitive, Participle
+	aught: Past, Intransitive, Participle
+	each: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:tenia
+	enia: Singular 
+	aeniae: Plural 
+	eniae: Plural 
+
+Noun, MORPHO_TYPE:teras
+	s: Singular 
+	ta: Plural 
+
+Pronoun, MORPHO_TYPE:that
+	at: Singular, Indicative
+	ose: Plural, Indicative
+
+Pronoun, MORPHO_TYPE:that-640
+	at: Singular, Indicative 
+	ose: Plural, Indicative 
+
+Pronoun, MORPHO_TYPE:they
+	y: Nominative, General, Plural, Third, Personal
+	m: Accusative, General, Plural, Third, Personal
+	mselves: Accusative, General, Singular, Third, Reflexive
+	irs: Genitive, General, Plural, Third, Possessive
+	ir: Genitive, General, Plural, Third, Possessive 
+
+Adverb, MORPHO_TYPE:thin-643
+	_:
+	ner: Comparative 
+	nest: Superlative 
+
+Pronoun, MORPHO_TYPE:this
+	is: Singular, Indicative
+	ese: Plural, Indicative
+
+Pronoun, MORPHO_TYPE:this-645
+	is: Singular, Indicative 
+	ese: Plural, Indicative 
+
+Verb, MORPHO_TYPE:thrive
+	ive: Intransitive, Infinitive
+	ives: Singular, Third, Present, Intransitive, Personal
+	ived: Past, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	iving: Present, Intransitive, Participle
+	ived: Past, Intransitive, Participle
+	iven: Past, Intransitive, Participle
+	ive: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:thyrse
+	yrse: Singular 
+	erses: Plural 
+
+Verb, MORPHO_TYPE:tic
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ced: Past, Intransitive, Personal
+	cing: Present, Intransitive, Participle
+	ced: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:trammel
+	mel: Transitive, Infinitive
+	els: Singular, Third, Present, Transitive, Personal
+	elled: Past, Transitive, Personal
+	eled: Past, Transitive, Personal
+	elling: Present, Transitive, Participle
+	elled: Past, Transitive, Participle
+	eled: Past, Transitive, Participle
+	mel: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:transfix
+	_: Transitive, Infinitive
+	es: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:tranship
+	hip: Transitive, Infinitive
+	hips: Singular, Third, Present, Transitive, Personal
+	shipped: Past, Transitive, Personal
+	hipped: Past, Transitive, Personal
+	shipping: Present, Transitive, Participle
+	hipping: Present, Transitive, Participle
+	shipped: Past, Transitive, Participle
+	hipped: Past, Transitive, Participle
+	hip: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:tranship-654
+	hip: Intransitive, Infinitive
+	hips: Singular, Third, Present, Intransitive, Personal
+	shipped: Past, Intransitive, Personal
+	hipped: Past, Intransitive, Personal
+	shipping: Present, Intransitive, Participle
+	hipping: Present, Intransitive, Participle
+	shipped: Past, Intransitive, Participle
+	hipped: Past, Intransitive, Participle
+	hip: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:tread-655
+	ead: Intransitive, Infinitive
+	eads: Singular, Third, Present, Intransitive, Personal
+	od: Past, Intransitive, Personal
+	eading: Present, Intransitive, Participle
+	odden: Past, Intransitive, Participle
+	ead: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:tribespeople
+	_: Animate, Plural 
+
+Adverb, MORPHO_TYPE:trim-657
+	_:
+	mer: Comparative 
+	mest: Superlative 
+
+Noun, MORPHO_TYPE:uighur
+	hur: Singular 
+	urs: Plural 
+
+Verb, MORPHO_TYPE:unclothe
+	othe: Transitive, Infinitive
+	othes: Singular, Third, Present, Transitive, Personal
+	ad: Past, Transitive, Personal
+	othing: Present, Transitive, Participle
+	ad: Past, Transitive, Participle
+	othe: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:underwork
+	ork: Transitive, Infinitive
+	orks: Singular, Third, Present, Transitive, Personal
+	rought: Past, Transitive, Personal
+	orked: Past, Transitive, Personal
+	orking: Present, Transitive, Participle
+	rought: Past, Transitive, Participle
+	orked: Past, Transitive, Participle
+	ork: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:underwork-662
+	ork: Intransitive, Infinitive
+	orks: Singular, Third, Present, Intransitive, Personal
+	rought: Past, Intransitive, Personal
+	orked: Past, Intransitive, Personal
+	orking: Present, Intransitive, Participle
+	rought: Past, Intransitive, Participle
+	orked: Past, Intransitive, Participle
+	ork: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:unreeve-663
+	eeve: Intransitive, Infinitive
+	eeves: Singular, Third, Present, Intransitive, Personal
+	ove: Past, Intransitive, Personal
+	eeving: Present, Intransitive, Participle
+	ove: Past, Intransitive, Participle
+	eeve: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:upswell
+	ell: Infinitive
+	ells: Singular, Third, Present, Personal
+	ollen: Past, Personal
+	elling: Present, Participle
+	ollen: Past, Participle
+	ell: Present, Personal
+
+Verb, MORPHO_TYPE:upswing
+	ing: Infinitive
+	ings: Singular, Third, Present, Personal
+	ung: Past, Personal
+	inging: Present, Participle
+	ung: Past, Participle
+	ing: Present, Personal
+
+Noun, MORPHO_TYPE:uredium
+	redium: Singular 
+	ncidia: Plural 
+
+Adjective, MORPHO_TYPE:very
+	y:
+	ry:
+	ier: Comparative 
+	iest: Superlative 
+
+Noun, MORPHO_TYPE:villagization
+	villagization: Singular 
+	svillagization: Plural 
+
+Noun, MORPHO_TYPE:vis
+	s: Singular 
+	res: Plural 
+
+Noun, MORPHO_TYPE:wahabi
+	abi: Singular 
+	habis: Plural 
+
+Adverb, MORPHO_TYPE:well
+	well:
+	better: Comparative 
+	best: Superlative 
+
+Pronoun, MORPHO_TYPE:what
+	_: Interrogative
+
+Pronoun, MORPHO_TYPE:what-673
+	_: Interrogative 
+
+Pronoun, MORPHO_TYPE:whatever
+	_: Relative 
+
+Adverb, MORPHO_TYPE:when
+	_: InterrogativeRelative
+
+Adverb, MORPHO_TYPE:where
+	_: InterrogativeRelative
+
+Verb, MORPHO_TYPE:whiz-677
+	_: Intransitive, Infinitive
+	zes: Singular, Third, Present, Intransitive, Personal
+	zed: Past, Intransitive, Personal
+	zing: Present, Intransitive, Participle
+	zed: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Pronoun, MORPHO_TYPE:who
+	_: Interrogative 
+
+Pronoun, MORPHO_TYPE:who-679
+	_: Interrogative
+	m: Accusative, Interrogative
+
+Pronoun, MORPHO_TYPE:whoever
+	ever: Relative
+	mever: Accusative, Relative
+
+Pronoun, MORPHO_TYPE:whose-681
+	_: Genitive, Relative 
+
+Pronoun, MORPHO_TYPE:whose-682
+	_: Genitive, Interrogative 
+
+Pronoun, MORPHO_TYPE:whosoever
+	soever: Relative
+	msoever: Accusative, Relative
+
+Verb, MORPHO_TYPE:whup
+	_: Infinitive
+	s: Singular, Third, Present, Personal
+	ped: Past, Personal
+	t: Past, Personal
+	ping: Present, Participle
+	ped: Past, Participle
+	t: Past, Participle
+	_: Present, Personal
+
+Adverb, MORPHO_TYPE:why
+	_: InterrogativeRelative
+
+Verb, MORPHO_TYPE:will
+	ill: Present, Intransitive, Impersonal, AuxiliaryVerb 
+	ould: Past, Intransitive, Impersonal, AuxiliaryVerb 
+
+Verb, MORPHO_TYPE:win
+	in: Transitive, Infinitive
+	ins: Singular, Third, Present, Transitive, Personal
+	on: Past, Transitive, Personal
+	inning: Present, Transitive, Participle
+	on: Past, Transitive, Participle
+	in: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:win-688
+	in: Intransitive, Infinitive
+	ins: Singular, Third, Present, Intransitive, Personal
+	on: Past, Intransitive, Personal
+	inning: Present, Intransitive, Participle
+	on: Past, Intransitive, Participle
+	in: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:wit
+	it: Transitive, Infinitive
+	ot: Singular, Third, Present, Transitive, Personal
+	ist: Past, Transitive, Personal
+	itting: Present, Transitive, Participle
+	ist: Past, Transitive, Participle
+	it: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:wit-690
+	it: Intransitive, Infinitive
+	ot: Singular, Third, Present, Intransitive, Personal
+	ist: Past, Intransitive, Personal
+	itting: Present, Intransitive, Participle
+	ist: Past, Intransitive, Participle
+	it: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:worship
+	_: Transitive, Infinitive
+	s: Singular, Third, Present, Transitive, Personal
+	ed: Past, Transitive, Personal
+	ped: Past, Transitive, Personal
+	ing: Present, Transitive, Participle
+	ping: Present, Transitive, Participle
+	ed: Past, Transitive, Participle
+	ped: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:worship-692
+	_: Intransitive, Infinitive
+	s: Singular, Third, Present, Intransitive, Personal
+	ed: Past, Intransitive, Personal
+	ped: Past, Intransitive, Personal
+	ing: Present, Intransitive, Participle
+	ping: Present, Intransitive, Participle
+	ed: Past, Intransitive, Participle
+	ped: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:wrap
+	_: Transitive, Infinitive
+	ping: Singular, Third, Present, Transitive, Personal
+	s: Singular, Third, Present, Transitive, Personal
+	t: Past, Transitive, Personal
+	ped: Past, Transitive, Personal
+	s: Present, Transitive, Participle
+	ping: Present, Transitive, Participle
+	t: Past, Transitive, Participle
+	ped: Past, Transitive, Participle
+	_: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:wrap-694
+	_: Intransitive, Infinitive
+	ping: Singular, Third, Present, Intransitive, Personal
+	s: Singular, Third, Present, Intransitive, Personal
+	t: Past, Intransitive, Personal
+	ped: Past, Intransitive, Personal
+	s: Present, Intransitive, Participle
+	ping: Present, Intransitive, Participle
+	t: Past, Intransitive, Participle
+	ped: Past, Intransitive, Participle
+	_: Present, Intransitive, Impersonal
+
+Verb, MORPHO_TYPE:write
+	ite: Transitive, Infinitive
+	ites: Singular, Third, Present, Transitive, Personal
+	ote: Past, Transitive, Personal
+	it: Past, Transitive, Personal
+	iting: Present, Transitive, Participle
+	itten: Past, Transitive, Participle
+	it: Past, Transitive, Participle
+	ite: Present, Transitive, Impersonal
+
+Verb, MORPHO_TYPE:write-696
+	ite: Intransitive, Infinitive
+	ites: Singular, Third, Present, Intransitive, Personal
+	ote: Past, Intransitive, Personal
+	it: Past, Intransitive, Personal
+	iting: Present, Intransitive, Participle
+	itten: Past, Intransitive, Participle
+	it: Past, Intransitive, Participle
+	ite: Present, Intransitive, Impersonal
+
+Noun, MORPHO_TYPE:yeshiva
+	a: Singular 
+	oth: Plural 
+	ahs: Plural 
+
+Pronoun, MORPHO_TYPE:you
+	you: Nominative, General, Singular, Second, Personal
+	thou: Nominative, General, Singular, Second, Personal
+	you: Nominative, General, Plural, Second, Personal
+	ye: Nominative, General, Plural, Second, Personal
+	you: Accusative, General, Singular, Second, Personal
+	thee: Accusative, General, Singular, Second, Personal
+	you: Accusative, General, Plural, Second, Personal
+	yours: Accusative, General, Singular, Second, Possessive
+	thine: Accusative, General, Singular, Second, Possessive
+	yours: Accusative, General, Plural, Second, Possessive
+	yourself: Accusative, General, Singular, Second, Reflexive
+	yourselves: Accusative, General, Plural, Second, Reflexive
+	your: Genitive, General, Singular, Second, Possessive 
+	thy: Genitive, General, Singular, Second, Possessive
+	your: Genitive, General, Plural, Second, Possessive 
+
+Noun, MORPHO_TYPE:zoaea
+	aea: Singular 
+	aeae: Plural 
+	eas: Plural 
+
+Noun, MORPHO_TYPE:zoea
+	ea: Singular 
+	aeae: Plural 
+	eae: Plural 
+
+Noun, MORPHO_TYPE:Inuit
+	_: Singular 
+	s: Plural 
+
+Noun, MORPHO_TYPE:Abaco
+	_: Inanimate, Singular 
+
+Noun, MORPHO_TYPE:Algiers
+	_: Inanimate, Singular 
+	': Inanimate, Genitive, Singular 
+
+Adjective, MORPHO_TYPE:Scotch
+	_:
+
+Noun, MORPHO_TYPE:Thomas
+	_: Animate, Masculine, Singular 
+	es: Animate, Masculine, Plural 
+
+Noun, MORPHO_TYPE:Balfe
+	fe: Animate, General, Singular 
+	ves: Animate, General, Plural 
+
+Noun, MORPHO_TYPE:Bible
+	_: Inanimate, Singular 
+	s: Inanimate, Plural 
+	s: Inanimate, Genitive, Singular 
+
+Noun, MORPHO_TYPE:Christianity
+	y: Inanimate, Singular 
+	ies: Inanimate, Plural 
+	ys: Inanimate, Genitive, Singular 
+
+Noun, MORPHO_TYPE:Anasazi
+	_: Animate, Singular 
+	_: Animate, Plural 
+	es: Animate, Plural 
+
+Noun, MORPHO_TYPE:Juda
+	_: Animate, Singular 
+	s: Animate, Plural 
+	s: Animate, Genitive, Singular 
+
+Noun, MORPHO_TYPE:MAbbr-Common-a
+	_: Inanimate, Singular 
+
+Noun, MORPHO_TYPE:MAbbr-MA
+	_: Animate, Masculine, Singular 
+
+Noun, MORPHO_TYPE:MAbbr-FA
+	_: Animate, Feminine, Singular 
+
+Noun, MORPHO_TYPE:MAbbr-CA
+	_: Animate, General, Singular 
+
+Noun, MORPHO_TYPE:brothers-in-law
+	_: Animate, Masculine, Plural 
+
+Noun, MORPHO_TYPE:daughters-in-law
+	_: Animate, Feminine, Plural 
+
+Noun, MORPHO_TYPE:Nicolas
+	_: Animate, Masculine, Singular 
+	es: Animate, Masculine, Plural 
+
+Verb, MORPHO_TYPE:born-720
+	_: Past, Intransitive, Participle
+
+Pronoun, MORPHO_TYPE:anybody
+	_: Indefinitive1, Third
+
+Numeral, MORPHO_TYPE:billion
+	_: Cardinal 
+	s: Cardinal 
+
+Numeral, MORPHO_TYPE:one
+	_: Cardinal 
+
+Numeral, MORPHO_TYPE:first
+	_: Ordinal 
+
+Pronoun, MORPHO_TYPE:who-725
+	_: Plural, Relative
+	m: Plural, Accusative, Relative
+
+Pronoun, MORPHO_TYPE:which-726
+	_: Plural, Relative
+
+Pronoun, MORPHO_TYPE:that-727
+	at: Plural, Relative
+
+Pronoun, MORPHO_TYPE:what-728
+	_: Plural, Relative
+
+Noun, MORPHO_TYPE:stomach-729
+	_: Singular 
+	s: Plural 
+	es: Plural 
