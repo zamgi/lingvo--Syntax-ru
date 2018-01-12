@@ -309,6 +309,14 @@ namespace lingvo.syntax
 
         public void ProcessRequest( HttpContext context )
         {
+            #region [.log.]
+            if ( Log.ProcessViewCommand( context ) )
+            {
+                return;
+            }
+            #endregion
+
+            var text = default(string);
             try
             {
                 #region [.anti-bot.]
@@ -320,9 +328,8 @@ namespace lingvo.syntax
                 }                
                 #endregion
 
-                var text          = context.GetRequestStringParam( "text", Config.MAX_INPUTTEXT_LENGTH );
-                var splitBySmiles = context.Request[ "splitBySmiles" ].Try2Boolean( true );                
-                //var html          = context.Request[ "html" ].Try2Boolean( false );                
+                    text          = context.GetRequestStringParam( "text", Config.MAX_INPUTTEXT_LENGTH );
+                var splitBySmiles = context.Request[ "splitBySmiles" ].Try2Bool( true );                
 
                 #region [.anti-bot.]
                 antiBot.MarkRequestEx( text );
@@ -330,10 +337,12 @@ namespace lingvo.syntax
 
                 var words = ConcurrentFactoryHelper.GetConcurrentFactory().Run_Debug( text, splitBySmiles );
 
+                Log.Info( context, text );
                 SendJsonResponse( context, words );
             }
             catch ( Exception ex )
             {
+                Log.Error( context, text, ex );
                 SendJsonResponse( context, ex );
             }
         }
