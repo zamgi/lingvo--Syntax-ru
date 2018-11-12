@@ -4,6 +4,7 @@
  *		- http://www.cs.uku.fi/~kilpelai/BSA05/lectures/slides04.pdf
  */
 using System.Collections.Generic;
+using System.Linq;
 
 using lingvo.tokenizing;
 
@@ -14,22 +15,14 @@ namespace lingvo.postagger
     /// </summary>
     internal struct SearchResult
     {
-        public SearchResult( int startIndex, int length ) : this()
+        public SearchResult( int startIndex, int length )
         {
             StartIndex = startIndex;
             Length     = length;
         }
 
-        public int StartIndex
-        {
-            get;
-            private set;
-        }
-        public int Length
-        {
-            get;
-            private set;
-        }
+        public int StartIndex { get; private set; }
+        public int Length     { get; private set; }
 
         public override string ToString()
         {
@@ -38,21 +31,19 @@ namespace lingvo.postagger
     }
 
     /// <summary>
-    /// Class for searching string for one or multiple 
-    /// keywords using efficient Aho-Corasick search algorithm
+    /// Class for searching string for one or multiple keywords using efficient Aho-Corasick search algorithm
     /// </summary>
     internal sealed class AhoCorasick
     {
         /// <summary>
-        /// Tree node representing character and its 
-        /// transition and failure function
+        /// Tree node representing character and its transition and failure function
         /// </summary>
-        private class TreeNode
+        private sealed class TreeNode
         {
             /// <summary>
             /// 
             /// </summary>
-            private class StringsIEqualityComparer : IEqualityComparer< string[] >
+            private sealed class StringsIEqualityComparer : IEqualityComparer< string[] >
             {
                 public static readonly StringsIEqualityComparer Instance = new StringsIEqualityComparer();
                 private StringsIEqualityComparer() { }
@@ -88,15 +79,11 @@ namespace lingvo.postagger
             /// Initialize tree node with specified character
             /// </summary>
             /// <param name="parent">Parent node</param>
-            /// <param name="c">Character</param>
+            /// <param name="word">word</param>
             public TreeNode( TreeNode parent, string word )
             {
-                Word    = word;
-                Parent  = parent;
-                Ngrams = new HashSet< string[] >( StringsIEqualityComparer.Instance );
-
-                Transitions      = new TreeNode[ 0 ];
-                _TransDictionary = new Dictionary< string, TreeNode >();
+                Word   = word;
+                Parent = parent;
             }
 
             /// <summary>
@@ -105,7 +92,11 @@ namespace lingvo.postagger
             /// <param name="ngram">Pattern</param>
             public void AddNgram( string[] ngram )
             {
-                Ngrams.Add( ngram );
+                if ( _Ngrams == null )
+                {
+                    _Ngrams = new HashSet< string[] >( StringsIEqualityComparer.Instance );
+                }
+                _Ngrams.Add( ngram );
             }
 
             /// <summary>
@@ -114,10 +105,11 @@ namespace lingvo.postagger
             /// <param name="node">Node</param>
             public void AddTransition( TreeNode node )
             {
-                _TransDictionary.Add( node.Word, node );
-                var nodes = new TreeNode[ _TransDictionary.Values.Count ];
-                _TransDictionary.Values.CopyTo( nodes, 0 );
-                Transitions = nodes;
+                if ( _TransDict == null )
+                {
+                    _TransDict = new Dictionary< string, TreeNode >();
+                }
+                _TransDict.Add( node.Word, node );
             }
 
             /// <summary>
@@ -127,8 +119,8 @@ namespace lingvo.postagger
             /// <returns>Returns TreeNode or null</returns>
             public TreeNode GetTransition( string word )
             {
-                var node = default(TreeNode);
-                if ( _TransDictionary.TryGetValue( word, out node ) )
+                TreeNode node;
+                if ( (_TransDict != null) && _TransDict.TryGetValue( word, out node ) )
                     return (node);
                 return (null);
             }
@@ -140,63 +132,45 @@ namespace lingvo.postagger
             /// <returns>True if transition exists</returns>
             public bool ContainsTransition( string word )
             {
-                return (_TransDictionary.ContainsKey( word ));
+                return ((_TransDict != null) && _TransDict.ContainsKey( word ));
             }
             #endregion
 
             #region [.properties.]
-            private Dictionary< string, TreeNode > _TransDictionary;
+            private Dictionary< string, TreeNode > _TransDict;
+            private HashSet< string[] > _Ngrams;
 
             /// <summary>
             /// Character
             /// </summary>
-            public string Word
-            {
-                get;
-                private set;
-            }
+            public string Word { get; private set; }
 
             /// <summary>
             /// Parent tree node
             /// </summary>
-            public TreeNode Parent
-            {
-                get;
-                private set;
-            }
+            public TreeNode Parent { get; private set; }
 
             /// <summary>
             /// Failure function - descendant node
             /// </summary>
-            public TreeNode Failure
-            {
-                get;
-                internal set;
-            }
+            public TreeNode Failure { get; internal set; }
 
             /// <summary>
             /// Transition function - list of descendant nodes
             /// </summary>
-            public TreeNode[] Transitions
-            {
-                get;
-                private set;
-            }
+            public IEnumerable< TreeNode > Transitions { get { return ((_TransDict != null) ? _TransDict.Values : Enumerable.Empty< TreeNode >()); } }
 
             /// <summary>
             /// Returns list of patterns ending by this letter
             /// </summary>
-            public HashSet< string[] > Ngrams
-            {
-                get;
-                private set;
-            }
+            public IEnumerable< string[] > Ngrams { get { return (_Ngrams ?? Enumerable.Empty< string[] >()); } }
+            public bool HasNgrams { get { return (_Ngrams != null); } }
             #endregion
 
             public override string ToString()
             {
                 return ( ((Word != null) ? ('\'' + Word + '\'') : "ROOT") +
-                         ", transitions(descendants): " + Transitions.Length + ", ngrams: " + Ngrams.Count
+                         ", transitions(descendants): " + ((_TransDict != null) ? _TransDict.Count : 0) + ", ngrams: " + ((_Ngrams != null) ? _Ngrams.Count : 0)
                        );
             }
         }
@@ -204,7 +178,7 @@ namespace lingvo.postagger
         /// <summary>
         /// 
         /// </summary>
-        private class SearchResultIComparer : IComparer< SearchResult >
+        private sealed class SearchResultIComparer : IComparer< SearchResult >
         {
             public static readonly SearchResultIComparer Instance = new SearchResultIComparer();
             private SearchResultIComparer() { }
@@ -216,6 +190,39 @@ namespace lingvo.postagger
                     return (d);
 
                 return (y.StartIndex - x.StartIndex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private struct Finder
+        {
+            private TreeNode _Root;
+            private TreeNode _Node;
+            public static Finder Create( TreeNode root ) => new Finder() { _Root = root, _Node = root };
+
+            public TreeNode Find( string word )
+            {
+                TreeNode transNode;
+                do
+                {
+                    transNode = _Node.GetTransition( word );
+                    if ( _Node == _Root )
+                    {
+                        break;
+                    }
+                    if ( transNode == null )
+                    {
+                        _Node = _Node.Failure;
+                    }
+                }
+                while ( transNode == null );
+                if ( transNode != null )
+                {
+                    _Node = transNode;
+                }
+                return (_Node);
             }
         }
 
@@ -323,103 +330,39 @@ namespace lingvo.postagger
         #endregion
 
         #region [.public method's & properties.]
-        public int Count
-        {
-            get;
-            private set;
-        }
+        public int Count { get; private set; }
 
         public SearchResult? FindFirstIngnoreCase( List< word_t > words )
         {
-            var searchResults = default(SortedSet< SearchResult >);
-
-            TreeNode node = _Root;
-
-            for ( int index = 0, len = words.Count; index < len; index++ )
+            var ss = FindAllIngnoreCaseInternal( words );
+            if ( ss != null )
             {
-                var valueUpper = words[ index ].valueUpper;
-                if ( valueUpper == null )
-                    continue;
-
-                TreeNode trans = null;
-                while ( trans == null )
-                {
-                    trans = node.GetTransition( valueUpper );
-                    if ( node == _Root ) 
-                        break;
-                    if ( trans == null ) 
-                        node = node.Failure;
-                }
-                if ( trans != null ) 
-                    node = trans;
-
-                if ( 0 < node.Ngrams.Count )
-                {
-                    if ( searchResults == null )
-                    {
-                        searchResults = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
-                    }
-
-                    foreach ( var ngram in node.Ngrams )
-                    {
-                        searchResults.Add( new SearchResult( index - ngram.Length + 1, ngram.Length ) );
-                    }
-                }
-            }
-            if ( searchResults != null )
-            {
-                return (searchResults.Min);
+                return (ss.Min);
             }
             return (null);
         }
         public SearchResult? FindFirstSensitiveCase( List< word_t > words )
         {
-            var searchResults = default(SortedSet< SearchResult >);
-
-            TreeNode node = _Root;
-
-            for ( int index = 0, len = words.Count; index < len; index++ )
+            var ss = FindAllSensitiveCaseInternal( words );
+            if ( ss != null )
             {
-                var valueOriginal = words[ index ].valueOriginal;
-                if ( valueOriginal == null )
-                    continue;
-
-                TreeNode trans = null;
-                while ( trans == null )
-                {
-                    trans = node.GetTransition( valueOriginal );
-                    if ( node == _Root ) 
-                        break;
-                    if ( trans == null ) 
-                        node = node.Failure;
-                }
-                if ( trans != null ) 
-                    node = trans;
-
-                if ( 0 < node.Ngrams.Count )
-                {
-                    if ( searchResults == null )
-                    {
-                        searchResults = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
-                    }
-
-                    foreach ( var ngram in node.Ngrams )
-                    {
-                        searchResults.Add( new SearchResult( index - ngram.Length + 1, ngram.Length ) );
-                    }
-                }
-            }
-            if ( searchResults != null )
-            {
-                return (searchResults.Min);
+                return (ss.Min);
             }
             return (null);
         }
         public ICollection< SearchResult > FindAllIngnoreCase( List< word_t > words )
         {
-            var searchResults = default(SortedSet< SearchResult >);
+            return (FindAllIngnoreCaseInternal( words ));
+        }
+        public ICollection< SearchResult > FindAllSensitiveCase( List< word_t > words )
+        {
+            return (FindAllSensitiveCaseInternal( words ));
+        }
 
-            TreeNode node = _Root;
+        private SortedSet< SearchResult > FindAllIngnoreCaseInternal( List< word_t > words )
+        {
+            var ss = default(SortedSet< SearchResult >);
+            var finder = Finder.Create( _Root );
 
             for ( int index = 0, len = words.Count; index < len; index++ )
             {
@@ -427,38 +370,24 @@ namespace lingvo.postagger
                 if ( valueUpper == null )
                     continue;
 
-                TreeNode trans = null;
-                while ( trans == null )
-                {
-                    trans = node.GetTransition( valueUpper );
-                    if ( node == _Root ) 
-                        break;
-                    if ( trans == null ) 
-                        node = node.Failure;
-                }
-                if ( trans != null ) 
-                    node = trans;
+                var node = finder.Find( valueUpper );
 
-                if ( 0 < node.Ngrams.Count )
+                if ( node.HasNgrams )
                 {
-                    if ( searchResults == null )
-                    {
-                        searchResults = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
-                    }
+                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
 
                     foreach ( var ngram in node.Ngrams )
                     {
-                        searchResults.Add( new SearchResult( index - ngram.Length + 1, ngram.Length ) );
+                        ss.Add( new SearchResult( index - ngram.Length + 1, ngram.Length ) );
                     }
                 }
             }
-            return (searchResults);
+            return (ss);
         }
-        public ICollection< SearchResult > FindAllSensitiveCase( List< word_t > words )
+        private SortedSet< SearchResult > FindAllSensitiveCaseInternal( List< word_t > words )
         {
-            var searchResults = default(SortedSet< SearchResult >);
-
-            TreeNode node = _Root;
+            var ss = default(SortedSet< SearchResult >);
+            var finder = Finder.Create( _Root );
 
             for ( int index = 0, len = words.Count; index < len; index++ )
             {
@@ -466,32 +395,19 @@ namespace lingvo.postagger
                 if ( valueOriginal == null )
                     continue;
 
-                TreeNode trans = null;
-                while ( trans == null )
-                {
-                    trans = node.GetTransition( valueOriginal );
-                    if ( node == _Root ) 
-                        break;
-                    if ( trans == null ) 
-                        node = node.Failure;
-                }
-                if ( trans != null ) 
-                    node = trans;
+                var node = finder.Find( valueOriginal );
 
-                if ( 0 < node.Ngrams.Count )
+                if ( node.HasNgrams )
                 {
-                    if ( searchResults == null )
-                    {
-                        searchResults = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
-                    }
+                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
 
                     foreach ( var ngram in node.Ngrams )
                     {
-                        searchResults.Add( new SearchResult( index - ngram.Length + 1, ngram.Length ) );
+                        ss.Add( new SearchResult( index - ngram.Length + 1, ngram.Length ) );
                     }
                 }
             }
-            return (searchResults);
+            return (ss);
         }
         #endregion
 
