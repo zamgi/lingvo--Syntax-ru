@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("syntax-crf.NET")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("xz")]
+[assembly: AssemblyCompany("zamgi")]
 [assembly: AssemblyProduct("syntax-crf.NET")]
-[assembly: AssemblyCopyright("Copyright © xz 2014")]
+[assembly: AssemblyCopyright("Copyright © zamgi 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

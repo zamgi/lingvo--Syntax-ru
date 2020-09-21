@@ -1,8 +1,3 @@
-/* Aho-Corasick text search algorithm for string's implementation
- * 
- * For more information visit
- *		- http://www.cs.uku.fi/~kilpelai/BSA05/lectures/slides04.pdf
- */
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +10,24 @@ namespace lingvo.postagger
     /// </summary>
     internal struct SearchResult
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public sealed class Comparer : IComparer< SearchResult >
+        {
+            public static readonly Comparer Instance = new Comparer();
+            private Comparer() { }
+
+            public int Compare( SearchResult x, SearchResult y )
+            {
+                var d = y.Length - x.Length;
+                if ( d != 0 )
+                    return (d);
+
+                return (y.StartIndex - x.StartIndex);
+            }
+        }
+
         public SearchResult( int startIndex, int length )
         {
             StartIndex = startIndex;
@@ -72,6 +85,99 @@ namespace lingvo.postagger
                     return (obj.Length.GetHashCode());
                 }
                 #endregion
+            }
+
+            /// <summary>
+            /// Build tree from specified keywords
+            /// </summary>
+            public static TreeNode BuildTree( IList< string[] > ngrams )
+            {
+                // Build keyword tree and transition function
+                var root = new TreeNode( null, null );
+                foreach ( var ngram in ngrams )
+                {
+                    // add pattern to tree
+                    var node = root;
+                    foreach ( string word in ngram )
+                    {
+                        var nodeNew = node.GetTransition( word );
+                        if ( nodeNew == null )
+                        {
+                            nodeNew = new TreeNode( node, word );
+                            node.AddTransition( nodeNew );
+                        }
+                        node = nodeNew;
+                    }
+                    node.AddNgram( ngram );
+                }
+
+                // Find failure functions
+                var nodes = new List< TreeNode >();
+                // level 1 nodes - fail to root node
+                var transitions_root_nodes = root.Transitions;
+                if ( transitions_root_nodes != null )
+                {
+                    nodes.Capacity = transitions_root_nodes.Count;
+
+                    foreach ( var node in transitions_root_nodes )
+                    {
+                        node.Failure = root;
+                        var transitions_nodes = node.Transitions;
+                        if ( transitions_nodes != null )
+                        {
+                            foreach ( var trans in transitions_nodes )
+                            {
+                                nodes.Add( trans );
+                            }
+                        }
+                    }
+                }
+
+                // other nodes - using BFS
+                while ( nodes.Count != 0 )
+                {
+                    var newNodes = new List< TreeNode >( nodes.Count );
+                    foreach ( var node in nodes )
+                    {
+                        var r = node.Parent.Failure;
+                        var word = node.Word;
+
+                        while ( (r != null) && !r.ContainsTransition( word ) )
+                        {
+                            r = r.Failure;
+                        }
+                        if ( r == null )
+                        {
+                            node.Failure = root;
+                        }
+                        else
+                        {
+                            node.Failure = r.GetTransition( word );
+                            var failure_ngrams = node.Failure.Ngrams;
+                            if ( failure_ngrams != null )
+                            {
+                                foreach ( var result in failure_ngrams )
+                                {
+                                    node.AddNgram( result );
+                                }
+                            }
+                        }
+
+                        // add child nodes to BFS list 
+                        var transitions_nodes = node.Transitions;
+                        if ( transitions_nodes != null )
+                        {
+                            foreach ( var child in transitions_nodes )
+                            {
+                                newNodes.Add( child );
+                            }
+                        }
+                    }
+                    nodes = newNodes;
+                }
+                root.Failure = root;
+
+                return (root);
             }
 
             #region [.ctor() & methods.]
@@ -158,12 +264,12 @@ namespace lingvo.postagger
             /// <summary>
             /// Transition function - list of descendant nodes
             /// </summary>
-            public IEnumerable< TreeNode > Transitions { get { return ((_TransDict != null) ? _TransDict.Values : Enumerable.Empty< TreeNode >()); } }
+            public ICollection< TreeNode > Transitions { get { return ((_TransDict != null) ? _TransDict.Values : null); } }
 
             /// <summary>
             /// Returns list of patterns ending by this letter
             /// </summary>
-            public IEnumerable< string[] > Ngrams { get { return (_Ngrams ?? Enumerable.Empty< string[] >()); } }
+            public ICollection< string[] > Ngrams { get { return (_Ngrams); } }
             public bool HasNgrams { get { return (_Ngrams != null); } }
             #endregion
 
@@ -172,24 +278,6 @@ namespace lingvo.postagger
                 return ( ((Word != null) ? ('\'' + Word + '\'') : "ROOT") +
                          ", transitions(descendants): " + ((_TransDict != null) ? _TransDict.Count : 0) + ", ngrams: " + ((_Ngrams != null) ? _Ngrams.Count : 0)
                        );
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private sealed class SearchResultIComparer : IComparer< SearchResult >
-        {
-            public static readonly SearchResultIComparer Instance = new SearchResultIComparer();
-            private SearchResultIComparer() { }
-
-            public int Compare( SearchResult x, SearchResult y )
-            {
-                var d = y.Length - x.Length;
-                if ( d != 0 )
-                    return (d);
-
-                return (y.StartIndex - x.StartIndex);
             }
         }
 
@@ -230,7 +318,7 @@ namespace lingvo.postagger
         /// <summary>
         /// Root of keyword tree
         /// </summary>
-        private readonly TreeNode _Root;        
+        private TreeNode _Root;        
         #endregion
 
         #region [.ctor().]
@@ -240,98 +328,11 @@ namespace lingvo.postagger
         /// <param name="keywords">Keywords to search for</param>
         public AhoCorasick( IList< string[] > ngrams )
         {
-            _Root = new TreeNode( null, null );
-            Count = ngrams.Count;
-            BuildTree( ngrams );
-        }
-        #endregion
-
-        #region [.private method's.]
-        /// <summary>
-        /// Build tree from specified keywords
-        /// </summary>
-        private void BuildTree( IList< string[] > ngrams )
-        {
-            // Build keyword tree and transition function
-            //---_Root = new TreeNode( null, null );
-            foreach ( var ngram in ngrams )
-            {
-                // add pattern to tree
-                TreeNode node = _Root;
-                foreach ( string word in ngram )
-                {
-                    TreeNode nodeNew = null;
-                    foreach ( TreeNode trans in node.Transitions )
-                    {
-                        if ( trans.Word == word )
-                        {
-                            nodeNew = trans;
-                            break;
-                        }
-                    }
-
-                    if ( nodeNew == null )
-                    {
-                        nodeNew = new TreeNode( node, word );
-                        node.AddTransition( nodeNew );
-                    }
-                    node = nodeNew;
-                }
-                node.AddNgram( ngram );
-            }
-
-            // Find failure functions
-            var nodes = new List< TreeNode >();
-            // level 1 nodes - fail to root node
-            foreach ( TreeNode node in _Root.Transitions )
-            {
-                node.Failure = _Root;
-                foreach ( TreeNode trans in node.Transitions )
-                {
-                    nodes.Add( trans );
-                }
-            }
-            // other nodes - using BFS
-            while ( nodes.Count != 0 )
-            {
-                var newNodes = new List< TreeNode >();
-                foreach ( TreeNode node in nodes )
-                {
-                    TreeNode r = node.Parent.Failure;
-                    string word = node.Word;
-
-                    while ( r != null && !r.ContainsTransition( word ) )
-                    {
-                        r = r.Failure;
-                    }
-                    if ( r == null )
-                    {
-                        node.Failure = _Root;
-                    }
-                    else
-                    {
-                        node.Failure = r.GetTransition( word );
-                        foreach ( var result in node.Failure.Ngrams )
-                        {
-                            node.AddNgram( result );
-                        }
-                    }
-
-                    // add child nodes to BFS list 
-                    foreach ( TreeNode child in node.Transitions )
-                    {
-                        newNodes.Add( child );
-                    }
-                }
-                nodes = newNodes;
-            }
-            _Root.Failure = _Root;
+            _Root = TreeNode.BuildTree( ngrams );
         }
         #endregion
 
         #region [.public method's & properties.]
-        public int Count { get; private set; }
-
         public SearchResult? FindFirstIngnoreCase( List< word_t > words )
         {
             var ss = FindAllIngnoreCaseInternal( words );
@@ -374,7 +375,7 @@ namespace lingvo.postagger
 
                 if ( node.HasNgrams )
                 {
-                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
+                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResult.Comparer.Instance );
 
                     foreach ( var ngram in node.Ngrams )
                     {
@@ -399,7 +400,7 @@ namespace lingvo.postagger
 
                 if ( node.HasNgrams )
                 {
-                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResultIComparer.Instance );
+                    if ( ss == null ) ss = new SortedSet< SearchResult >( SearchResult.Comparer.Instance );
 
                     foreach ( var ngram in node.Ngrams )
                     {
@@ -413,7 +414,7 @@ namespace lingvo.postagger
 
         public override string ToString()
         {
-            return ("[" + _Root + "], count: " + Count);
+            return ("[" + _Root + "]");
         }
     }
 }
