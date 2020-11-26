@@ -1,6 +1,6 @@
 del "*.suo" /S/Q/F/A
 del "*.csproj.user" /S/Q/F/A
-del "syntax_ru.web.demo\bin\*.pdb" /Q
+rd "syntax_ru.web.demo\bin" /S/Q
 rd "syntax_ru.web.demo\obj" /S/Q
 rd "syntax_ru.web.demo\(logs)" /S/Q
 rem del "syntax_ru.console.demo\bin\*.pdb" /Q
