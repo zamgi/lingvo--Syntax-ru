@@ -209,6 +209,8 @@ namespace lingvo.morphology
             private GCHandle                               _ENDING_UPPER_BUFFER_GCHandle;
             private EnumParser< MorphoAttributeEnum >      _EnumParserMorphoAttribute;
             private EnumParser< PartOfSpeechEnum    >      _EnumParserPartOfSpeech;
+            // empty-native-string
+            private IntPtr _EMPTY_STRING;
 
             //out-of-this-class created field & passed as params of 'Run'-method
             private TreeDictionaryNative _TreeDictionary;
@@ -239,6 +241,7 @@ namespace lingvo.morphology
                 _MorphoAttributePairs_Buffer      = new List< MorphoAttributePair >( MORPHOATTRIBUTEPAIRS_BUFFER_CAPACITY );
                 _EnumParserMorphoAttribute        = new EnumParser< MorphoAttributeEnum >();
                 _EnumParserPartOfSpeech           = new EnumParser< PartOfSpeechEnum >();
+                _EMPTY_STRING = Alloc_EMPTY_STRING();
                 _EndingDictionary.Add( _EMPTY_STRING, _EMPTY_STRING );
                 #region [._ModelLoadingErrorCallback.]
                 if ( config.ModelLoadingErrorCallback == null )
@@ -1096,41 +1099,16 @@ namespace lingvo.morphology
                 }
                 *destPtr   = '\0';
             }
-            /*private static void AllocHGlobalAndCopyToUpperInvariant( char* source, int sourceLength, out IntPtr destUpper )
+            private static IntPtr Alloc_EMPTY_STRING()
             {
-                //alloc with include zero-'\0' end-of-string
-                destUpper = Marshal.AllocHGlobal( (sourceLength + 1) * sizeof(char) );
-                var destUpPtr = (char*) destUpper;
-                for ( ; 0 < sourceLength; sourceLength-- )
-                {
-                    *(destUpPtr++) = _UPPER_INVARIANT_MAP[ *(source++) ];
-                }
-                *destUpPtr = '\0';
+                //alloc static empty-native-string
+                var empty_string = Marshal.AllocHGlobal( sizeof( char ) );
+                *((char*) empty_string) = '\0';
+                return (empty_string);
             }
-            private static void AllocHGlobalAndCopyToUpperInvariant( char* source, int sourceLength, out IntPtr dest, out IntPtr destUpper )
-            {
-                //alloc with include zero-'\0' end-of-string
-                var cb        = (sourceLength + 1) * sizeof(char);
-                dest          = Marshal.AllocHGlobal( cb );
-                destUpper     = Marshal.AllocHGlobal( cb );
-                var destPtr   = (char*) dest;
-                var destUpPtr = (char*) destUpper;
-                for ( ; 0 < sourceLength; sourceLength-- )
-                {
-                    var ch = *(source++);
-                    *(destPtr++)   = ch;
-                    *(destUpPtr++) = _UPPER_INVARIANT_MAP[ ch ];
-                }
-                *destPtr   = '\0';
-                *destUpPtr = '\0';
-            }
-            */
         }
 
         #region [.private field's.]
-        // empty-native-string
-        private static IntPtr _EMPTY_STRING;
-
         // словарь слов
         private TreeDictionaryNative _TreeDictionary;
         // array of endings-of-word. if not NULL, then for faster call 'Marshal.FreeHGlobal'
@@ -1138,13 +1116,6 @@ namespace lingvo.morphology
         #endregion
 
         #region [.ctor().]
-        static MorphoModelNative()
-        {
-            //alloc static empty-native-string
-            _EMPTY_STRING = Marshal.AllocHGlobal( sizeof(char) );
-            *((char*) _EMPTY_STRING) = '\0';
-        }
-
         public MorphoModelNative( MorphoModelConfig config ) : base( config )
         {
             _TreeDictionary = new TreeDictionaryNative();
