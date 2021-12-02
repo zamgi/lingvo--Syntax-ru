@@ -16,10 +16,7 @@ namespace lingvo.morphology
         /// коллекция информаций о формах слова
         private List< BaseMorphoForm > _BaseMorphoForms;
 
-        public TreeDictionaryClassic()
-        {
-            _Slots = new Dictionary<char, TreeDictionaryClassic>();
-        }
+        public TreeDictionaryClassic() => _Slots = new Dictionary<char, TreeDictionaryClassic>();
 
         #region [.append words.]
         /// добавление слова и всех его форм в словарь
@@ -80,7 +77,7 @@ namespace lingvo.morphology
         /// получение морфологических свойств слова
         /// word - слово
         /// result - коллекция информаций о формах слова
-        unsafe public bool GetWordFormMorphologies( string wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
+        unsafe public bool GetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
         {
             result.Clear();
             fixed ( char* word_ptr = wordUpper )
@@ -90,7 +87,7 @@ namespace lingvo.morphology
             }
             return (result.Count != 0);
         }
-        unsafe public bool GetWordFormMorphologies( char*  wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
+        unsafe public bool GetWordFormMorphologies( char*  wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
         {
             result.Clear();            
             {
@@ -103,7 +100,7 @@ namespace lingvo.morphology
         /// получение всех форм слова
         /// word - слово
         /// result - коллекция форм слова
-        unsafe public bool GetWordForms( string wordUpper, List< WordForm_t > result )
+        unsafe public bool GetWordForms( string wordUpper, ICollection< WordForm_t > result )
         {
             result.Clear();
             fixed ( char* word_ptr = wordUpper )
@@ -120,7 +117,7 @@ namespace lingvo.morphology
         /// result - коллекция форм слова
         /// 
         unsafe private void FillWordFormMorphologies( char* word, int wordLength, int fullWordLength
-            , List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
+            , ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
         {
             FillWordFormMorphologies_Core( word, wordLength, fullWordLength, result, wordFormMorphologyMode );
             var first_char = *word;
@@ -133,7 +130,7 @@ namespace lingvo.morphology
                 }
             }
         }
-        unsafe private void FillWordForms( char* word, int wordLength, int fullWordLength, List< WordForm_t > result )
+        unsafe private void FillWordForms( char* word, int wordLength, int fullWordLength, ICollection< WordForm_t > result )
         {
             FillWordForms_Core( word, wordLength, fullWordLength, result );
             var first_char = *word;
@@ -152,7 +149,7 @@ namespace lingvo.morphology
         /// pSlot - слот
         /// letterIndex - индекс буквы
         unsafe private void FillWordFormMorphologies_Core( char* wordPart, int wordPartLength, int fullWordLength
-            , List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
+            , ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
         {
             if ( _BaseMorphoForms == null )
                 return;
@@ -246,7 +243,7 @@ namespace lingvo.morphology
                 }
             }
         }
-        unsafe private void FillWordForms_Core( char* wordPart, int wordPartLength, int fullWordLength, List< WordForm_t > result )
+        unsafe private void FillWordForms_Core( char* wordPart, int wordPartLength, int fullWordLength, ICollection< WordForm_t > result )
         {
             if ( _BaseMorphoForms == null )
                 return;

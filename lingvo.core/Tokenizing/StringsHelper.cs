@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace lingvo.core
 {
@@ -9,11 +8,7 @@ namespace lingvo.core
     unsafe public static class StringsHelper
     {
         private static char* _UPPER_INVARIANT_MAP;
-
-        static StringsHelper()
-        {
-            _UPPER_INVARIANT_MAP = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
-        }
+        static StringsHelper() => _UPPER_INVARIANT_MAP = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
 
         /// <summary>
         /// 
@@ -222,10 +217,7 @@ namespace lingvo.core
                 }
             }
         }
-        public static int GetLength( IntPtr _base )
-        {
-            return (GetLength( (char*) _base ));
-        }
+        public static int GetLength( IntPtr _base ) => GetLength( (char*) _base );
 
         public static string CreateWordForm( string _base, char* morphoFormEnding )
         {
@@ -341,9 +333,6 @@ namespace lingvo.core
             }
             return (str);
         }
-        public static string ToString( IntPtr value )
-        {
-            return (ToString( (char*) value ));
-        }
+        public static string ToString( IntPtr value ) => ToString( (char*) value );
     }
 }

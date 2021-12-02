@@ -65,7 +65,7 @@ namespace lingvo.syntax
 
             throw (new InvalidOperationException( this.GetType().Name + ": nothing to return (fusking)" ));
 		}
-        public List< word_t[] > Run_Debug( string text, bool splitBySmiles )
+        public List< word_t[] > Run_Details( string text, bool splitBySmiles )
 		{
 			_Semaphore.WaitOne();
 			var worker = default(SyntaxProcessor);
@@ -87,7 +87,7 @@ namespace lingvo.syntax
                     }
                 }
 
-                var result = worker.Run_Debug( text, splitBySmiles ).ToList();
+                var result = worker.Run_Details( text, splitBySmiles ).ToList();
                 return (result);
 			}
 			finally
@@ -102,12 +102,6 @@ namespace lingvo.syntax
             throw (new InvalidOperationException( this.GetType().Name + ": nothing to return (fusking)" ));
 		}
 
-        private static T Pop< T >( ConcurrentStack< T > stack )
-        {
-            var t = default(T);
-            if ( stack.TryPop( out t ) )
-                return (t);
-            return (default(T));
-        }
+        private static T Pop<T>( ConcurrentStack< T > stack ) => stack.TryPop( out var t ) ? t : default;
 	}
 }

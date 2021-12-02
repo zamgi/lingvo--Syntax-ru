@@ -40,7 +40,7 @@ namespace lingvo.postagger
                             where !string.IsNullOrEmpty( v )
                             let words = v.Split( SPLIT_BY_SPACE, StringSplitOptions.RemoveEmptyEntries )
                           select words;
-            PhrasesSearcher = new AhoCorasick( phrases.ToList() );
+            PhrasesSearcher = new Searcher( phrases.ToList() );
 
             //-3-
             AbbreviationsSearcher = CreateAbbreviationSearcher( "abbreviations", xdoc, posTaggerResourcesXmlFilename );
@@ -53,7 +53,7 @@ namespace lingvo.postagger
             Abbreviations = new HashSet< string >( abbreviations );
         }
 
-        private static AhoCorasick CreateAbbreviationSearcher( 
+        private static Searcher CreateAbbreviationSearcher( 
             string elementName, XDocument xdoc, string posTaggerResourcesXmlFilename )
         {
             const char DOT = '.';
@@ -85,7 +85,7 @@ namespace lingvo.postagger
                 abbreviations.AddRange( result );
             }
 
-            var abbreviationSearcher = new AhoCorasick( abbreviations );
+            var abbreviationSearcher = new Searcher( abbreviations );
             return (abbreviationSearcher);
         }
 
@@ -176,12 +176,12 @@ namespace lingvo.postagger
             get;
             private set;
         }
-        internal AhoCorasick       PhrasesSearcher
+        internal Searcher       PhrasesSearcher
         {
             get;
             private set;
         }
-        internal AhoCorasick       AbbreviationsSearcher
+        internal Searcher       AbbreviationsSearcher
         {
             get;
             private set;

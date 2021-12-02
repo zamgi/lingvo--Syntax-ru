@@ -127,7 +127,7 @@ namespace lingvo.postagger
             _OuterProcessSentCallback_Delegate( words );
         }
 
-        public List< word_t[] > Run_Debug( string text
+        public List< word_t[] > Run_Details( string text
             , bool splitBySmiles
             , bool mergeChains
             , bool processMorphology

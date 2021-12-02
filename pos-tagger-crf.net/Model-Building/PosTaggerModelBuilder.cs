@@ -20,10 +20,8 @@ namespace lingvo.postagger
         private readonly UrlDetector                  _UrlDetector;
         private readonly List< word_t >               _Words;
 
-        public PosTaggerModelBuilder( string            templateFilename, 
-                                      LanguageTypeEnum  languageType, 
-                                      UrlDetectorConfig urlDetectorConfig )
-		{
+        public PosTaggerModelBuilder( string templateFilename, LanguageTypeEnum languageType, UrlDetectorConfig urlDetectorConfig )
+        {
             templateFilename.ThrowIfNullOrWhiteSpace("templateFilename");
             urlDetectorConfig.ThrowIfNull("urlDetectorConfig");
 			
@@ -136,12 +134,7 @@ namespace lingvo.postagger
             return (true);
         }
 
-        private static PosTaggerOutputType ToPosTaggerOutputType( string value )
-        {
-            var e = (PosTaggerOutputType) Enum.Parse( typeof(PosTaggerOutputType), value, true );
-            return (e);
-        }
-
+        private static PosTaggerOutputType ToPosTaggerOutputType( string value ) => (PosTaggerOutputType) Enum.Parse( typeof(PosTaggerOutputType), value, true );
         private static IPosTaggerInputTypeProcessor CreatePosTaggerInputTypeProcessor( LanguageTypeEnum languageType )
         {
             switch ( languageType )

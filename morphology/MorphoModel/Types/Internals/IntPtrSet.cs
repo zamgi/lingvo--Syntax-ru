@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime;
 
 namespace lingvo.morphology
 {
@@ -29,35 +28,17 @@ namespace lingvo.morphology
 	        private IntPtr    _Current;
             private int       _Index;
 
-            public IntPtr Current
-	        {
-		        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-		        get { return _Current; }
-	        }
-	        object IEnumerator.Current
-	        {
-		        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-		        get
-		        {
-                    if ( _Index == 0 || _Index == _Set._Count + 1 )
-			        {
-				        throw (new InvalidOperationException("InvalidOperation_EnumOpCantHappen"));
-			        }
-			        return (_Current);
-		        }
-	        }
+            public IntPtr Current => _Current;
+	        object IEnumerator.Current => _Current;
 
             internal Enumerator( IntPtrSet set )
 	        {
 		        this._Set     = set;
 		        this._Index   = 0;
-		        this._Current = default(IntPtr);
+		        this._Current = default;
 	        }
-            public void Dispose()
-            {
-            }
+            public void Dispose() { }
 
-	        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
 	        public bool MoveNext()
 	        {
                 while ( _Index < _Set._Count )
@@ -68,26 +49,15 @@ namespace lingvo.morphology
                     {                            
                         return (true);
                     }
-                    /*var slot = _Set._Slots[ _Index ];
-                    if ( 0 <= slot.hashCode )
-			        {
-                        _Current = slot.value;
-				        _Index++;
-				        return (true);
-			        }
-			        _Index++;
-                    */
                 }
                 _Index = _Set._Count + 1;
-		        _Current = default(IntPtr);
+		        _Current = default;
 		        return (false);
 	        }
-
-	        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
 	        void IEnumerator.Reset()
 	        {
 		        _Index   = 0;
-                _Current = default( IntPtr );
+                _Current = default;
 	        }
         }
 
@@ -96,18 +66,8 @@ namespace lingvo.morphology
 		private int    _Count;
 		private int    _FreeList;
 
-        internal Slot[] Slots
-        {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-            get { return (_Slots); }
-        }
-        public int Count
-        {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-            get { return (_Count); }
-        }
-
-		[TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
+        internal Slot[] Slots => _Slots;
+        public int Count => _Count;
 		public IntPtrSet( int capacity )
 		{
 			_Buckets  = new int [ capacity ];
@@ -115,7 +75,6 @@ namespace lingvo.morphology
 			_FreeList = -1;
 		}
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
         public bool Add( IntPtr value )
 		{
             #region [.find exists.]
@@ -160,7 +119,6 @@ namespace lingvo.morphology
             #endregion
         }
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
         public void Clear()
         {
             if ( 0 < _Count )
@@ -172,7 +130,6 @@ namespace lingvo.morphology
 	        }                    
         }
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
 		private void Resize()
 		{
             int n1 = checked( _Count * 2 + 1 );
@@ -189,22 +146,8 @@ namespace lingvo.morphology
             _Slots   = slots;
 		}
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-        public IntPtrSet.Enumerator GetEnumerator()
-        {
-            return (new IntPtrSet.Enumerator( this ));
-        }
-
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-        IEnumerator< IntPtr > IEnumerable< IntPtr >.GetEnumerator()
-        {
-            return (new IntPtrSet.Enumerator( this ));
-        }
-
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (new IntPtrSet.Enumerator( this ));
-        }
-	}
+        public Enumerator GetEnumerator() => new Enumerator( this );
+        IEnumerator< IntPtr > IEnumerable< IntPtr >.GetEnumerator() => new Enumerator( this );
+        IEnumerator IEnumerable.GetEnumerator() => new Enumerator( this );
+    }
 }

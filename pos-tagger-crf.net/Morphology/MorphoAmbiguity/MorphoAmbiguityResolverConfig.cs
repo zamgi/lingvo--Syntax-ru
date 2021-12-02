@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+#if DEBUG
+using System.Diagnostics; 
+#endif
 using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 
 using lingvo.core;
@@ -12,11 +14,8 @@ namespace lingvo.postagger
     /// <summary>
     /// 
     /// </summary>
-    public sealed class MorphoAmbiguityResolverConfig
+    public struct MorphoAmbiguityResolverConfig
     {
-        public MorphoAmbiguityResolverConfig()
-        {
-        }
         public MorphoAmbiguityResolverConfig( string modelFilename, string templateFilename_5g, string templateFilename_3g )
         {
             ModelFilename       = modelFilename;
@@ -24,21 +23,9 @@ namespace lingvo.postagger
             TemplateFilename_3g = templateFilename_3g;
         }
 
-        public string ModelFilename
-        {
-            get;
-            set;
-        }
-        public string TemplateFilename_5g
-        {
-            get;
-            set;
-        }
-        public string TemplateFilename_3g
-        {
-            get;
-            set;
-        }
+        public string ModelFilename       { get; set; }
+        public string TemplateFilename_5g { get; set; }
+        public string TemplateFilename_3g { get; set; }
     }
 
     /// <summary>
@@ -46,11 +33,8 @@ namespace lingvo.postagger
     /// </summary>
     internal sealed class ByteIntPtr_IEqualityComparer : IEqualityComparer< IntPtr >
     {
-        public ByteIntPtr_IEqualityComparer()
-        {
-        }
-
-        unsafe private int getLength( byte* ptr )
+        public ByteIntPtr_IEqualityComparer() { }
+        unsafe private static int getLength( byte* ptr )
         {
             for ( var i = 0; ; i++ )
             {
@@ -64,16 +48,6 @@ namespace lingvo.postagger
         {
             var x_ptr = (byte*) x.ToPointer();
             var y_ptr = (byte*) y.ToPointer();
-
-            /*
-            var x_len = getLength( x_ptr );
-            var y_len = getLength( y_ptr );
-            System.Diagnostics.Debug.Assert( x_len < 50, "50 < x_len" );
-            System.Diagnostics.Debug.Assert( y_len < 50, "50 < y_len" );
-            */
-
-            //if ( x_ptr == y_ptr )
-            //    return (true);
 
             for ( ; ; x_ptr++, y_ptr++)
             {
@@ -107,7 +81,8 @@ namespace lingvo.postagger
     /// </summary>
     public sealed class MorphoAmbiguityResolverModel : IDisposable
     {
-        public MorphoAmbiguityResolverModel( MorphoAmbiguityResolverConfig config )
+        private NativeMemAllocationMediator _NativeMemAllocator;
+        public MorphoAmbiguityResolverModel( in MorphoAmbiguityResolverConfig config )
         {
             config                    .ThrowIfNull("config");
             config.ModelFilename      .ThrowIfNullOrWhiteSpace("ModelFilename");
@@ -116,92 +91,41 @@ namespace lingvo.postagger
 
             Config = config;
 
-            /*Dictionary      = LoadModel     ( config.ModelFilename );*/
-            DictionaryBytes = LoadModelBytes( config.ModelFilename );
+            _NativeMemAllocator = new NativeMemAllocationMediator( nativeBlockAllocSize: 1024 * 512 );
+            DictionaryBytes = LoadModelBytes( config.ModelFilename, _NativeMemAllocator );
         }
-
-        ~MorphoAmbiguityResolverModel()
-        {
-            DisposeNativeResources();
-        }
+        ~MorphoAmbiguityResolverModel() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
-        private void DisposeNativeResources()
+        private void DisposeNativeResources() => _NativeMemAllocator.Dispose();
+
+        unsafe private struct key_t
         {
-            if ( DictionaryBytes != null )
-            {
-                foreach ( var p in DictionaryBytes )
-                {
-                    Marshal.FreeHGlobal( p.Key );
-                }
-                DictionaryBytes = null;
-            }
+            public char* ptr;
+            public int   length;
+            public override string ToString() => StringsHelper.ToString( ptr, length ); //new string( key.ptr, 0, key.length );
         }
-
-        /*unsafe private static Dictionary< string, float > LoadModel( string modelFilename )
+        unsafe private static Dictionary< IntPtr, float > LoadModelBytes( string modelFilename, NativeMemAllocationMediator nativeMemAllocator )
         {
             var NF = new NumberFormatInfo() { NumberDecimalSeparator = "." };
             var NS = NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign;
-            var key = default(string);
-            var f   = default(float);
+            var f  = default(float);
 
-            var dict = new Dictionary< string, float >( 200000 );
+            var dict = new Dictionary< IntPtr, float >( 500_000, new ByteIntPtr_IEqualityComparer() );
+
+            const int BYTE_BUFFER_SZIE = 4096;
+            byte* bytesBuffer = stackalloc byte[ BYTE_BUFFER_SZIE ];
+
+            var encoding = Encoding.UTF8;
 
             using ( var sr = new StreamReader( modelFilename ) )
             {
                 for ( var line = sr.ReadLine(); line != null; line = sr.ReadLine() )
                 {
-                    key = default( string );
-
-                    fixed ( char* _base = line )
-                    {
-                        var ptr = _base;
-                        for ( ; ; ptr++ )
-                        {
-                            var ch = *ptr;
-                            if ( ch == '\0' )
-                                break;
-
-                            if ( ch == '\t' )
-                            {                                
-                                var value = new string( ptr + 1 );
-                                f   = float.Parse( value, NS, NF );
-                                key = new string( _base, 0, (int) (ptr - _base) );
-
-                                break;
-                            }
-                        }
-                    }
-
-                    if ( key == default(string) )
-                    {
-                        throw (new InvalidDataException("Invalid data foramt: '" + line + '\'' ));
-                    }
-
-                    dict.Add( key, f );
-                }
-            }
-
-            return (dict);
-        }*/
-        unsafe private static Dictionary< IntPtr, float > LoadModelBytes( string modelFilename )
-        {
-            var NF = new NumberFormatInfo() { NumberDecimalSeparator = "." };
-            var NS = NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent | NumberStyles.AllowLeadingSign;
-            var key = default(string);
-            var f   = default(float);
-
-            var dict = new Dictionary< IntPtr, float >( 500000, new ByteIntPtr_IEqualityComparer() );
-
-            using ( var sr = new StreamReader( modelFilename ) )
-            {
-                for ( var line = sr.ReadLine(); line != null; line = sr.ReadLine() )
-                {
-                    key = default(string);
+                    var key = default(key_t);
 
                     fixed ( char* _base = line )
                     {
@@ -234,24 +158,28 @@ namespace lingvo.postagger
                             {
                                 *(ptr++) = '\0';
                                 var value = new string( ptr );
-                                f = float.Parse( value, NS, NF );
-                                key = new string( _base, 0, (int) (ptr - _base) );
+                                f = float.Parse( value, NS, NF ); //its need for replace custom impl!
+                                key = new key_t() { ptr = _base, length = (int) (ptr - _base) };
 
                                 break;
                             }
                         }
                         #endregion
                     }
-
-                    if ( key == default(string) )
+                    if ( key.ptr == ((char*) 0) )
                     {
                         throw (new InvalidDataException("Invalid data foramt: '" + line + '\'' ));
                     }
+#if DEBUG
+                    //Debug.Assert( key.Length * sizeof(char) <= BYTE_BUFFER_SZIE );
+                    Debug.Assert( encoding.GetByteCount( key.ptr, key.length ) <= BYTE_BUFFER_SZIE );
+#endif                        
+                    var byteCount = encoding.GetBytes( key.ptr, key.length, bytesBuffer, BYTE_BUFFER_SZIE );
 
-                    //--- var bytes = Encoding.UTF8.GetBytes( key + '\0' );
-                    var bytes = Encoding.UTF8.GetBytes( key );
-                    var bytesPtr = Marshal.AllocHGlobal( bytes.Length );
-                    Marshal.Copy( bytes, 0, bytesPtr, bytes.Length );
+                    var bytesPtr = nativeMemAllocator.Alloc( byteCount );
+                    Buffer.MemoryCopy( bytesBuffer, (void*) bytesPtr, byteCount, byteCount );
+
+                    //Debug.Assert( encoding.GetString( (byte*) bytesPtr, byteCount ) == key.ToString() );
 
                     dict.Add( bytesPtr, f );
                 }
@@ -260,20 +188,7 @@ namespace lingvo.postagger
             return (dict);
         }
 
-        public MorphoAmbiguityResolverConfig Config
-        {
-            get;
-            private set;
-        }
-        /*public Dictionary< string, float >   Dictionary
-        {
-            get;
-            private set;
-        }*/
-        public Dictionary< IntPtr, float >   DictionaryBytes
-        {
-            get;
-            private set;
-        }
+        public MorphoAmbiguityResolverConfig Config { get; }
+        public Dictionary< IntPtr, float > DictionaryBytes { get; }
     }
 }

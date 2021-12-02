@@ -83,7 +83,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url:  "RESTProcessHandler.ashx",
+            url:  "ProcessHandler.ashx",
             data: {
                 splitBySmiles: true,                
                 text         : text,
@@ -196,7 +196,7 @@ $(document).ready(function () {
     (function() {
         $.ajax({
             type: "POST",
-            url: "RESTProcessHandler.ashx",
+            url: "ProcessHandler.ashx",
             data: { splitBySmiles: true, text: "_dummy_", html: false }
         });
     })();

@@ -24,9 +24,9 @@ namespace lingvo.morphology
     /// </summary>
     public interface IMorphoModel : IDisposable
     {
-        bool GetWordFormMorphologies( string wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
-        unsafe bool GetWordFormMorphologies( char*  wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
-        bool GetWordForms( string wordUpper, List< WordForm_t > result );
+        bool TryGetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
+        unsafe bool TryGetWordFormMorphologies( char*  wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
+        bool TryGetWordForms( string wordUpper, ICollection< WordForm_t > result );
     }
 
     /// <summary>
@@ -61,11 +61,7 @@ namespace lingvo.morphology
         protected const char COLON         = ':';
         protected const string MORPHO_TYPE = "MORPHO_TYPE";
 
-        protected MorphoModelBase( MorphoModelConfig config )
-        {
-            CheckConfig( config );
-        }
-
+        protected MorphoModelBase( in MorphoModelConfig config ) => CheckConfig( in config );
         protected void Initialization()
         {
             MORPHOTYPE_PREFIX_REGEXP   = new Regex( "(([A-Za-z]+), MORPHO_TYPE:)" );
@@ -85,11 +81,10 @@ namespace lingvo.morphology
         protected struct ParsedLineWords
         {
             public int    WordLength;
-            //public string Word;
             public string MorphoTypeName;
             public string PartOfSpeech;
         }
-        protected static bool ParseLineWords( string line, ref ParsedLineWords plw )
+        protected static bool TryParseLineWords( string line, ref ParsedLineWords plw )
         {
             var index1 = line.IndexOf( TABULATION );
             if ( index1 == -1 )
@@ -122,7 +117,7 @@ namespace lingvo.morphology
                         "', PartOfSpeech: '" + StringsHelper.ToString( PartOfSpeech ) + '\'');
             }
         }
-        unsafe protected static bool ParseLineWords( char* lineBase, ref ParsedLineWords_unsafe plw )
+        unsafe protected static bool TryParseLineWords( char* lineBase, ref ParsedLineWords_unsafe plw )
         {
             var index1 = IndexOf( lineBase, TABULATION );
             if ( index1 == -1 )
@@ -190,9 +185,9 @@ namespace lingvo.morphology
             //return (Path.Combine( folder.TrimEnd( '/' ), filename.TrimStart( '/' ) ));
         }
 
-        private static void CheckConfig( MorphoModelConfig config )
+        private static void CheckConfig( in MorphoModelConfig config )
         {
-            config.ThrowIfNull("config");
+            config.ThrowIfNull( "config" );
             config.MorphoTypesFilenames.ThrowIfNullOrWhiteSpaceAnyElement( "config.MorphoTypesFilenames" );
             config.ProperNamesFilenames.ThrowIfNullOrWhiteSpaceAnyElement( "config.ProperNamesFilenames" );
             config.CommonFilenames     .ThrowIfNullOrWhiteSpaceAnyElement( "config.CommonFilenames" );
@@ -204,30 +199,18 @@ namespace lingvo.morphology
     /// </summary>
     public static class MorphoModelFactory
     {
-        public static IMorphoModel Create( MorphoModelConfig config )
+        public static IMorphoModel Create( in MorphoModelConfig config )
         {
-            config.ThrowIfNull("config");
+            config.ThrowIfNull( "config" );
 
             switch ( config.TreeDictionaryType )
             {
                 case MorphoModelConfig.TreeDictionaryTypeEnum.Classic:
                 case MorphoModelConfig.TreeDictionaryTypeEnum.FastMemPlenty:
-                {
-                    var model = new MorphoModel( config );
-
-                    //GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced );
-
-                    return (model);
-                }
+                    return (new MorphoModel( in config ));
 
                 case MorphoModelConfig.TreeDictionaryTypeEnum.Native:
-                {
-                    var model = new MorphoModelNative( config );
-                    
-                    //GC.Collect( GC.MaxGeneration, GCCollectionMode.Forced );
-
-                    return (model);
-                }
+                    return (new MorphoModelNative( in config ));
 
                 default:
                     throw (new ArgumentException( config.TreeDictionaryType.ToString() ));

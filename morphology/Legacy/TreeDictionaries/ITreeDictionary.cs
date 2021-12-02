@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace lingvo.morphology
 {
@@ -12,8 +9,8 @@ namespace lingvo.morphology
     {
         void AddWord( string word, MorphoType morphoType, MorphoAttributePair? nounType );
 
-        bool GetWordFormMorphologies( string wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
-        unsafe bool GetWordFormMorphologies( char*  wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
-        bool GetWordForms( string wordUpper, List< WordForm_t > result );
+        bool GetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
+        unsafe bool GetWordFormMorphologies( char*  wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode );
+        bool GetWordForms( string wordUpper, ICollection< WordForm_t > result );
     }
 }

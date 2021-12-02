@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,41 +36,42 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumParser.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="FastNative\BaseMorphoFormNative.cs" />
-    <Compile Include="FastNative\IntPtrSet.cs" />
-    <Compile Include="FastNative\MorphoTypeNative.cs" />
-    <Compile Include="FastNative\MorphoFormNative.cs" />
+    <Compile Include="Infrastructure\EnumParser.cs" />
+    <Compile Include="Infrastructure\Extensions.cs" />
+    <Compile Include="MorphoModel\Types\BaseMorphoFormNative.cs" />
+    <Compile Include="MorphoModel\Types\Internals\IntPtrSet.cs" />
+    <Compile Include="MorphoModel\Types\MorphoTypeNative.cs" />
+    <Compile Include="MorphoModel\Types\MorphoFormNative.cs" />
     <Compile Include="Legacy\BaseMorphoForm.cs" />
     <None Include="Legacy\TreeDictionaries\link_list_t.cs" />
     <Compile Include="MorphoModel\MorphoModelConfig.cs" />
     <Compile Include="MorphoModel\MorphoModelNative.cs" />
-    <Compile Include="FastNative\SortedListCharKey[T].cs" />
-    <Compile Include="FastNative\SortedListIntPtrKey[T].cs" />
-    <Compile Include="FastNative\TreeDictionaryNative.cs" />
+    <Compile Include="MorphoModel\Types\Internals\SortedListCharKey[T].cs" />
+    <Compile Include="MorphoModel\Types\Internals\SortedListIntPtrKey[T].cs" />
+    <Compile Include="MorphoModel\Types\TreeDictionary.cs" />
     <Compile Include="MorphoModel\IMorphoModel.cs" />
     <Compile Include="Legacy\TreeDictionaries\ITreeDictionary.cs" />
     <Compile Include="Legacy\TreeDictionaries\TreeDictionaryFastMemPlenty.cs" />
-    <Compile Include="MorphoAttributeGroupEnum.cs" />
+    <Compile Include="MorphoModel\Types\MorphoAttributeGroupEnum.cs" />
     <Compile Include="Legacy\MorphoForm.cs" />
     <Compile Include="Legacy\MorphoType.cs" />
-    <Compile Include="PartOfSpeech.cs" />
-    <Compile Include="PartOfSpeechList.cs" />
+    <Compile Include="MorphoModel\Types\PartOfSpeech.cs" />
+    <Compile Include="MorphoModel\Types\PartOfSpeechList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Legacy\TreeDictionaries\TreeDictionaryClassic.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MorphoAttributePair.cs" />
+    <Compile Include="MorphoModel\Types\MorphoAttributePair.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MorphoAttributeList.cs" />
+    <Compile Include="MorphoModel\Types\MorphoAttributeList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MorphoModel\MorphoModel.cs" />

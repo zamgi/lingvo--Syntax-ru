@@ -13,8 +13,7 @@ namespace lingvo.postagger
     {
         private readonly IPosTaggerInputTypeProcessor _PosTaggerInputTypeProcessor;
 
-        internal PosTaggerInputTypeProcessorFactory( PosTaggerResourcesModel model, 
-                                                     LanguageTypeEnum languageType )
+        internal PosTaggerInputTypeProcessorFactory( PosTaggerResourcesModel model, LanguageTypeEnum languageType )
         {
             switch ( languageType )
             {
@@ -30,11 +29,7 @@ namespace lingvo.postagger
                     throw (new ArgumentException( languageType.ToString() ));
             }
         }
-
-        public IPosTaggerInputTypeProcessor CreateInstance()
-        {
-            return (_PosTaggerInputTypeProcessor);
-        }
+        public IPosTaggerInputTypeProcessor CreateInstance() => _PosTaggerInputTypeProcessor;
     }
 
     /// <summary>
@@ -89,12 +84,6 @@ namespace lingvo.postagger
             }
 
             return (hasLatinLetter);
-
-            /*
-            var regex = new Regex("[a-zA-Z-]+");
-			var match = regex.Match( word );
-			return (match.Value.Length == word.Length);
-            */
         }
 
         /// <summary>
@@ -231,7 +220,6 @@ namespace lingvo.postagger
                     break;
                 }
             }
-
 
             var first_ch = *_base;
             var first_ct = *(_CTM + first_ch);
@@ -458,7 +446,6 @@ namespace lingvo.postagger
                         return (PosTaggerInputTypeResult.OneCP);
                 }
             }
-
 
             if ( (first_ct & CharType.IsDigit) == CharType.IsDigit )
                 return (PosTaggerInputTypeResult.Num);

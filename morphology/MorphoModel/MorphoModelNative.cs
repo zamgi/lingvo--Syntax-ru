@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 
 using lingvo.core;
+
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -15,18 +19,19 @@ namespace lingvo.morphology
         /// <summary>
         /// 
         /// </summary>
-        private struct MorphoTypeNative_pair_t
+        private struct MorphoType_pair_t
         {
-            //public string           Name;
             public IntPtr           Name;
             public MorphoTypeNative MorphoType;
+            public bool IsEmpty { [M(O.AggressiveInlining)] get => (Name == IntPtr.Zero); }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        private struct CharIntPtr_IEqualityComparer : IEqualityComparer< IntPtr >
+        private sealed class CharIntPtr_EqualityComparer : IEqualityComparer< IntPtr >
         {
+            public CharIntPtr_EqualityComparer() { }
             unsafe public bool Equals( IntPtr x, IntPtr y )
             {
                 if ( x == y )
@@ -44,7 +49,7 @@ namespace lingvo.morphology
             }
             unsafe public int GetHashCode( IntPtr obj )
             {
-                char* ptr = (char*) obj;
+                var ptr = (char*) obj;
                 int n1 = 5381;
                 int n2 = 5381;
                 int n3;
@@ -55,52 +60,7 @@ namespace lingvo.morphology
                     ptr++;
                 }
                 return (n1 + n2 * 1566083941);
-
-                #region commented
-                /*
-                char* ptr = (char*) obj;
-                int n1 = 5381;
-                int n2 = 5381;
-                int n3;
-                while ( (n3 = (int) (*(ushort*) ptr)) != 0 )
-                {
-                    n1 = ((n1 << 5) + n1 ^ n3);
-                    n3 = (int) (*(ushort*) ptr);
-                    if ( n3 == 0 )
-                    {
-                        break;
-                    }
-                    n2 = ((n2 << 5) + n2 ^ n3);
-                    ptr += 2;
-                }
-                return (n1 + n2 * 1566083941);
-                */
-                #endregion
             }
-
-            /*[ReliabilityContract (Consistency.WillNotCorruptState, Cer.MayFail)]
-            public unsafe override int GetHashCode ()
-            {
-                fixed ( char* ptr = this + (IntPtr)RuntimeHelpers.OffsetToStringData / 2 )
-                {
-                    char* ptr2 = ptr;
-                    char* ptr3 = ptr2 + (IntPtr)(this.length * 2) / 2 - 1;
-                    int n1 = 0;
-                    while (ptr2 < ptr3)
-                    {
-                        n1 = (n1 << 5) - n1 + (int)(*(ushort*)ptr2);
-                        n1 = (n1 << 5) - n1 + (int)(*(ushort*)(ptr2 + 1));
-                        ptr2 += 4 / 2;
-                    }
-                    ptr3++;
-                    if (ptr2 < ptr3)
-                    {
-                        n1 = (n1 << 5) - n1 + (int)(*(ushort*)ptr2);
-                    }
-                    return (n1);
-                }
-            }        
-            */
         }
 
         /// <summary>
@@ -109,22 +69,16 @@ namespace lingvo.morphology
         private sealed class PartOfSpeechToNativeStringMapper : IDisposable
         {
             private Dictionary< PartOfSpeechEnum, IntPtr > _Dictionary;
-
             public PartOfSpeechToNativeStringMapper()
             {
                 _Dictionary = Enum.GetValues( typeof(PartOfSpeechEnum) )
                                   .Cast< PartOfSpeechEnum >()
                                   .ToDictionary( pos => pos, pos => Marshal.StringToHGlobalUni( pos.ToString() ) );
             }
-            ~PartOfSpeechToNativeStringMapper()
-            {
-                DisposeNativeResources();
-            }
-
+            ~PartOfSpeechToNativeStringMapper() => DisposeNativeResources();
             public void Dispose()
             {
                 DisposeNativeResources();
-
                 GC.SuppressFinalize( this );
             }
             private void DisposeNativeResources()
@@ -139,10 +93,7 @@ namespace lingvo.morphology
                 }
             }
 
-            public IntPtr this[ PartOfSpeechEnum partOfSpeech ]
-            {
-                get { return (_Dictionary[ partOfSpeech ]); }
-            }
+            public IntPtr this[ PartOfSpeechEnum partOfSpeech ] => _Dictionary[ partOfSpeech ];
         }
 
         /// <summary>
@@ -150,59 +101,25 @@ namespace lingvo.morphology
         /// </summary>
         private sealed class ModelLoader : IDisposable
         {
-            /// <summary>
-            /// 
-            /// </summary>
-            public sealed class EndingsNativeKeeper : IDisposable
-            {
-                private IntPtr[] _EndingsNative;
-
-                internal EndingsNativeKeeper( IntPtr[] endingsNative )
-                {
-                    _EndingsNative = endingsNative;
-                }
-                ~EndingsNativeKeeper()
-                {
-                    DisposeNativeResources();
-                }
-
-                public void Dispose()
-                {
-                    DisposeNativeResources();
-
-                    GC.SuppressFinalize( this );
-                }
-                private void DisposeNativeResources()
-                {
-                    if ( _EndingsNative != null )
-                    {
-                        for ( int i = 0, len = _EndingsNative.Length; i < len; i++ )
-                        {
-                            Marshal.FreeHGlobal( _EndingsNative[ i ] );
-                        }
-                        _EndingsNative = null;
-                    }                    
-                }
-            }
-
             #region [.private field's.]
-            private const int                              ENDING_BUFFER_SIZE = 256;
+            private const int                              ENDING_BUFFER_SIZE = 1024; //256;
 
             private static CharType*                       _CHARTYPE_MAP;
             private static char*                           _UPPER_INVARIANT_MAP;
+            private static char*                           _LOWER_INVARIANT_MAP;
 
             private MorphoModelConfig                      _Config;
-		    /// морфо-типы
-            private Dictionary< IntPtr, IntPtr >           _EndingDictionary;
-            private Dictionary< IntPtr, MorphoTypeNative > _MorphoTypesDictionary;
-            /// список допустимых комбинаций морфо-аттрибутов в группах 
+		    // морфо-типы
+            private HashSet< IntPtr >                      _EndingHashSet;
+            private Dictionary< IntPtr, MorphoTypeNative > _MorphoTypesDict;
+            // список допустимых комбинаций морфо-аттрибутов в группах 
             private MorphoAttributeList                    _MorphoAttributeList;
             private PartOfSpeechList                       _PartOfSpeechList;
             private PartOfSpeechToNativeStringMapper       _PartOfSpeechToNativeStringMapper;
             private List< MorphoAttributePair >            _MorphoAttributePairs_Buffer;
             private Action< string, string >               _ModelLoadingErrorCallback;
-            private GCHandle                               _LOWER_INVARIANT_MAP_GCHandle;
-            private char*                                  _LOWER_INVARIANT_MAP;            
+            //---private GCHandle                               _LOWER_INVARIANT_MAP_GCHandle;
+            //---private char*                                  _LOWER_INVARIANT_MAP;
             private char*                                  _ENDING_LOWER_BUFFER;
             private GCHandle                               _ENDING_LOWER_BUFFER_GCHandle;
             private char*                                  _ENDING_UPPER_BUFFER;
@@ -213,7 +130,8 @@ namespace lingvo.morphology
             private IntPtr _EMPTY_STRING;
 
             //out-of-this-class created field & passed as params of 'Run'-method
-            private TreeDictionaryNative _TreeDictionary;
+            private TreeDictionary _TreeDictionary;
+            private NativeMemAllocationMediator _NativeMemAllocator;
             #endregion
 
             #region [.ctor().]
@@ -221,28 +139,40 @@ namespace lingvo.morphology
             {
                 _CHARTYPE_MAP        = xlat_Unsafe.Inst._CHARTYPE_MAP;
                 _UPPER_INVARIANT_MAP = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
+                _LOWER_INVARIANT_MAP = xlat_Unsafe.Inst._LOWER_INVARIANT_MAP;
             }
 
-            public ModelLoader( MorphoModelConfig config, TreeDictionaryNative treeDictionary )
+            public static void RunLoad( in MorphoModelConfig config, TreeDictionary treeDictionary, NativeMemAllocationMediator nativeMemAllocationMediator )
+            {
+                using ( var loader = new ModelLoader( config, treeDictionary, nativeMemAllocationMediator ) )
+                {
+                    loader.RunLoad();
+                }
+            }
+            public ModelLoader( in MorphoModelConfig config, TreeDictionary treeDictionary, NativeMemAllocationMediator nativeMemAllocationMediator )
             {
                 const int ENDING_DICTIONARY_CAPACITY           = 350003; //prime
                 const int MORPHOTYPES_DICTIONARY_CAPACITY      = 4001;   //prime
                 const int MORPHOATTRIBUTEPAIRS_BUFFER_CAPACITY = 100;
 
-                _TreeDictionary = treeDictionary;
-                //-----------------------------------------------//
-                TreeDictionaryNative.BeginLoad();
+                _TreeDictionary     = treeDictionary;
+                _NativeMemAllocator = nativeMemAllocationMediator;
+                //-----------------------------------------------//                
+                TreeDictionary.BeginLoad();
                 _Config                           = config;
-                _EndingDictionary                 = new Dictionary< IntPtr, IntPtr >( ENDING_DICTIONARY_CAPACITY, default(CharIntPtr_IEqualityComparer) );
-                _MorphoTypesDictionary            = new Dictionary< IntPtr, MorphoTypeNative >( MORPHOTYPES_DICTIONARY_CAPACITY, default(CharIntPtr_IEqualityComparer) );
+                var comparer = new CharIntPtr_EqualityComparer();
+                _EndingHashSet                    = new HashSet< IntPtr >( ENDING_DICTIONARY_CAPACITY, comparer );
+                _MorphoTypesDict                  = new Dictionary< IntPtr, MorphoTypeNative >( MORPHOTYPES_DICTIONARY_CAPACITY, comparer );
                 _MorphoAttributeList              = new MorphoAttributeList();
                 _PartOfSpeechList                 = new PartOfSpeechList();
                 _PartOfSpeechToNativeStringMapper = new PartOfSpeechToNativeStringMapper();
                 _MorphoAttributePairs_Buffer      = new List< MorphoAttributePair >( MORPHOATTRIBUTEPAIRS_BUFFER_CAPACITY );
                 _EnumParserMorphoAttribute        = new EnumParser< MorphoAttributeEnum >();
                 _EnumParserPartOfSpeech           = new EnumParser< PartOfSpeechEnum >();
-                _EMPTY_STRING = Alloc_EMPTY_STRING();
-                _EndingDictionary.Add( _EMPTY_STRING, _EMPTY_STRING );
+
+                _EMPTY_STRING = _NativeMemAllocator.AllocAndCopy( string.Empty );
+                _EndingHashSet.Add( _EMPTY_STRING );
+
                 #region [._ModelLoadingErrorCallback.]
                 if ( config.ModelLoadingErrorCallback == null )
                 {
@@ -253,10 +183,10 @@ namespace lingvo.morphology
                     _ModelLoadingErrorCallback = config.ModelLoadingErrorCallback;
                 }
                 #endregion
-                #region [._LOWER_INVARIANT_MAP.]
-                var lower_invariant_map       = xlat.Create_LOWER_INVARIANT_MAP();
-                _LOWER_INVARIANT_MAP_GCHandle = GCHandle.Alloc( lower_invariant_map, GCHandleType.Pinned );
-                _LOWER_INVARIANT_MAP          = (char*) _LOWER_INVARIANT_MAP_GCHandle.AddrOfPinnedObject().ToPointer();
+                #region comm.[._LOWER_INVARIANT_MAP.]
+                //var lower_invariant_map       = xlat.Create_LOWER_INVARIANT_MAP();
+                //_LOWER_INVARIANT_MAP_GCHandle = GCHandle.Alloc( lower_invariant_map, GCHandleType.Pinned );
+                //_LOWER_INVARIANT_MAP          = (char*) _LOWER_INVARIANT_MAP_GCHandle.AddrOfPinnedObject().ToPointer();
 	            #endregion
                 #region [._ENDING_LOWER_BUFFER.]
                 var ending_lower_buffer       = new char[ ENDING_BUFFER_SIZE ];
@@ -269,105 +199,81 @@ namespace lingvo.morphology
                 _ENDING_UPPER_BUFFER          = (char*) _ENDING_UPPER_BUFFER_GCHandle.AddrOfPinnedObject().ToPointer();
                 #endregion
             }
-            ~ModelLoader()
-            {
-                DisposeNativeResources();
-            }
-
+            ~ModelLoader() => DisposeNativeResources();
             public void Dispose()
             {
                 DisposeNativeResources();
-
                 GC.SuppressFinalize( this );
             }
             private void DisposeNativeResources()
             {
                 _TreeDictionary = null;
                 //-----------------------------------------------//                
-                TreeDictionaryNative.EndLoad();
-                _LOWER_INVARIANT_MAP_GCHandle.Free(); _LOWER_INVARIANT_MAP = null;
+                TreeDictionary.EndLoad();
+                //---_LOWER_INVARIANT_MAP_GCHandle.Free(); _LOWER_INVARIANT_MAP = null;
                 _ENDING_LOWER_BUFFER_GCHandle.Free(); _ENDING_LOWER_BUFFER = null;
                 _ENDING_UPPER_BUFFER_GCHandle.Free(); _ENDING_UPPER_BUFFER = null;
-                _EndingDictionary             = null;
+                _EndingHashSet                = null;
                 _ModelLoadingErrorCallback    = null;
-                _MorphoTypesDictionary        = null;
-                _MorphoAttributeList.Dispose(); _MorphoAttributeList = null;
+                _MorphoTypesDict              = null;
+                _MorphoAttributeList          = null;
                 _PartOfSpeechList             = null;
                 _PartOfSpeechToNativeStringMapper.Dispose(); _PartOfSpeechToNativeStringMapper = null;
                 _MorphoAttributePairs_Buffer  = null;                
                 _EnumParserMorphoAttribute    = null;
                 _EnumParserPartOfSpeech       = null;
-                _Config                       = default(MorphoModelConfig);
+                _Config                       = default;
             }
             #endregion
 
-            public EndingsNativeKeeper Run()
+            public void RunLoad()
             {
-                Console.WriteLine( "\r\n\r\n" );
-                var sw = new System.Diagnostics.Stopwatch();
+#if DEBUG
+                var sw = new Stopwatch();
+# endif
                 foreach ( var morphoTypesFilename in _Config.MorphoTypesFilenames )
                 {
                     var filename = GetFullFilename( _Config.BaseDirectory, morphoTypesFilename );
-                sw.Restart();
+#if DEBUG
+                    sw.Restart(); 
+#endif
                     ReadMorphoTypes( filename );
-                sw.Stop();
-                Console.WriteLine( "elapsed: " + sw.Elapsed + ", " + filename );
+#if DEBUG
+                    sw.Stop(); Console.WriteLine( $"morphology: '{filename}', elapsed: {sw.Elapsed}" ); 
+#endif
                 }
 
                 foreach ( var properNamesFilename in _Config.ProperNamesFilenames )
                 {
                     var filename = GetFullFilename( _Config.BaseDirectory, properNamesFilename );
-                sw.Restart();
+#if DEBUG
+                    sw.Restart(); 
+#endif
                     ReadWords( filename, MorphoAttributeEnum.Proper );
-                sw.Stop();
-                Console.WriteLine( "elapsed: " + sw.Elapsed + ", " + filename );
+#if DEBUG
+                    sw.Stop(); Console.WriteLine( $"morphology: '{filename}', elapsed: {sw.Elapsed}" ); 
+#endif
                 }
 
                 foreach ( var commonFilename in _Config.CommonFilenames )
                 {
                     var filename = GetFullFilename( _Config.BaseDirectory, commonFilename );
-                sw.Restart();
+#if DEBUG
+                    sw.Restart(); 
+#endif
                     ReadWords( filename, MorphoAttributeEnum.Common );
-                sw.Stop();
-                Console.WriteLine( "elapsed: " + sw.Elapsed + ", " + filename );
+#if DEBUG
+                    sw.Stop(); Console.WriteLine( $"morphology: '{filename}', elapsed: {sw.Elapsed}" ); 
+#endif
                 }
 
-                sw.Restart();
+#if DEBUG
+                sw.Restart(); 
+#endif
                 _TreeDictionary.Trim();
-                sw.Stop();
-                Console.WriteLine( "elapsed: " + sw.Elapsed + ", _TreeDictionary.Trim();" );
-                //-----------------------------------------------//
-                IntPtr[] endingsNative = (_Config.IsPermanentStayInMemoryUseType ? null : _EndingDictionary.Keys.ToArray());
-
-                return (new EndingsNativeKeeper( endingsNative ));
-            }
-
-            private MorphoTypeNative _MorphoTypeByNameValue;
-            /// <summary>
-            /// получение морфотипа по его имени
-            /// </summary>
-            private MorphoTypeNative GetMorphoTypeByName( IntPtr name )
-            {
-                if ( _MorphoTypesDictionary.TryGetValue( name, out _MorphoTypeByNameValue ) )
-                {
-                    return (_MorphoTypeByNameValue);
-                }
-                return (null);
-            }
-
-            /// <summary>
-            /// сохранение морфотипа
-            /// </summary>
-            private void AddMorphoType2Dictionary( ref MorphoTypeNative_pair_t morphoTypePair )
-            {
-                if ( _MorphoTypesDictionary.ContainsKey( morphoTypePair.Name ) )
-                {
-                    _ModelLoadingErrorCallback( "Duplicated morpho-type", StringsHelper.ToString( morphoTypePair.Name ) ); //throw (new DuplicatedMorphoTypeException());
-                }
-                else
-                {
-                    _MorphoTypesDictionary.Add( morphoTypePair.Name, morphoTypePair.MorphoType );
-                }
+#if DEBUG
+                sw.Stop(); Console.WriteLine( $"morphology: _TreeDictionary.Trim(), elapsed: {sw.Elapsed}" ); 
+#endif
             }
 
 		    /// <summary>
@@ -380,7 +286,9 @@ namespace lingvo.morphology
                 var lines = ReadFile( filename );
                 var morphoForms = new List< MorphoFormNative >( MORPHOFORMS_CAPACITY );
 
-			    var morphoTypePairLast = default(MorphoTypeNative_pair_t?);
+                var morphoForm = default(MorphoFormNative);
+                var morphoTypePair = default(MorphoType_pair_t);
+                var morphoTypePairLast = default(MorphoType_pair_t);
 			    foreach ( var line in lines )
 			    {
                     //if ( line == "Pronoun, MORPHO_TYPE:что" )
@@ -388,16 +296,14 @@ namespace lingvo.morphology
 
                     fixed ( char* lineBase = line )
                     {
-                        MorphoTypeNative_pair_t? morphoTypePair = CreateMorphoTypePair( lineBase, line.Length );
                         /// новый морфо-тип
-                        if ( morphoTypePair.HasValue ) 
+                        if ( TryCreateMorphoTypePair( lineBase, line.Length, ref morphoTypePair ) ) 
 				        {
-                            if ( morphoTypePairLast.HasValue )
+                            if ( !morphoTypePairLast.IsEmpty )
                             {
-                                var mtp = morphoTypePairLast.Value;
-                                mtp.MorphoType.SetMorphoForms( morphoForms );
+                                morphoTypePairLast.MorphoType.SetMorphoForms( morphoForms );
 
-                                AddMorphoType2Dictionary( ref mtp );
+                                AddMorphoType2Dict( in morphoTypePairLast );
                             }
                             morphoForms.Clear();
                     
@@ -405,12 +311,11 @@ namespace lingvo.morphology
 				        }
 				        else 
                         /// словоформа в последнем морфо-типе
-                        if ( morphoTypePairLast.HasValue )
+                        if ( !morphoTypePairLast.IsEmpty )
 				        {
-                            MorphoFormNative? morphoForm = CreateMorphoForm( morphoTypePairLast.Value.MorphoType, lineBase );
-                            if ( morphoForm.HasValue )
+                            if ( TryCreateMorphoForm( morphoTypePairLast.MorphoType, lineBase, ref morphoForm ) )
                             {
-                                morphoForms.Add( morphoForm.Value );
+                                morphoForms.Add( morphoForm );
                             }
                             else
                             {
@@ -424,12 +329,10 @@ namespace lingvo.morphology
                     }
 			    }
                 /// последний морфо-тип
-                if ( morphoTypePairLast.HasValue )
+                if ( !morphoTypePairLast.IsEmpty )
                 {
-                    var mtp = morphoTypePairLast.Value;
-                    mtp.MorphoType.SetMorphoForms( morphoForms );
-
-                    AddMorphoType2Dictionary( ref mtp );
+                    morphoTypePairLast.MorphoType.SetMorphoForms( morphoForms );
+                    AddMorphoType2Dict( in morphoTypePairLast );
                 }
 		    }
 
@@ -446,14 +349,13 @@ namespace lingvo.morphology
                 {
                    fixed ( char* lineBase = line )
                    {
-                        if ( !ParseLineWords( lineBase, ref plw ) )
+                        if ( !TryParseLineWords( lineBase, ref plw ) )
                         {
                             _ModelLoadingErrorCallback( "Wrong line format", line ); //throw (new MorphoFormatException());
                             continue;
                         }
 
-                        MorphoTypeNative morphoType = GetMorphoTypeByName( (IntPtr) plw.MorphoTypeName );
-				        if ( morphoType == null )
+				        if ( !_MorphoTypesDict.TryGetValue( (IntPtr) plw.MorphoTypeName, out var morphoType ) )
                         {
                             _ModelLoadingErrorCallback( "Unknown morpho-type", line ); //throw new UnknownMorphoTypeException();
                             continue;
@@ -467,12 +369,6 @@ namespace lingvo.morphology
                         
                         if ( morphoType.HasMorphoForms )
                         {
-                            var nounTypePair = default(MorphoAttributePair?);
-                            if ( (morphoType.MorphoAttributeGroup & MorphoAttributeGroupEnum.NounType) == MorphoAttributeGroupEnum.NounType )
-                            {
-                                nounTypePair = _MorphoAttributeList.GetMorphoAttributePair( MorphoAttributeGroupEnum.NounType, nounType );
-                            }
-
                             #region [.alloc native-memory for _base-of-word.]
                             var len = plw.WordLength - StringsHelper.GetLength( morphoType.FirstEnding );
                             len = ((0 <= len) ? len : plw.WordLength);
@@ -483,15 +379,15 @@ namespace lingvo.morphology
                                 *(lineBase + len) = '\0';
                                 lineBasePtr = new IntPtr( lineBase );
 
-                                IntPtr existsPtr;
-                                if ( _EndingDictionary.TryGetValue( lineBasePtr, out existsPtr ) )
+                                if ( _EndingHashSet.TryGetValue( lineBasePtr, out var existsPtr ) )
                                 {
                                     lineBasePtr = existsPtr;
                                 }
                                 else
                                 {
-                                    AllocHGlobalAndCopy( lineBase, len, out lineBasePtr );
-                                    _EndingDictionary.Add( lineBasePtr, lineBasePtr );
+                                    lineBasePtr = _NativeMemAllocator.AllocAndCopy( lineBase, len );
+                                    var suc = _EndingHashSet.Add( lineBasePtr );
+                                    Debug.Assert( suc );
                                 }
                             }
                             else
@@ -500,92 +396,20 @@ namespace lingvo.morphology
                             }
                             #endregion
 
-                            #region [.commented previous version. alloc native-memory for _base-of-word.]
-                            /*
-                            var len = plw.WordLength - StringsHelper.GetLength( morphoType.FirstEnding );
-                            var _base = line.Substring( 0, (0 <= len) ? len : plw.WordLength );
+                            if ( (morphoType.MorphoAttributeGroup & MorphoAttributeGroupEnum.NounType) == MorphoAttributeGroupEnum.NounType )
+                            {
+                                if ( !_MorphoAttributeList.TryGetMorphoAttributePair( MorphoAttributeGroupEnum.NounType, nounType, ref _TempMorphoAttributePair ) )
+                                {
+                                    throw (new MorphoFormatException());
+                                }
 
-                            IntPtr basePtr;
-                            if ( 0 < _base.Length )
-                            {                        
-                                basePtr = Marshal.StringToHGlobalUni( _base );
-                                IntPtr basePtrExists;
-                                if ( _EndingDictionary.TryGetValue( basePtr, out basePtrExists ) )
-                                {
-                                    Marshal.FreeHGlobal( basePtr );
-                                    basePtr = basePtrExists;
-                                }
-                                else
-                                {
-                                    _EndingDictionary.Add( basePtr, basePtr );
-                                }
+                                _TreeDictionary.AddWord( (char*) lineBasePtr, morphoType, in _TempMorphoAttributePair );
                             }
                             else
                             {
-                                basePtr = _EMPTY_STRING;
+                                _TreeDictionary.AddWord( (char*) lineBasePtr, morphoType );
                             }
-                            */
-                            #endregion
-
-                            _TreeDictionary.AddWord( (char*) lineBasePtr, morphoType, ref nounTypePair );
                         }
-
-                        #region commneted
-                        /*
-				        var array = line.Split( WORDS_DICTIONARY_SEPARATOR, StringSplitOptions.RemoveEmptyEntries );
-                        if ( array.Length != 3 )
-                        {
-                            _ModelLoadingErrorCallback( "Wrong line format", line ); //throw (new MorphoFormatException());
-                            continue;
-                        }
-
-                        MorphoTypeNative morphoType = GetMorphoTypeByName( array[ 1 ] );
-				        if ( morphoType == null )
-                        {
-                            _ModelLoadingErrorCallback( "Unknown morpho-type", line ); //throw new UnknownMorphoTypeException();
-                        }
-                        else
-                        if ( array[ 2 ] != _PartOfSpeechStringDictionary[ morphoType.PartOfSpeech ] )
-                        {
-                            _ModelLoadingErrorCallback( "Wrong part-of-speech", line ); //throw new WrongPartOfSpeechException();
-                        }
-                        else
-                        {
-                            if ( morphoType.MorphoForms.Length != 0 )
-                            {
-                                var word = array[ 0 ];
-
-                                //if ( word == "прийти" )
-                                    //System.Diagnostics.Debugger.Break();
-
-                                var _nounType = default( MorphoAttributePair? );
-                                if ( (morphoType.MorphoAttributeGroup & MorphoAttributeGroupEnum.NounType) == MorphoAttributeGroupEnum.NounType )
-                                {
-                                    _nounType = _MorphoAttributeList.GetMorphoAttributePair( MorphoAttributeGroupEnum.NounType, nounType );
-                                }
-
-                                var len = word.Length - StringsHelper.GetLength( morphoType.MorphoForms[ 0 ].Ending );
-                                var _base = (0 <= len) ? word.Substring( 0, len ) : word;
-
-                                IntPtr basePtrExists;
-                                IntPtr basePtr = Marshal.StringToHGlobalUni( _base );
-                                if ( _EndingDictionary.TryGetValue( basePtr, out basePtrExists ) )
-                                {
-                                    Marshal.FreeHGlobal( basePtr );
-                                    basePtr = basePtrExists;
-                                }
-                                else
-                                {
-                                    _EndingDictionary.Add( basePtr, basePtr );
-                                }
-
-                                _TreeDictionary.AddWord( (char*) basePtr, _base, morphoType, _nounType );
-                            }
-
-                            //---_TreeDictionary.AddWord( word, morphoType, _nounType );
-                        }
-                        */
-                        #endregion
                     }
 			    }
 		    }
@@ -609,7 +433,7 @@ namespace lingvo.morphology
                     Parallel.ForEach( partitioner, new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                     (t) =>
                     {
-                        var plw = default(ParsedLineWords_unsafe);
+                        var plw = default(ParsedLineWords);
 
                         for ( var i = t.Item1; i < t.Item2; i++ )
                         {
@@ -689,17 +513,33 @@ namespace lingvo.morphology
                 //Console.WriteLine( "(elapsed:" + sw.Elapsed + ", " + filename + ')' );
 		    }*/
 
-		    /// <summary>
+            /// <summary>
+            /// сохранение морфотипа
+            /// </summary>
+            [M(O.AggressiveInlining)] private void AddMorphoType2Dict( in MorphoType_pair_t morphoTypePair )
+            {
+                if ( _MorphoTypesDict.ContainsKey( morphoTypePair.Name ) )
+                {
+                    _ModelLoadingErrorCallback( "Duplicated morpho-type", StringsHelper.ToString( morphoTypePair.Name ) );
+                }
+                else
+                {
+                    _MorphoTypesDict.Add( morphoTypePair.Name, morphoTypePair.MorphoType );
+                }
+            }
+
+            /// <summary>
             /// создание морфоформы из строки
-		    /// </summary>
-            private MorphoFormNative? CreateMorphoForm( MorphoTypeNative morphoType, char* lineBase )
+            /// </summary>
+            private MorphoAttributePair _TempMorphoAttributePair;
+            [M(O.AggressiveInlining)] private bool TryCreateMorphoForm( MorphoTypeNative morphoType, char* lineBase, ref MorphoFormNative morphoForm )
 		    {
                 #region [.find index-of-COLON & check on length.]
                 var index = IndexOf( lineBase, COLON );
                 if ( (index == -1) || (ENDING_BUFFER_SIZE <= index) )
                 {
                     _ModelLoadingErrorCallback( "Index of COLON is undefined or length the line is too long", StringsHelper.ToString( lineBase ) );
-                    return (null); //throw (new MorphoFormatException());
+                    return (false);
                 }
                 #endregion
 
@@ -743,16 +583,11 @@ namespace lingvo.morphology
                     if ( len != 0 )
                     {
                         var morphoAttribute = default(MorphoAttributeEnum);
-                        //---var attr = new string( ptr - len, 0, len );
-                        //---if ( Enum.TryParse( attr, true, out morphoAttribute ) )
                         if ( _EnumParserMorphoAttribute.TryParse( ptr - len, len, ref morphoAttribute ) )
                         {
-                            //---_MorphoAttributePairs_Buffer.Add( _MorphoAttributeList.GetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute ) );
-
-                            var map = _MorphoAttributeList.TryGetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute );
-                            if ( map.HasValue )
+                            if ( _MorphoAttributeList.TryGetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute, ref _TempMorphoAttributePair ) )
                             {
-                                _MorphoAttributePairs_Buffer.Add( map.Value );
+                                _MorphoAttributePairs_Buffer.Add( _TempMorphoAttributePair );
                             }
 #if DEBUG
                             //*
@@ -778,7 +613,6 @@ namespace lingvo.morphology
                 #endregion
 
                 #region [.alloc native-memory for ending-of-word.]
-                //*
                 IntPtr endingPtr;
                 IntPtr endingUpperPtr;
                 if ( (i == 1) && (_ENDING_LOWER_BUFFER[ 0 ] == UNDERLINE) )
@@ -792,16 +626,15 @@ namespace lingvo.morphology
                     #region [.v2.]
                     #region [.ending-in-original-case.]
                     endingPtr = new IntPtr( _ENDING_LOWER_BUFFER );
-
-                    IntPtr existsPtr;
-                    if ( _EndingDictionary.TryGetValue( endingPtr, out existsPtr ) )
+                    if ( _EndingHashSet.TryGetValue( endingPtr, out var existsPtr ) )
                     {
                         endingPtr = existsPtr;
                     }
                     else
                     {
-                        AllocHGlobalAndCopy( _ENDING_LOWER_BUFFER, index, out endingPtr );
-                        _EndingDictionary.Add( endingPtr, endingPtr );
+                        endingPtr = _NativeMemAllocator.AllocAndCopy( _ENDING_LOWER_BUFFER, index );
+                        var suc = _EndingHashSet.Add( endingPtr );
+                        Debug.Assert( suc );
                     }
                     #endregion
 
@@ -809,255 +642,65 @@ namespace lingvo.morphology
                     StringsHelper.ToUpperInvariant( _ENDING_LOWER_BUFFER, _ENDING_UPPER_BUFFER );
 
                     endingUpperPtr = new IntPtr( _ENDING_UPPER_BUFFER );
-
-                    if ( _EndingDictionary.TryGetValue( endingUpperPtr, out existsPtr ) )
+                    if ( _EndingHashSet.TryGetValue( endingUpperPtr, out existsPtr ) )
                     {
                         endingUpperPtr = existsPtr;
                     }
                     else
                     {
-                        AllocHGlobalAndCopy( _ENDING_UPPER_BUFFER, index, out endingUpperPtr );
-                        _EndingDictionary.Add( endingUpperPtr, endingUpperPtr );
+                        endingUpperPtr = _NativeMemAllocator.AllocAndCopy( _ENDING_UPPER_BUFFER, index );
+                        var suc = _EndingHashSet.Add( endingUpperPtr );
+                        Debug.Assert( suc );
                     } 
                     #endregion
                     #endregion
-
-                    #region [.commented. v1.]
-                    /*
-                    AllocHGlobalAndCopyToUpperInvariant( _ENDING_LOWER_BUFFER, index, out endingPtr, out endingUpperPtr  );
-
-                    #region [.ending-in-original-case.]
-                    IntPtr existsPtr;
-                    if ( _EndingDictionary.TryGetValue( endingPtr, out existsPtr ) )
-                    {
-                        Marshal.FreeHGlobal( endingPtr );
-                        endingPtr = existsPtr;
-                    }
-                    else
-                    {
-                        _EndingDictionary.Add( endingPtr, endingPtr );
-                    }
-                    #endregion
-
-                    #region [.ending-in-upper-case.]
-                    if ( _EndingDictionary.TryGetValue( endingUpperPtr, out existsPtr ) )
-                    {
-                        Marshal.FreeHGlobal( endingUpperPtr );
-                        endingUpperPtr = existsPtr;
-                    }
-                    else
-                    {
-                        _EndingDictionary.Add( endingUpperPtr, endingUpperPtr );
-                    } 
-                    #endregion
-                    */
-                    #endregion
                 }
-                //*/
                 #endregion
 
-                #region [.commented previous version. alloc native-memory for ending-of-word.]
-                /*
-                IntPtr endingPtr;
-                IntPtr endingUpperPtr;                
-                if ( (i == 1) && (_ENDING_LOWER_BUFFER[ 0 ] == UNDERLINE) )
-                {
-                    //this is a '_EMPTY_STRING'. it is already in '_EndingDictionary'
-                    endingPtr      = _EMPTY_STRING;
-                    endingUpperPtr = _EMPTY_STRING;
-                }
-                else
-                {
-                    var ending = new string( _ENDING_LOWER_BUFFER, 0, index );
-
-                    #region [.ending-in-original-case.]
-                    endingPtr = Marshal.StringToHGlobalUni( ending );
-                    IntPtr existsPtr;
-                    if ( _EndingDictionary.TryGetValue( endingPtr, out existsPtr ) )
-                    {
-                        Marshal.FreeHGlobal( endingPtr );
-                        endingPtr = existsPtr;
-                    }
-                    else
-                    {
-                        _EndingDictionary.Add( endingPtr, endingPtr );
-                    }
-                    #endregion
-
-                    #region [.ending-in-upper-case.]
-                    StringsHelper.ToUpperInvariantInPlace( ending );
-                    endingUpperPtr = Marshal.StringToHGlobalUni( ending );
-                    if ( _EndingDictionary.TryGetValue( endingUpperPtr, out existsPtr ) )
-                    {
-                        Marshal.FreeHGlobal( endingUpperPtr );
-                        endingUpperPtr = existsPtr;
-                    }
-                    else
-                    {
-                        _EndingDictionary.Add( endingUpperPtr, endingUpperPtr );
-                    }
-                    #endregion
-                }
-                //*/
-                #endregion
-                
-                var morphoForm = new MorphoFormNative( (char*) endingPtr, (char*) endingUpperPtr, _MorphoAttributePairs_Buffer );
-                return (morphoForm);
+                morphoForm = new MorphoFormNative( (char*) endingPtr, (char*) endingUpperPtr, _MorphoAttributePairs_Buffer );
+                return (true);
             }
-            /*unsafe private MorphoFormNative ___CreateMorphoForm__( MorphoTypeNative morphoType, string line )
-		    {
-			    int index = line.IndexOf( COLON );
-                if ( index < 0 )
-                {
-                    return (null); //throw (new MorphoFormatException());
-                }
-
-                var ending = StringsHelper.ToLowerInvariant( line.Substring( 0, index ).Trim() );
-			    if (ending == EMPTY_ENDING)
-				    ending = string.Empty;
-
-                _morphoAttributePairs_Buffer.Clear();
-			    var attributes = line.Substring( index + 1 ).Split( MORPHO_ATTRIBUTE_SEPARATOR, StringSplitOptions.RemoveEmptyEntries );
-			    foreach ( var attribute in attributes )
-			    {
-				    var attr = attribute.Trim();
-				    if ( !string.IsNullOrEmpty( attr ) )
-				    {
-                        var morphoAttribute = default(MorphoAttributeEnum);
-                        if ( Enum.TryParse( attr, true, out morphoAttribute ) )
-                        {
-                            _morphoAttributePairs_Buffer.Add( _MorphoAttributeList.GetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute ) );
-                        }
-                        else
-                        {
-                            _ModelLoadingErrorCallback( "Unknown morpho-attribute: '" + attr + '\'', line );
-                        }
-				    }
-			    }
-
-                //
-                IntPtr endingPtrExists;
-                IntPtr endingPtr = Marshal.StringToHGlobalUni( ending );
-                if ( _EndingDictionary.TryGetValue( endingPtr, out endingPtrExists ) )
-                {
-                    Marshal.FreeHGlobal( endingPtr );
-                    endingPtr = endingPtrExists;
-                }
-                else
-                {
-                    _EndingDictionary.Add( endingPtr, endingPtr );
-                }
-
-
-                IntPtr endingUpperPtr;
-                if ( string.IsNullOrEmpty( ending ) )
-                {
-                    endingUpperPtr = endingPtr;
-                }
-                else
-                {
-                    IntPtr endingUpperPtrExists;
-                    endingUpperPtr = Marshal.StringToHGlobalUni( StringsHelper.ToUpperInvariant( ending ) );
-                    if ( _EndingDictionary.TryGetValue( endingUpperPtr, out endingUpperPtrExists ) )
-                    {
-                        Marshal.FreeHGlobal( endingUpperPtr );
-                        endingUpperPtr = endingUpperPtrExists;
-                    }
-                    else
-                    {
-                        _EndingDictionary.Add( endingUpperPtr, endingUpperPtr );
-                    }
-                }
-                //
-
-                var morphoForm = new MorphoFormNative( (char*) endingPtr, (char*) endingUpperPtr, _morphoAttributePairs_Buffer );
-                return (morphoForm);
-            }*/
 
 		    /// <summary>
             /// создание морфотипа из строки
 		    /// </summary>
-            private MorphoTypeNative_pair_t? CreateMorphoTypePair( char* lineBase, int lineLength )
+            [M(O.AggressiveInlining)] private bool TryCreateMorphoTypePair( char* lineBase, int lineLength, ref MorphoType_pair_t morphoTypePair )
 		    {
                 var index1 = IndexOf( lineBase, COMMA );
                 if ( index1 == -1 )
                 {
-                    return (null);
+                    return (false);
                 }
                 var index2 = IndexAfter_MORPHO_TYPE( lineBase + index1 + 1 );
                 if ( index2 == -1 )
                 {
-                    return (null);
+                    return (false);
                 }
 
-                var partOfSpeech = default(PartOfSpeechEnum);
-                //---var pos = line.Substring( 0, index1 );                
-                //---if ( Enum.TryParse( pos, true, out partOfSpeech ) )
-                if ( _EnumParserPartOfSpeech.TryParse( lineBase, index1, ref partOfSpeech ) )
+                var pos = default(PartOfSpeechEnum);
+                if ( _EnumParserPartOfSpeech.TryParse( lineBase, index1, ref pos ) )
                 {
                     var startIndex = index1 + 1 + index2 + 1;
-                    IntPtr namePtr;
-                    AllocHGlobalAndCopy( lineBase + startIndex, lineLength - startIndex, out namePtr );
 
-                    var morphoType = new MorphoTypeNative( _PartOfSpeechList.GetPartOfSpeech( partOfSpeech ) );
-                    var morphoTypePair = new MorphoTypeNative_pair_t()
+                    var namePtr = _NativeMemAllocator.AllocAndCopy( lineBase + startIndex, lineLength - startIndex );
+
+                    var morphoType = new MorphoTypeNative( _PartOfSpeechList.GetPartOfSpeech( pos ) );
+                    morphoTypePair = new MorphoType_pair_t()
                     {
                         Name       = namePtr,
                         MorphoType = morphoType,
                     };
-                    return (morphoTypePair);
-
-                    #region commneted. previous.
-                    /*
-                    var name = line.Substring( index1 + 1 + index2 + 1 );
-                    var morphoType = new MorphoTypeNative( _PartOfSpeechList.GetPartOfSpeech( partOfSpeech ) );
-                    var morphoTypePair = new MorphoTypeNative_pair_t()
-                    {
-                        Name       = name,
-                        MorphoType = morphoType,
-                    };
-                    return (morphoTypePair);
-                    */
-                    #endregion
+                    return (true);
                 }
                 else
                 {
-                    var pos = StringsHelper.ToString( lineBase, index1 );
-                    _ModelLoadingErrorCallback( "Unknown part-of-speech: '" + pos + '\'', StringsHelper.ToString( lineBase ) );
+                    var pos_txt = StringsHelper.ToString( lineBase, index1 );
+                    _ModelLoadingErrorCallback( "Unknown part-of-speech: '" + pos_txt + '\'', StringsHelper.ToString( lineBase ) );
                 }
-                return (null);
+                return (false);
 		    }
-            /*private MorphoTypeNative_pair_t? __CreateMorphoTypePair__( string line )
-		    {
-                var m = MORPHOTYPE_PREFIX_REGEXP.Match( line );
-                if ( m == null || m.Groups.Count < 3 )
-                {
-                    return (null);
-                }
-
-                string prefix = m.Groups[ 1 ].Value;
-                string pos    = m.Groups[ 2 ].Value;
-                string name   = line.Substring( prefix.Length );
-
-                var partOfSpeech = default(PartOfSpeechEnum);
-                if ( Enum.TryParse( pos, true, out partOfSpeech ) )
-                {
-                    var morphoType = new MorphoTypeNative( _PartOfSpeechList.GetPartOfSpeech( partOfSpeech ) );
-                    var morphoTypePair = new MorphoTypeNative_pair_t()
-                    {
-                        Name       = name,
-                        MorphoType = morphoType,
-                    };
-                    return (morphoTypePair);
-                }
-                else
-                {
-                    _ModelLoadingErrorCallback( "Unknown part-of-speech: '" + pos + '\'', line );
-                }
-                return (null);
-		    }*/
-        
-            private static int IndexAfter_MORPHO_TYPE( char* ptr )
+              
+            [M(O.AggressiveInlining)] private static int IndexAfter_MORPHO_TYPE( char* ptr )
             {
                 var index = IndexOf( ptr, COLON );
                 if ( index == -1 )
@@ -1087,66 +730,29 @@ namespace lingvo.morphology
 
                 return (-1);
             }
-
-            private static void AllocHGlobalAndCopy( char* source, int sourceLength, out IntPtr dest )
-            {
-                //alloc with include zero-'\0' end-of-string
-                dest = Marshal.AllocHGlobal( (sourceLength + 1) * sizeof(char) );
-                var destPtr = (char*) dest;
-                for ( ; 0 < sourceLength; sourceLength-- )
-                {
-                    *(destPtr++) = *(source++);
-                }
-                *destPtr   = '\0';
-            }
-            private static IntPtr Alloc_EMPTY_STRING()
-            {
-                //alloc static empty-native-string
-                var empty_string = Marshal.AllocHGlobal( sizeof( char ) );
-                *((char*) empty_string) = '\0';
-                return (empty_string);
-            }
         }
 
         #region [.private field's.]
         // словарь слов
-        private TreeDictionaryNative _TreeDictionary;
-        // array of endings-of-word. if not NULL, then for faster call 'Marshal.FreeHGlobal'
-        private ModelLoader.EndingsNativeKeeper _EndingsNativeKeeper;
+        private TreeDictionary _TreeDictionary;
+        private NativeMemAllocationMediator _NativeMemAllocator;
         #endregion
 
         #region [.ctor().]
-        public MorphoModelNative( MorphoModelConfig config ) : base( config )
+        public MorphoModelNative( in MorphoModelConfig config ) : base( config )
         {
-            _TreeDictionary = new TreeDictionaryNative();
+            _TreeDictionary = new TreeDictionary();
+            _NativeMemAllocator = new NativeMemAllocationMediator( nativeBlockAllocSize: 4096 * 100 );
 
-            #region [.loading model.]
-            using ( var loader = new ModelLoader( config, _TreeDictionary ) )
-            {
-                _EndingsNativeKeeper = loader.Run();
-            }
-            #endregion            
+            ModelLoader.RunLoad( in config, _TreeDictionary, _NativeMemAllocator );
         }
-
-        public void Dispose()
-        {
-            _EndingsNativeKeeper.Dispose();
-        }
+        public void Dispose() => _NativeMemAllocator.Dispose();
         #endregion
 
         #region [.IMorphoModel.]
-        public bool GetWordFormMorphologies( string wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
-        {
-            return (_TreeDictionary.GetWordFormMorphologies( wordUpper, result, wordFormMorphologyMode ));
-        }
-        public bool GetWordFormMorphologies( char* wordUpper, List< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
-        {
-            return (_TreeDictionary.GetWordFormMorphologies( wordUpper, result, wordFormMorphologyMode ));
-        }
-        public bool GetWordForms( string wordUpper, List< WordForm_t > result )
-        {
-            return (_TreeDictionary.GetWordForms( wordUpper, result ));
-        }
+        public bool TryGetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum mode ) => _TreeDictionary.TryGetWordFormMorphologies( wordUpper, result, mode );
+        public bool TryGetWordFormMorphologies( char* wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum mode ) => _TreeDictionary.TryGetWordFormMorphologies( wordUpper, result, mode );
+        public bool TryGetWordForms( string wordUpper, ICollection< WordForm_t > result ) => _TreeDictionary.TryGetWordForms( wordUpper, result );
         #endregion
     }
 }

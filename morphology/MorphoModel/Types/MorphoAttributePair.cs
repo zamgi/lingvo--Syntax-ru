@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
-	/// <summary>
-	/// Морфоатрибут
-	/// </summary>
-	internal struct MorphoAttributePair
+    /// <summary>
+    /// Морфоатрибут
+    /// </summary>
+    internal struct MorphoAttributePair
 	{
         /// значение
         private MorphoAttributeEnum      _MorphoAttribute;
@@ -20,20 +20,11 @@ namespace lingvo.morphology
         }
 
 		/// получение типа атрибута
-		public MorphoAttributeGroupEnum MorphoAttributeGroup
-        {
-            get { return (_MorphoAttributeGroup); }
-        }
+		public MorphoAttributeGroupEnum MorphoAttributeGroup { [M(O.AggressiveInlining)] get => _MorphoAttributeGroup; }
 		/// получение значения атрибута
-        public MorphoAttributeEnum MorphoAttribute
-        {
-            get { return (_MorphoAttribute); }
-        }
+        public MorphoAttributeEnum MorphoAttribute { [M(O.AggressiveInlining)] get => _MorphoAttribute; }
 
-        public override string ToString()
-        {
-            return (_MorphoAttributeGroup + " : " + _MorphoAttribute);
-        }
+        public override string ToString() => (_MorphoAttributeGroup + " : " + _MorphoAttribute);
 
         /// получение морфологической информации по форме слова
         /// pWordFormInfo - морфологическая информация о форме слова
@@ -73,46 +64,7 @@ namespace lingvo.morphology
 
             return (result);
         }
-        /*---unsafe public static MorphoAttributeEnum GetMorphoAttribute( BaseMorphoFormNative baseMorphoForm, MorphoFormNative morphoForm )
-        {
-            var result = default( MorphoAttributeEnum );
-
-            var morphoAttributeGroup = baseMorphoForm.MorphoAttributeGroup;
-            fixed ( MorphoAttributePair* map_ptr = morphoForm.MorphoAttributePairs )
-            {
-                for ( int i = 0, len = morphoForm.MorphoAttributePairs.Length; i < len; i++ )
-                {
-                    var morphoAttributePair = (map_ptr + i);
-                    if ( (morphoAttributeGroup & morphoAttributePair->MorphoAttributeGroup) == morphoAttributePair->MorphoAttributeGroup )
-                    {
-                        result |= morphoAttributePair->MorphoAttribute;
-                    }
-                    else
-                    {
-                        throw (new WrongAttributeException());
-                    }
-                }
-            }
-            if ( baseMorphoForm.NounType.HasValue )
-            {
-                var morphoAttributePair = baseMorphoForm.NounType.Value;
-                if ( (morphoAttributeGroup & morphoAttributePair.MorphoAttributeGroup) == morphoAttributePair.MorphoAttributeGroup )
-                {
-                    result |= morphoAttributePair.MorphoAttribute;
-                }
-                else
-                {
-                    throw (new WrongAttributeException());
-                }
-            }
-
-            return (result);
-        }
-        */
-        unsafe public static MorphoAttributeEnum GetMorphoAttribute( 
-            MorphoTypeNative         morphoType,
-            MorphoFormNative         morphoForm,
-            ref MorphoAttributePair? nounType )
+        unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, MorphoFormNative morphoForm, ref MorphoAttributePair? nounType )
         {
             var result = default(MorphoAttributeEnum);
 
@@ -152,9 +104,7 @@ namespace lingvo.morphology
             return (result);
         }
 
-        unsafe public static MorphoAttributeEnum GetMorphoAttribute( 
-            MorphoTypeNative morphoType,
-            MorphoFormNative morphoForm )
+        unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, MorphoFormNative morphoForm )
         {
             var result = default(MorphoAttributeEnum);
 
@@ -181,17 +131,12 @@ namespace lingvo.morphology
 
             return (result);
         }
-
-        unsafe public static MorphoAttributeEnum GetMorphoAttribute( 
-            MorphoTypeNative         morphoType,
-            MorphoAttributeEnum      morphoAttribute,
-            ref MorphoAttributePair? nounType )
+        [M(O.AggressiveInlining)] unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, MorphoAttributeEnum morphoAttribute, in MorphoAttributePair? nounType )
         {
             if ( nounType.HasValue )
             {
-                var morphoAttributeGroup = morphoType.MorphoAttributeGroup;
-                var morphoAttributePair  = nounType.Value;
-                if ( (morphoAttributeGroup & morphoAttributePair.MorphoAttributeGroup) == morphoAttributePair.MorphoAttributeGroup )
+                var morphoAttributePair = nounType.Value;
+                if ( (morphoType.MorphoAttributeGroup & morphoAttributePair.MorphoAttributeGroup) == morphoAttributePair.MorphoAttributeGroup )
                 {
                     morphoAttribute |= morphoAttributePair.MorphoAttribute;
                 }
@@ -201,6 +146,18 @@ namespace lingvo.morphology
                 }
             }
 
+            return (morphoAttribute);
+        }
+        [M(O.AggressiveInlining)] unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, MorphoAttributeEnum morphoAttribute, in MorphoAttributePair nounType )
+        {
+            if ( (morphoType.MorphoAttributeGroup & nounType.MorphoAttributeGroup) == nounType.MorphoAttributeGroup )
+            {
+                morphoAttribute |= nounType.MorphoAttribute;
+            }
+            else
+            {
+                throw (new WrongAttributeException());
+            }
             return (morphoAttribute);
         }
     }

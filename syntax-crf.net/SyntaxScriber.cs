@@ -253,10 +253,15 @@ namespace lingvo.syntax
             _CrfTemplateFile = CRFTemplateFileLoader.Load( templateFilename, ALLOWED_COLUMNNAMES );
 
             //-0-
-            native.load_native_crf_suite();
-            var ptr = Marshal.StringToHGlobalAnsi( modelFilename );			
-            _Tagger = native.crf_tagger_initialize( ptr );
-            Marshal.FreeHGlobal( ptr );
+            var ptr = Marshal.StringToHGlobalAnsi( modelFilename );
+            try
+            {
+                _Tagger = Native.crf_tagger_initialize( ptr );
+            }
+            finally
+            {
+                Marshal.FreeHGlobal( ptr );
+            }
 
             if ( _Tagger == IntPtr.Zero )
             {
@@ -290,22 +295,17 @@ namespace lingvo.syntax
                 _PinnedWordsBufferPtrBase = null;
             }
         }
-
-        ~SyntaxScriber_NoWords()
-        {
-            DisposeNativeResources();
-        }
+        ~SyntaxScriber_NoWords() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
         private void DisposeNativeResources()
         {
             if ( _Tagger != IntPtr.Zero )
             {
-                native.crf_tagger_uninitialize( _Tagger );
+                Native.crf_tagger_uninitialize( _Tagger );
                 _Tagger = IntPtr.Zero;
             }
 
@@ -333,15 +333,15 @@ namespace lingvo.syntax
             #endif
             #endregion
 
-            native.crf_tagger_beginAddItemSequence( _Tagger );
+            Native.crf_tagger_beginAddItemSequence( _Tagger );
 
             #region [.put-attr-values-to-crf.]
             for ( int wordIndex = 0; wordIndex < wordsCount; wordIndex++ )
 			{
-                native.crf_tagger_beginAddItemAttribute( _Tagger );
+                Native.crf_tagger_beginAddItemAttribute( _Tagger );
 
                 #region [.process-crf-attributes-by-word.]
-                native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._PosInputtypeOtherPtrBase );
+                Native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._PosInputtypeOtherPtrBase );
                 #if DEBUG
                     sb_attr_debug.Append( PosTaggerInputType.O.ToText() ).Append( '\t' );
                 #endif
@@ -401,7 +401,7 @@ namespace lingvo.syntax
 
                     #region [.add-attr-values.]
                     *(_AttributeBufferPtr++) = ZERO;
-                    native.crf_tagger_addItemAttributeNameOnly( _Tagger, _AttributeBufferPtrBase );
+                    Native.crf_tagger_addItemAttributeNameOnly( _Tagger, _AttributeBufferPtrBase );
                     #if DEBUG
                         var attr_len_with_zero = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);
                         var s_debug = new string( (sbyte*) _AttributeBufferPtrBase, 0, attr_len_with_zero - 1 );
@@ -413,7 +413,7 @@ namespace lingvo.syntax
                 #region [.BOS-&-EOS.]
 			    if ( wordIndex == 0 )
                 {
-                    native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._BeginOfSentencePtrBase );
+                    Native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._BeginOfSentencePtrBase );
                     #if DEBUG
                         sb_attr_debug.Append( xlat_Unsafe.BEGIN_OF_SENTENCE ).Append( '\t' );
                     #endif
@@ -421,7 +421,7 @@ namespace lingvo.syntax
                 else 
                 if ( wordIndex == wordsCount_Minus1 )
                 {
-                    native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._EndOfSentencePtrBase );
+                    Native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._EndOfSentencePtrBase );
                     #if DEBUG
                         sb_attr_debug.Append( xlat_Unsafe.END_OF_SENTENCE ).Append( '\t' );
                     #endif
@@ -429,26 +429,26 @@ namespace lingvo.syntax
                 #endregion
                 #endregion
 
-                native.crf_tagger_endAddItemAttribute( _Tagger );
+                Native.crf_tagger_endAddItemAttribute( _Tagger );
                 #if DEBUG
                     sb_attr_debug.Append( '\n' );
                 #endif
 			}
             #endregion
 
-            native.crf_tagger_endAddItemSequence( _Tagger );
+            Native.crf_tagger_endAddItemSequence( _Tagger );
             #if DEBUG
                 var attr_debug = sb_attr_debug.ToString();
             #endif
 
             #region [.run-crf-tagging-words.]
-            native.crf_tagger_tag( _Tagger );
+            Native.crf_tagger_tag( _Tagger );
             #endregion
 
             #region [.get-crf-tagging-data.]
-            for ( uint i = 0, len = native.crf_tagger_getResultLength( _Tagger ); i < len; i++ )
+            for ( uint i = 0, len = Native.crf_tagger_getResultLength( _Tagger ); i < len; i++ )
             {
-                var ptr = native.crf_tagger_getResultValue( _Tagger, i );
+                var ptr = Native.crf_tagger_getResultValue( _Tagger, i );
                 
                 var value = (byte*) ptr.ToPointer();
                 words[ (int) i ].syntaxRoleType = SyntaxExtensions.ToSyntaxRoleType( value );
@@ -486,10 +486,6 @@ namespace lingvo.syntax
 
             return (true);
         }
-        /*private void Uninit()
-        {
-            //_Words = null;
-        }*/
 
         private void AppendAttrValue( int wordIndex, CRFAttribute crfAttribute )
         {
@@ -687,10 +683,15 @@ namespace lingvo.syntax
             _CrfTemplateFile = CRFTemplateFileLoader.Load( templateFilename, ALLOWED_COLUMNNAMES );
 
             //-0-
-            native.load_native_crf_suite();
-            var ptr = Marshal.StringToHGlobalAnsi( modelFilename );			
-            _Tagger = native.crf_tagger_initialize( ptr );
-            Marshal.FreeHGlobal( ptr );
+            var ptr = Marshal.StringToHGlobalAnsi( modelFilename );
+            try
+            {
+                _Tagger = Native.crf_tagger_initialize( ptr );
+            }
+            finally
+            {
+                Marshal.FreeHGlobal( ptr );
+            }
 
             if ( _Tagger == IntPtr.Zero )
             {
@@ -731,22 +732,17 @@ namespace lingvo.syntax
                 _PinnedWordsBufferPtrBase = null;
             }
         }
-
-        ~SyntaxScriber_Words()
-        {
-            DisposeNativeResources();
-        }
+        ~SyntaxScriber_Words() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
         private void DisposeNativeResources()
         {
             if ( _Tagger != IntPtr.Zero )
             {
-                native.crf_tagger_uninitialize( _Tagger );
+                Native.crf_tagger_uninitialize( _Tagger );
                 _Tagger = IntPtr.Zero;
             }
 
@@ -780,15 +776,15 @@ namespace lingvo.syntax
             #endif
             #endregion
 
-            native.crf_tagger_beginAddItemSequence( _Tagger );
+            Native.crf_tagger_beginAddItemSequence( _Tagger );
 
             #region [.put-attr-values-to-crf.]
             for ( int wordIndex = 0; wordIndex < wordsCount; wordIndex++ )
 			{
-                native.crf_tagger_beginAddItemAttribute( _Tagger );
+                Native.crf_tagger_beginAddItemAttribute( _Tagger );
 
                 #region [.process-crf-attributes-by-word.]
-                native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._PosInputtypeOtherPtrBase );
+                Native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._PosInputtypeOtherPtrBase );
                 #if DEBUG
                     sb_attr_debug.Append( PosTaggerInputType.O.ToText() ).Append( '\t' );
                 #endif
@@ -850,7 +846,7 @@ namespace lingvo.syntax
                     *(_AttributeBufferPtr++) = ZERO;
                     var attr_len_with_zero = Math.Min( ATTRIBUTE_MAX_LENGTH, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) );
                     UTF8_ENCODING.GetBytes( _AttributeBufferPtrBase, attr_len_with_zero, _UTF8BufferPtrBase, UTF8_BUFFER_SIZE ); //var bytesWritten = UTF8_ENCODER.GetBytes( attr_ptr, attr_len, utf8buffer, UTF8_BUFFER_SIZE, true ); 
-                    native.crf_tagger_addItemAttributeNameOnly( _Tagger, _UTF8BufferPtrBase );
+                    Native.crf_tagger_addItemAttributeNameOnly( _Tagger, _UTF8BufferPtrBase );
                     #if DEBUG
                         var s_debug = new string( _AttributeBufferPtrBase, 0, attr_len_with_zero - 1 );
                         sb_attr_debug.Append( s_debug ).Append( '\t' );
@@ -861,7 +857,7 @@ namespace lingvo.syntax
                 #region [.BOS-&-EOS.]
 			    if ( wordIndex == 0 )
                 {
-                    native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._BeginOfSentencePtrBase );
+                    Native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._BeginOfSentencePtrBase );
                     #if DEBUG
                         sb_attr_debug.Append( xlat_Unsafe.BEGIN_OF_SENTENCE ).Append( '\t' );
                     #endif
@@ -869,7 +865,7 @@ namespace lingvo.syntax
                 else 
                 if ( wordIndex == wordsCount_Minus1 )
                 {
-                    native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._EndOfSentencePtrBase );
+                    Native.crf_tagger_addItemAttributeNameOnly( _Tagger, xlat_Unsafe.Inst._EndOfSentencePtrBase );
                     #if DEBUG
                         sb_attr_debug.Append( xlat_Unsafe.END_OF_SENTENCE ).Append( '\t' );
                     #endif
@@ -877,27 +873,27 @@ namespace lingvo.syntax
                 #endregion
                 #endregion
 
-                native.crf_tagger_endAddItemAttribute( _Tagger );
+                Native.crf_tagger_endAddItemAttribute( _Tagger );
                 #if DEBUG
                     sb_attr_debug.Append( '\n' );
                 #endif
 			}
             #endregion
 
-            native.crf_tagger_endAddItemSequence( _Tagger );
+            Native.crf_tagger_endAddItemSequence( _Tagger );
             #if DEBUG
                 var attr_debug = sb_attr_debug.ToString();
             #endif
 
             #region [.run-crf-tagging-words.]
-            native.crf_tagger_tag( _Tagger );
+            Native.crf_tagger_tag( _Tagger );
             #endregion
 
             #region [.get-crf-tagging-data.]
-            System.Diagnostics.Debug.Assert( native.crf_tagger_getResultLength( _Tagger ) == wordsCount, "(native.crf_tagger_getResultLength( _Tagger ) != _WordsCount)" );
+            System.Diagnostics.Debug.Assert( Native.crf_tagger_getResultLength( _Tagger ) == wordsCount, "(native.crf_tagger_getResultLength( _Tagger ) != _WordsCount)" );
             for ( var i = 0; i < wordsCount; i++ )
             {
-                var ptr = native.crf_tagger_getResultValue( _Tagger, (uint) i );
+                var ptr = Native.crf_tagger_getResultValue( _Tagger, (uint) i );
                 
                 var value = (byte*) ptr.ToPointer();
                 words[ i ].syntaxRoleType = SyntaxExtensions.ToSyntaxRoleType( value );
@@ -944,14 +940,6 @@ namespace lingvo.syntax
 
             return (true);
         }
-        /*private void Uninit()
-        {
-            for ( var i = 0; i < _WordsCount; i++ )
-            {
-                (_PinnedWordsBufferPtrBase + i)->gcHandle.Free();
-            }
-            //_Words = null;
-        }*/
 
         private void AppendAttrValue( int wordIndex, CRFAttribute crfAttribute )
         {

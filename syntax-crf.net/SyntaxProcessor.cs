@@ -108,9 +108,9 @@ namespace lingvo.syntax
             _ProcessSentCallback( words );
         }
 
-        public List< word_t[] > Run_Debug( string text, bool splitBySmiles )
+        public List< word_t[] > Run_Details( string text, bool splitBySmiles )
         {
-            var wordsBySents = _PosTaggerProcessor.Run_Debug( text, splitBySmiles, true, true, true );
+            var wordsBySents = _PosTaggerProcessor.Run_Details( text, splitBySmiles, true, true, true );
 
             foreach ( var words in wordsBySents )
             {

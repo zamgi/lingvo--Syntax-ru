@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,7 +12,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>lingvo.syntax</RootNamespace>
     <AssemblyName>syntax_ru.web.demo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -30,7 +31,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -71,36 +72,36 @@
     <Content Include="rc\css\syntax.css" />
     <Content Include="rc\css\pos-tagger.css" />
     <Content Include="rc\css\style.css" />
-    <Content Include="rc\javascript\jquery-1.9.1.js" />
-    <Content Include="rc\javascript\main.js" />
+    <Content Include="rc\js\jquery-1.9.1.js" />
+    <Content Include="rc\js\main.js" />
     <Content Include="[resources]\crfsuite-tokenizer-resources.xml" />
-    <Content Include="[resources]\morphology\dsf_pa_%28morpho_ambiguity%29_5g.txt" />
-    <Content Include="[resources]\morphology\ENG\dic_nominal.txt" />
-    <Content Include="[resources]\morphology\ENG\dic_proper.txt" />
-    <Content Include="[resources]\morphology\ENG\MorphoTypes.txt" />
-    <Content Include="[resources]\morphology\RUS\dic_nominal.txt" />
-    <Content Include="[resources]\morphology\RUS\dic_proper.txt" />
-    <Content Include="[resources]\morphology\RUS\MorphoTypes.txt" />
-    <Content Include="[resources]\morphology\templateMorphoAmbiguity_3g.txt" />
-    <Content Include="[resources]\morphology\templateMorphoAmbiguity_5g.txt" />
+    <Content Include="[resources]\morphology\ru_dsf_pa_5g__morphoambiguity.txt" />
+    <Content Include="[resources]\morphology\en\en_dic_nominal.txt" />
+    <Content Include="[resources]\morphology\en\en_dic_proper.txt" />
+    <Content Include="[resources]\morphology\en\en_morpho_types.txt" />
+    <Content Include="[resources]\morphology\ru\ru_dic_nominal.txt" />
+    <Content Include="[resources]\morphology\ru\ru_dic_proper.txt" />
+    <Content Include="[resources]\morphology\ru\ru_morpho_types.txt" />
+    <Content Include="[resources]\morphology\template_3g__morphoambiguity.txt" />
+    <Content Include="[resources]\morphology\template_5g__morphoambiguity.txt" />
     <Content Include="[resources]\pos-tagger-resources.xml" />
     <Content Include="[resources]\sent-splitter-resources.xml" />
-    <Content Include="[resources]\syntax\templateSyntax_5g_no_words.txt" />
-    <Content Include="[resources]\syntax\templateSyntax_5g_words.txt" />
-    <Content Include="[resources]\templatePosTagger_ru.txt" />
+    <Content Include="[resources]\syntax\template_5g_no_words__syntax.txt" />
+    <Content Include="[resources]\syntax\template_5g_words__syntax.txt" />
+    <Content Include="[resources]\template__postagger.txt" />
     <Content Include="[resources]\url-detector-resources.xml" />
     <Content Include="description.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="[resources]\model_ap_%28minfreq-1%29_ru" />
+    <None Include="[resources]\ru_ap_%28minfreq-1%29__postagger.crf" />
     <Content Include="CaptchaImageHandler.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\AntiBotHelper.cs" />
-    <Compile Include="App_Code\Config.cs" />
-    <Compile Include="App_Code\Extensions.cs" />
-    <Compile Include="App_Code\Log.cs" />
+    <Compile Include="AppCodes\AntiBotHelper.cs" />
+    <Compile Include="AppCodes\Config.cs" />
+    <Compile Include="AppCodes\Extensions.cs" />
+    <Compile Include="AppCodes\Log.cs" />
     <Compile Include="Captcha.aspx.cs">
       <DependentUpon>Captcha.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -108,14 +109,14 @@
     <Compile Include="Captcha.aspx.designer.cs">
       <DependentUpon>Captcha.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\ConcurrentFactory.cs" />
+    <Compile Include="AppCodes\ConcurrentFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RESTProcessHandler.ashx.cs">
-      <DependentUpon>RESTProcessHandler.ashx</DependentUpon>
+    <Compile Include="ProcessHandler.ashx.cs">
+      <DependentUpon>ProcessHandler.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RESTProcessHandler.ashx" />
+    <Content Include="ProcessHandler.ashx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\captcha\captcha.csproj">
@@ -148,10 +149,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="[resources]\syntax\model_ap_5g_no_words" />
-    <Content Include="[resources]\syntax\model_ap_5g_words" />
-    <Content Include="[resources]\syntax\model_pa_5g_no_words" />
-    <Content Include="[resources]\syntax\model_pa_5g_words" />
+    <None Include="[resources]\syntax\ru_ap_5g_no_words__syntax.crf" />
+    <None Include="[resources]\syntax\ru_ap_5g_words__syntax.crf" />
+    <None Include="[resources]\syntax\ru_pa_5g_no_words__syntax.crf" />
+    <None Include="[resources]\syntax\ru_pa_5g_words__syntax.crf" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

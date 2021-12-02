@@ -5,8 +5,7 @@ namespace lingvo.morphology
     /// <summary>
     /// Тип/группа морфоатрибута
     /// </summary>
-    [Flags]
-    public enum MorphoAttributeGroupEnum : uint
+    [Flags] public enum MorphoAttributeGroupEnum : uint
     {
         __UNDEFINED__      = 0x0U,
 

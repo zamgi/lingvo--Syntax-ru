@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime;
 
 using lingvo.morphology;
 
@@ -29,14 +28,8 @@ namespace lingvo.postagger
             MorphoAttributeEnum.Neuter    |
             MorphoAttributeEnum.General;
 
-        private static bool IsCaseAnycase( MorphoAttributeEnum morphoAttribute )
-        {
-            return ((morphoAttribute & MorphoAttributeEnum.Anycase) == MorphoAttributeEnum.Anycase);
-        }
-        private static bool IsGenderGeneral( MorphoAttributeEnum morphoAttribute )
-        {
-            return ((morphoAttribute & MorphoAttributeEnum.General) == MorphoAttributeEnum.General);
-        }
+        private static bool IsCaseAnycase( MorphoAttributeEnum morphoAttribute ) => ((morphoAttribute & MorphoAttributeEnum.Anycase) == MorphoAttributeEnum.Anycase);
+        private static bool IsGenderGeneral( MorphoAttributeEnum morphoAttribute ) => ((morphoAttribute & MorphoAttributeEnum.General) == MorphoAttributeEnum.General);
         #endregion
 
         #region [.ctor().]
@@ -1207,9 +1200,11 @@ b) Для цепочки:
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     internal static class MorphoAmbiguityPreProcessorExt
     {
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
         public static void AddIfNotExists( this List< MorphoAmbiguityTuple_t > mats, MorphoAmbiguityTuple_t mat )
         {
             for ( int i = 0, len = mats.Count; i < len; i++ )
@@ -1223,10 +1218,9 @@ b) Для цепочки:
             mats.Add( mat );
         }
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-        private static bool Equals( MorphoAmbiguityTuple_t x, MorphoAmbiguityTuple_t y )
+        private static bool Equals( in MorphoAmbiguityTuple_t x, in MorphoAmbiguityTuple_t y )
         {
-            if ( !WordFormMorphology_t.Equals( ref x.WordFormMorphology, ref y.WordFormMorphology ) )
+            if ( !WordFormMorphology_t.Equals( in x.WordFormMorphology, in y.WordFormMorphology ) )
                 return (false);
 
             if ( string.CompareOrdinal( x.Word.valueUpper, y.Word.valueUpper ) != 0 )

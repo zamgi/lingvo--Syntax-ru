@@ -49,21 +49,6 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// </summary>
         public static byte get_CRF_W_field_value( MorphoAmbiguityTuple_t mat )
         {
-            /*
-            if ( mat.Word.posTaggerOutputType == PosTaggerOutputType.Punctuation )
-            {
-                switch ( mat.PunctuationType )
-                {                        
-                    case MorphoAmbiguityTuple_t.PunctuationTypeEnum.PunctuationQuote:   
-                        return ((byte) 'Q'); //Quote
-                    case MorphoAmbiguityTuple_t.PunctuationTypeEnum.PunctuationBracket: 
-                        return ((byte) 'B'); //Bracket                        
-                }
-            }
-
-            return (mat.Word.posTaggerOutputType.ToCrfByte());
-            */
-
             switch ( mat.Word.posTaggerOutputType )
             {
                 case PosTaggerOutputType.Adjective:           return ((byte) 'J');
@@ -95,8 +80,6 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     }
                     return ((byte) 'T'); //all-other-punctuation
             }
-
-            //---case PosTaggerOutputType.Other: return (O);
             return (O);
         }
         /// <summary>
@@ -387,10 +370,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// O => (y) crf-field
         /// </summary>
-        public static byte get_CRF_Y_field_value()
-        {
-            return (O);
-        }
+        public static byte get_CRF_Y_field_value() => O;
 
         unsafe public static MorphoAttributeEnum ToMorphoAttributes( byte* value )
         {
@@ -473,10 +453,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (morphoAttributes);
         }
 
-        public static bool IsSingleItemAndEmptyMorphoAttribute( List< MorphoAmbiguityTuple_t > mats )
-        {
-            return ((mats.Count == 1) && mats[ 0 ].WordFormMorphology.IsEmptyMorphoAttribute());
-        }
+        public static bool IsSingleItemAndEmptyMorphoAttribute( List< MorphoAmbiguityTuple_t > mats ) => ((mats.Count == 1) && mats[ 0 ].WordFormMorphology.IsEmptyMorphoAttribute());
 
         /*
         Так же возможен вариант, когда два токена объединились по четырем морфохарактеристикам, но при это имеют разный регистр первой буквы:
@@ -499,10 +476,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
             return (false);
         }
-        public static bool IsProbabilityEqual( double probability1, double probability2 )
-        {
-            return (Math.Abs( probability2 - probability1 ) <= PROBABILITY_EQUAL_THRESHOLD);
-        }
+        public static bool IsProbabilityEqual( double probability1, double probability2 ) => (Math.Abs( probability2 - probability1 ) <= PROBABILITY_EQUAL_THRESHOLD);
     }
 
     /// <summary>
@@ -517,14 +491,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         public MorphoAmbiguityTuple_t max_morphoAmbiguityTuple_3;
         public MorphoAmbiguityTuple_t max_morphoAmbiguityTuple_4;
 
-        public static probability_t Create()
-        {
-            var prob = new probability_t()
-            {
-                max_probability = double.MinValue,
-            };
-            return (prob);
-        }
+        public static probability_t Create() => new probability_t() { max_probability = double.MinValue, };
     }
 
 

@@ -16,24 +16,15 @@ namespace lingvo.syntax
     /// <summary>
     /// 
     /// </summary>
-    public sealed class RESTProcessHandler : IHttpHandler
+    public sealed class ProcessHandler : IHttpHandler
     {
         /// <summary>
         /// 
         /// </summary>
         private sealed class result_json_error
         {
-            public result_json_error( Exception ex )
-            {
-                exceptionMessage = ex.ToString();
-            }
-
-            [JsonProperty(PropertyName="err")]
-            public string exceptionMessage
-            {
-                get;
-                private set;
-            }
+            public result_json_error( Exception ex ) => exceptionMessage = ex.ToString();
+            [JsonProperty(PropertyName="err")] public string exceptionMessage { get; }
         }
 
         /// <summary>
@@ -41,69 +32,28 @@ namespace lingvo.syntax
         /// </summary>
         private struct morpho_info
         {
-            public morpho_info( WordFormMorphology_t morphology ) : this()
+            public morpho_info( WordFormMorphology_t morphology )
             {
                 normalForm      = morphology.NormalForm;
                 partOfSpeech    = morphology.PartOfSpeech.ToString();
                 morphoAttribute = !morphology.IsEmptyMorphoAttribute() ? morphology.MorphoAttribute.ToString() : "-";
             }
-
-            [JsonProperty(PropertyName="nf")]  public string normalForm
-            {
-                get;
-                set;
-            }
-            [JsonProperty(PropertyName="pos")] public string partOfSpeech
-            {
-                get;
-                set;
-            }                 
-            [JsonProperty(PropertyName="ma")]  public string morphoAttribute
-            {
-                get;
-                set;
-            }                 
+            [JsonProperty(PropertyName="nf")]  public string normalForm { get; set; }
+            [JsonProperty(PropertyName="pos")] public string partOfSpeech { get; set; }
+            [JsonProperty(PropertyName="ma")]  public string morphoAttribute { get; set; }
         }
         /// <summary>
         /// 
         /// </summary>
         private struct word_info
         {
-            [JsonProperty(PropertyName="i")]      public int          startIndex
-            {
-                get;
-                set;
-            }
-            [JsonProperty(PropertyName="l")]      public int          length
-            {
-                get;
-                set;
-            }
-            /*[JsonProperty(PropertyName="v")]      public string       value
-            {
-                get;
-                set;
-            }*/
-            [JsonProperty(PropertyName="p")]      public bool         isPunctuation
-            {
-                get;
-                set;
-            }
-            [JsonProperty(PropertyName="pos")]    public string       posTaggerOutputType
-            {
-                get;
-                set;
-            }                 
-            [JsonProperty(PropertyName="stx")]    public string       syntaxRoleType
-            {
-                get;
-                set;
-            }                 
-            [JsonProperty(PropertyName="morpho")] public morpho_info? morpho
-            {
-                get;
-                set;
-            }
+            [JsonProperty(PropertyName="i")]      public int startIndex { get; set; }
+            [JsonProperty(PropertyName="l")]      public int length { get; set; }
+            //[JsonProperty(PropertyName="v")]      public string       value { get; set; }
+            [JsonProperty(PropertyName="p")]      public bool isPunctuation { get; set; }
+            [JsonProperty(PropertyName="pos")]    public string posTaggerOutputType { get; set; }
+            [JsonProperty(PropertyName="stx")]    public string syntaxRoleType { get; set; }
+            [JsonProperty(PropertyName="morpho")] public morpho_info? morpho { get; set; }
         }
 
         /// <summary>
@@ -134,24 +84,15 @@ namespace lingvo.syntax
                     sents.Add( words );
                 }
             }
-
-            public List< word_info[] > sents
-            {
-                get;
-                private set;
-            }
+            public List< word_info[] > sents { get; }
         }
-
 
         /// <summary>
         /// 
         /// </summary>
         private static class ConcurrentFactoryHelper
         {
-            private static readonly object _SyncLock = new object();
-
-            private static string GetSyntaxModelFilename( SyntaxModelTypeEnum    syntaxModelType, 
-                                                          SyntaxModelSubTypeEnum syntaxModelsubType )
+            private static string GetSyntaxModelFilename( SyntaxModelTypeEnum syntaxModelType, SyntaxModelSubTypeEnum syntaxModelsubType )
             {
                 switch ( syntaxModelType )
                 {
@@ -184,27 +125,17 @@ namespace lingvo.syntax
                     default: throw (new ArgumentException(syntaxModelType.ToString()));
                 }
             }
-            private static SyntaxProcessorConfig         CreateSyntaxProcessorConfig( PosTaggerProcessorConfig     posTaggerConfig, 
-                                                                                      IMorphoModel                 morphoModel,
-                                                                                      MorphoAmbiguityResolverModel morphoAmbiguityModel )
-            {
-                var config = new SyntaxProcessorConfig( posTaggerConfig, morphoModel, morphoAmbiguityModel )
+            private static SyntaxProcessorConfig CreateSyntaxProcessorConfig( PosTaggerProcessorConfig posTaggerConfig, IMorphoModel morphoModel, MorphoAmbiguityResolverModel morphoAmbiguityModel )
+                => new SyntaxProcessorConfig( posTaggerConfig, morphoModel, morphoAmbiguityModel )
                 {
                     ModelType        = Config.SYNTAX_MODEL_TYPE,
                     ModelFilename    = GetSyntaxModelFilename   ( Config.SYNTAX_MODEL_TYPE, Config.SYNTAX_MODEL_SUBTYPE ),
                     TemplateFilename = GetSyntaxTemplateFilename( Config.SYNTAX_MODEL_TYPE ),
                 };
-
-                return (config);
-            }
-            private static PosTaggerProcessorConfig      CreatePosTaggerProcessorConfig()
+            private static PosTaggerProcessorConfig CreatePosTaggerProcessorConfig()
             {
-                var sentSplitterConfig = new SentSplitterConfig( Config.SENT_SPLITTER_RESOURCES_XML_FILENAME,
-                                                                 Config.URL_DETECTOR_RESOURCES_XML_FILENAME );
-                var config = new PosTaggerProcessorConfig( Config.TOKENIZER_RESOURCES_XML_FILENAME,
-                                                           Config.POSTAGGER_RESOURCES_XML_FILENAME, 
-                                                           LanguageTypeEnum.Ru,
-                                                           sentSplitterConfig )
+                var sentSplitterConfig = new SentSplitterConfig( Config.SENT_SPLITTER_RESOURCES_XML_FILENAME, Config.URL_DETECTOR_RESOURCES_XML_FILENAME );
+                var config = new PosTaggerProcessorConfig( Config.TOKENIZER_RESOURCES_XML_FILENAME, Config.POSTAGGER_RESOURCES_XML_FILENAME, LanguageTypeEnum.Ru, sentSplitterConfig )
                 {
                     ModelFilename    = Config.POSTAGGER_MODEL_FILENAME,
                     TemplateFilename = Config.POSTAGGER_TEMPLATE_FILENAME,
@@ -212,7 +143,7 @@ namespace lingvo.syntax
 
                 return (config);
             }
-            private static MorphoModelConfig             CreateMorphoModelConfig()
+            private static MorphoModelConfig CreateMorphoModelConfig()
             {
                 //_ModelLoadingErrors.Clear();
 
@@ -237,38 +168,29 @@ namespace lingvo.syntax
 
                 return (config);
             }
-            private static MorphoAmbiguityResolverConfig CreateMorphoAmbiguityConfig()
+            private static MorphoAmbiguityResolverConfig CreateMorphoAmbiguityConfig() => new MorphoAmbiguityResolverConfig()
             {
-                var config = new MorphoAmbiguityResolverConfig()
-                {
-                    ModelFilename       = Config.MORPHO_AMBIGUITY_MODEL_FILENAME,
-                    TemplateFilename_5g = Config.MORPHO_AMBIGUITY_TEMPLATE_FILENAME_5G,
-                    TemplateFilename_3g = Config.MORPHO_AMBIGUITY_TEMPLATE_FILENAME_3G,
-                };
-
-                return (config);
-            }
-            private static MorphoAmbiguityResolverModel  CreateMorphoAmbiguityResolverModel( MorphoAmbiguityResolverConfig config )
-            {
-                var model = new MorphoAmbiguityResolverModel( config );
-                return (model);
-            }
-            private static SyntaxProcessorConfig         CreateSyntaxProcessorConfig()
+                ModelFilename       = Config.MORPHO_AMBIGUITY_MODEL_FILENAME,
+                TemplateFilename_5g = Config.MORPHO_AMBIGUITY_TEMPLATE_FILENAME_5G,
+                TemplateFilename_3g = Config.MORPHO_AMBIGUITY_TEMPLATE_FILENAME_3G,
+            };
+            private static MorphoAmbiguityResolverModel  CreateMorphoAmbiguityResolverModel( in MorphoAmbiguityResolverConfig config ) => new MorphoAmbiguityResolverModel( in config );
+            private static SyntaxProcessorConfig CreateSyntaxProcessorConfig()
             {
                 var posTaggerConfig = CreatePosTaggerProcessorConfig();
 
                 var morphoModelConfig = CreateMorphoModelConfig();
-                var morphoModel       = MorphoModelFactory.Create( morphoModelConfig );
+                var morphoModel       = MorphoModelFactory.Create( in morphoModelConfig );
 
                 var morphoAmbiguityResolverConfig = CreateMorphoAmbiguityConfig();
-                var morphoAmbiguityModel          = CreateMorphoAmbiguityResolverModel( morphoAmbiguityResolverConfig );
+                var morphoAmbiguityModel          = CreateMorphoAmbiguityResolverModel( in morphoAmbiguityResolverConfig );
 
                 var config = CreateSyntaxProcessorConfig( posTaggerConfig, morphoModel, morphoAmbiguityModel );
                 return (config);
             }
 
-            private static ConcurrentFactory _ConcurrentFactory;            
-
+            private static readonly object _SyncLock = new object();
+            private static ConcurrentFactory _ConcurrentFactory;        
             public static ConcurrentFactory GetConcurrentFactory()
             {
                 var f = _ConcurrentFactory;
@@ -297,16 +219,9 @@ namespace lingvo.syntax
             }
         }
 
-        static RESTProcessHandler()
-        {
-            Environment.CurrentDirectory = HttpContext.Current.Server.MapPath( "~/" );
-        }
+        static ProcessHandler() => Environment.CurrentDirectory = HttpContext.Current.Server.MapPath( "~/" );
 
-        public bool IsReusable
-        {
-            get { return (true); }
-        }
-
+        public bool IsReusable => true;
         public void ProcessRequest( HttpContext context )
         {
             #region [.log.]
@@ -335,7 +250,7 @@ namespace lingvo.syntax
                 antiBot.MarkRequestEx( text );
                 #endregion
 
-                var words = ConcurrentFactoryHelper.GetConcurrentFactory().Run_Debug( text, splitBySmiles );
+                var words = ConcurrentFactoryHelper.GetConcurrentFactory().Run_Details( text, splitBySmiles );
 
                 Log.Info( context, text );
                 SendJsonResponse( context, words );
@@ -347,14 +262,8 @@ namespace lingvo.syntax
             }
         }
 
-        private static void SendJsonResponse( HttpContext context, List< word_t[] > words )
-        {            
-            SendJsonResponse( context, new result_json_by_sent( words ) );
-        }
-        private static void SendJsonResponse( HttpContext context, Exception ex )
-        {
-            SendJsonResponse( context, new result_json_error( ex ) );
-        }
+        private static void SendJsonResponse( HttpContext context, List< word_t[] > words ) => SendJsonResponse( context, new result_json_by_sent( words ) );
+        private static void SendJsonResponse( HttpContext context, Exception ex ) => SendJsonResponse( context, new result_json_error( ex ) );
         private static void SendJsonResponse( HttpContext context, object result )
         {
             context.Response.ContentType = "application/json";
@@ -370,17 +279,6 @@ namespace lingvo.syntax
     /// </summary>
     internal static class Extensions
     {
-        public static bool Try2Boolean( this string value, bool defaultValue )
-        {
-            if ( value != null )
-            {
-                var result = default(bool);
-                if ( bool.TryParse( value, out result ) )
-                    return (result);
-            }
-            return (defaultValue);
-        }
-
         public static string GetRequestStringParam( this HttpContext context, string paramName, int maxLength )
         {
             var value = context.Request[ paramName ];

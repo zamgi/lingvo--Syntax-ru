@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime;
+
 using lingvo.core;
-using lingvo.morphology;
 
 namespace lingvo.morphology
 {
@@ -18,13 +16,11 @@ namespace lingvo.morphology
         /// </summary>
         internal struct MorphoFormEndingUpperAndMorphoAttribute
         {
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public MorphoFormEndingUpperAndMorphoAttribute( IntPtr endingUpper, MorphoAttributeEnum[] morphoAttributes )
             {
                 EndingUpper      = endingUpper;
                 MorphoAttributes = morphoAttributes;
             }
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public MorphoFormEndingUpperAndMorphoAttribute( IntPtr endingUpper, LinkedList< MorphoAttributeEnum > morphoAttributes )
             {
                 EndingUpper      = endingUpper;
@@ -35,17 +31,13 @@ namespace lingvo.morphology
             public IntPtr                EndingUpper;
             public MorphoAttributeEnum[] MorphoAttributes;
 
-            public override string ToString()
-            {
-                return ("[" + StringsHelper.ToString( EndingUpper ) + ", {" + string.Join( ",", MorphoAttributes ) + "}]");
-            }
+            public override string ToString() => ("[" + StringsHelper.ToString( EndingUpper ) + ", {" + string.Join( ",", MorphoAttributes ) + "}]");
         }
 
         /// <summary>
         /// 
         /// </summary>
-	    private sealed class Set< TValue > : IEnumerable< KeyValuePair< IntPtr, TValue > >
-            where TValue : class
+	    private sealed class Set< TValue > : IEnumerable< KeyValuePair< IntPtr, TValue > > where TValue : class
 	    {
             /// <summary>
             /// 
@@ -67,33 +59,10 @@ namespace lingvo.morphology
                 private int           _Index;
                 private KeyValuePair< IntPtr, TValue > _Current;
 
-                public IntPtr Current_IntPtr
-                {
-                    [TargetedPatchingOptOut( "Performance critical to inline this type of method across NGen image boundaries" )]
-                    get { return _Current.Key; }
-                }
-                public TValue Current_Value
-                {
-                    [TargetedPatchingOptOut( "Performance critical to inline this type of method across NGen image boundaries" )]
-                    get { return _Current.Value; }
-                }
-                public KeyValuePair< IntPtr, TValue > Current
-	            {
-		            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-		            get { return _Current; }
-	            }
-	            object IEnumerator.Current
-	            {
-		            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-		            get
-		            {
-                        if ( _Index == 0 || _Index == _Set._Count + 1 )
-			            {
-				            throw (new InvalidOperationException("InvalidOperation_EnumOpCantHappen"));
-			            }
-			            return (_Current);
-		            }
-	            }
+                public IntPtr Current_IntPtr => _Current.Key;
+                public TValue Current_Value => _Current.Value;
+                public KeyValuePair< IntPtr, TValue > Current => _Current;
+                object IEnumerator.Current => _Current;
 
                 internal Enumerator( Set< TValue > set )
 	            {
@@ -101,11 +70,8 @@ namespace lingvo.morphology
 		            this._Index   = 0;
 		            this._Current = default(KeyValuePair< IntPtr, TValue >);
 	            }
-                public void Dispose()
-                {
-                }
+                public void Dispose() { }
 
-	            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
 	            public bool MoveNext()
 	            {
                     while ( _Index < _Set._Count )
@@ -117,26 +83,15 @@ namespace lingvo.morphology
                             _Current = new KeyValuePair< IntPtr, TValue >( slot.key, slot.value );
                             return (true);
                         }
-                        /*var slot = _Set._Slots[ _Index ];
-                        if ( 0 <= slot.hashCode )
-			            {
-                            _Current = slot.value;
-				            _Index++;
-				            return (true);
-			            }
-			            _Index++;
-                        */
                     }
                     _Index = _Set._Count + 1;
-		            _Current = default(KeyValuePair< IntPtr, TValue >);
+		            _Current = default;
 		            return (false);
 	            }
-
-	            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
 	            void IEnumerator.Reset()
 	            {
 		            _Index   = 0;
-                    _Current = default(KeyValuePair< IntPtr, TValue >);
+                    _Current = default;
 	            }
             }            
 
@@ -145,19 +100,11 @@ namespace lingvo.morphology
 		    private int    _Count;
 		    private int    _FreeList;
 
-            internal Slot[] Slots
-            {
-                [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-                get { return (_Slots); }
-            }
-            public int Count
-            {
-                [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-                get { return (_Count); }
-            }
+            internal Slot[] Slots => _Slots;
+            public int Count => _Count;
 
-		    [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-		    public Set( int capacity )
+
+            public Set( int capacity )
 		    {
 			    _Buckets  = new int [ capacity ];
 			    _Slots    = new Slot[ capacity ];
@@ -167,7 +114,6 @@ namespace lingvo.morphology
             /// <summary>
             /// try add not-exists-item & return-(true), else get exists-item to 'existsValue' & return-(false)
             /// </summary>
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public bool Add( IntPtr key, TValue value )
 		    {
                 #region [.find exists.]
@@ -213,7 +159,6 @@ namespace lingvo.morphology
                 #endregion
             }
 
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public bool TryGetValue( IntPtr key, ref TValue existsValue )
             {
                 #region [.find exists.]
@@ -233,7 +178,6 @@ namespace lingvo.morphology
                 #endregion
             }
 
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public void Clear()
             {
                 if ( 0 < _Count )
@@ -245,7 +189,6 @@ namespace lingvo.morphology
 	            }                    
             }
 
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
 		    private void Resize()
 		    {
                 int n1 = checked( _Count * 2 + 1 );
@@ -262,24 +205,10 @@ namespace lingvo.morphology
                 _Slots   = slots;
 		    }
 
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-            public Set< TValue >.Enumerator GetEnumerator()
-            {
-                return (new Set< TValue >.Enumerator( this ));
-            }
-
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-            IEnumerator< KeyValuePair< IntPtr, TValue > > IEnumerable< KeyValuePair< IntPtr, TValue > >.GetEnumerator()
-            {
-                return (new Set< TValue >.Enumerator( this ));
-            }
-
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return (new Set< TValue >.Enumerator( this ));
-            }
-	    }
+            public Enumerator GetEnumerator() => new Enumerator( this );
+            IEnumerator< KeyValuePair< IntPtr, TValue > > IEnumerable< KeyValuePair< IntPtr, TValue > >.GetEnumerator() => new Enumerator( this );
+            IEnumerator IEnumerable.GetEnumerator() => new Enumerator( this );
+        }
 
         //private static readonly MorphoFormNative[] EMPTY_MORPHOFORM = new MorphoFormNative[ 0 ];
         private static readonly char*[]                                   EMPTY_ENDINGS = new char*[ 0 ];
@@ -287,50 +216,48 @@ namespace lingvo.morphology
 
         #region [.temp-buffers (static, because model loading in single-thread).]
         /// temp (static, because model loading in single-thread)        
-        private static IntPtrSet tempBufferHS; /*---private static HashSet< IntPtr > tempBufferHS;*/
+        private static IntPtrSet _TempBufferSet; /*---private static HashSet< IntPtr > tempBufferHS;*/
         /// temp (static, because model loading in single-thread)
-        private static Set< LinkedList< MorphoAttributeEnum > > tempBufferDict; /*---private static Dictionary< IntPtr, LinkedList< MorphoAttributeEnum > > tempBufferDict;*/
+        private static Set< LinkedList< MorphoAttributeEnum > > _TempBufferSetLiists; /*---private static Dictionary< IntPtr, LinkedList< MorphoAttributeEnum > > tempBufferDict;*/
         /// temp (static, because model loading in single-thread)
-        private static Stack< LinkedList< MorphoAttributeEnum > > tempBufferLinkedLists;
+        private static Stack< LinkedList< MorphoAttributeEnum > > _TempBufferStackLists;
 
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
         private static LinkedList< MorphoAttributeEnum > PopLinkedList()
         {
-            if ( tempBufferLinkedLists.Count != 0 )
+            if ( _TempBufferStackLists.Count != 0 )
             {
-                return (tempBufferLinkedLists.Pop());
+                return (_TempBufferStackLists.Pop());
             }
             else
             {
                 var pairs = new LinkedList< MorphoAttributeEnum >();
-                tempBufferLinkedLists.Push( pairs );
+                _TempBufferStackLists.Push( pairs );
                 return (pairs);
             }               
         }
-        [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
         private static void PushLinkedList( LinkedList< MorphoAttributeEnum > pairs )
         {
             pairs.Clear();
-            tempBufferLinkedLists.Push( pairs );
+            _TempBufferStackLists.Push( pairs );
         }
 
         internal static void BeginLoad()
         {
             const int DEFAULT_CAPACITY = 107;
 
-            tempBufferHS   = new IntPtrSet( DEFAULT_CAPACITY ); /*---tempBufferHS = new HashSet< IntPtr >();*/
-            tempBufferDict = new Set< LinkedList< MorphoAttributeEnum > >( DEFAULT_CAPACITY ); /*---tempBufferDict = new Dictionary< IntPtr, LinkedList< MorphoAttributeEnum > >( DEFAULT_CAPACITY );*/
-            tempBufferLinkedLists = new Stack< LinkedList< MorphoAttributeEnum > >( DEFAULT_CAPACITY );
+            _TempBufferSet        = new IntPtrSet( DEFAULT_CAPACITY );
+            _TempBufferSetLiists  = new Set< LinkedList< MorphoAttributeEnum > >( DEFAULT_CAPACITY );
+            _TempBufferStackLists = new Stack< LinkedList< MorphoAttributeEnum > >( DEFAULT_CAPACITY );
             for ( var i = 0; i < DEFAULT_CAPACITY; i++ )
             {
-                tempBufferLinkedLists.Push( new LinkedList< MorphoAttributeEnum >() );
+                _TempBufferStackLists.Push( new LinkedList< MorphoAttributeEnum >() );
             }
         }
         internal static void EndLoad()
         {
-            tempBufferHS   = null;
-            tempBufferDict = null;
-            tempBufferLinkedLists = null;
+            _TempBufferSet        = null;
+            _TempBufferSetLiists  = null;
+            _TempBufferStackLists = null;
         }
         #endregion
 
@@ -367,15 +294,15 @@ namespace lingvo.morphology
                     var morphoForm = morphoForms[ i ];
 
                     #region [.окончания морфо-форм.]
-                    tempBufferHS.Add( (IntPtr) morphoForm.Ending );
+                    _TempBufferSet.Add( (IntPtr) morphoForm.Ending );
                     #endregion
 
                     #region [.MorphoFormEndingUpper-&-MorphoAttribute.]
                     var endingUpperPtr = (IntPtr) morphoForm.EndingUpper;
-                    if ( !tempBufferDict.TryGetValue( endingUpperPtr, ref morphoAttributes ) )
+                    if ( !_TempBufferSetLiists.TryGetValue( endingUpperPtr, ref morphoAttributes ) )
                     {
                         morphoAttributes = PopLinkedList();
-                        tempBufferDict.Add( endingUpperPtr, morphoAttributes );
+                        _TempBufferSetLiists.Add( endingUpperPtr, morphoAttributes );
                     }
                     var morphoAttribute = MorphoAttributePair.GetMorphoAttribute( this, morphoForm );
                     morphoAttributes.AddLast( morphoAttribute );
@@ -383,10 +310,10 @@ namespace lingvo.morphology
                 }
 
                 #region [.окончания морфо-форм.]
-                _MorphoFormEndings = new char*[ tempBufferHS.Count ];
+                _MorphoFormEndings = new char*[ _TempBufferSet.Count ];
                 fixed ( char** morphoFormEndingsBase = _MorphoFormEndings )
                 {
-                    var it = tempBufferHS.GetEnumerator();
+                    var it = _TempBufferSet.GetEnumerator();
                     for ( var i = 0; it.MoveNext(); i++ )
                     {
                         *(morphoFormEndingsBase + i) = (char*) it.Current;
@@ -400,13 +327,13 @@ namespace lingvo.morphology
                     }*/
                     #endregion
                 }
-                tempBufferHS.Clear();
+                _TempBufferSet.Clear();
                 #endregion
 
                 #region [.MorphoFormEndingUpper-&-MorphoAttribute.]
-                _MorphoFormEndingUpperAndMorphoAttributes = new MorphoFormEndingUpperAndMorphoAttribute[ tempBufferDict.Count ];
+                _MorphoFormEndingUpperAndMorphoAttributes = new MorphoFormEndingUpperAndMorphoAttribute[ _TempBufferSetLiists.Count ];
 
-                var it2 = tempBufferDict.GetEnumerator();
+                var it2 = _TempBufferSetLiists.GetEnumerator();
                 for ( var i = 0; it2.MoveNext(); i++ )
                 {
                     _MorphoFormEndingUpperAndMorphoAttributes[ i ] = new MorphoFormEndingUpperAndMorphoAttribute(
@@ -424,7 +351,7 @@ namespace lingvo.morphology
                 */
                 #endregion
 
-                tempBufferDict.Clear();
+                _TempBufferSetLiists.Clear();
                 #endregion
             }
             else
