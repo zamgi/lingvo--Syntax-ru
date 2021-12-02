@@ -10,20 +10,11 @@ namespace lingvo.sentsplitting
     /// </summary>
     internal static class Ext
     {
-        public static HashSet< string > ToHashset( this IEnumerable< string > seq, bool toUpperInvariant )
-        {
-            var hs = new HashSet< string >( seq.Select( d => d.TrimEx( toUpperInvariant ) ).Where( d => !string.IsNullOrEmpty( d ) ) );
-            return (hs);
-        }
+        public static HashSet< string > ToHashset( this IEnumerable< string > seq, bool toUpperInvariant ) 
+            => new HashSet< string >( seq.Select( d => d.TrimEx( toUpperInvariant ) ).Where( d => !string.IsNullOrEmpty( d ) ) );
         public static HashSet< string > ToHashsetWithReverseValues( this IEnumerable< string > seq, bool toUpperInvariant )
-        {
-            var hs = new HashSet< string >( seq.Select( d => (d != null) ? new string( d.Trim().Reverse().ToArray() ).ToUpperInvariantEx( toUpperInvariant ) : null ).Where( d => !string.IsNullOrEmpty( d ) ) );
-            return (hs);
-        }
-        public static int GetItemMaxLength( this HashSet< string > hs )
-        {
-            return ((hs.Count != 0) ? hs.Max( d => d.Length ) : 0);
-        }
+            => new HashSet< string >( seq.Select( d => (d != null) ? new string( d.Trim().Reverse().ToArray() ).ToUpperInvariantEx( toUpperInvariant ) : null ).Where( d => !string.IsNullOrEmpty( d ) ) );
+        public static int GetItemMaxLength( this HashSet< string > hs ) => ((hs.Count != 0) ? hs.Max( d => d.Length ) : 0);
 
         public static Dictionary< string, T > ToDictionary< T >( this IEnumerable< KeyValuePair< string, T > > seq, bool toUpperInvariant )
         {
@@ -41,31 +32,18 @@ namespace lingvo.sentsplitting
             }
             return (dict);
         }
-        public static int GetItemMaxKeyLength< T >( this Dictionary< string, T > dict )
-        {
-            return ((dict.Count != 0) ? dict.Max( p => p.Key.Length ) : 0);
-        }
-        public static int GetItemMinKeyLength< T >( this Dictionary< string, T > dict )
-        {
-            return ((dict.Count != 0) ? dict.Min( p => p.Key.Length ) : 0);
-        }
+        public static int GetItemMaxKeyLength< T >( this Dictionary< string, T > dict ) => ((dict.Count != 0) ? dict.Max( p => p.Key.Length ) : 0);
+        public static int GetItemMinKeyLength< T >( this Dictionary< string, T > dict ) => ((dict.Count != 0) ? dict.Min( p => p.Key.Length ) : 0);
 
-        public static string TrimStartDot( this string value )
-        {
-            return (value.TrimStart( '.' ));
-        }
-        public static string TrimEndDot( this string value )
-        {
-            return (value.TrimEnd( '.' ));
-        }
+        public static string TrimStartDot( this string value ) => value.TrimStart( '.' );
+        public static string TrimEndDot( this string value ) => value.TrimEnd( '.' );
 
         public static bool AttrValueIsTrue( this XElement xe, string attrName )
         {
             var xa = xe.Attribute( attrName );
             if ( xa != null )
             {
-                var r = default(bool);
-                if ( bool.TryParse( xa.Value, out r ) )
+                if ( bool.TryParse( xa.Value, out var r ) )
                     return (r);
             }
             return (false);
@@ -77,15 +55,9 @@ namespace lingvo.sentsplitting
                 return (null);
             return (toUpperInvarian ? value.ToUpperInvariant() : value);
         }
-        private static string ToUpperInvariantEx( this string value, bool toUpperInvarian )
-        {
-            return (toUpperInvarian ? value.ToUpperInvariant() : value);
-        }
+        private static string ToUpperInvariantEx( this string value, bool toUpperInvarian ) => (toUpperInvarian ? value.ToUpperInvariant() : value);
 
-        public static IEnumerable< T > SelectMany< T >( this IEnumerable< IEnumerable< T > > t )
-        {
-            return (t.SelectMany( _ => _ ));
-        }
+        public static IEnumerable< T > SelectMany< T >( this IEnumerable< IEnumerable< T > > t ) => t.SelectMany( _ => _ );
 
         private const char DOT = '.';
         private static readonly char[] SPLIT_BY_DOT    = new[] { DOT };

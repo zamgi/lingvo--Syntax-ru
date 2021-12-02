@@ -16,10 +16,9 @@ namespace lingvo.syntax
 		private readonly Semaphore                          _Semaphore;
         private readonly ConcurrentStack< SyntaxProcessor > _Stack;
 
-        public ConcurrentFactory( SyntaxProcessorConfig config, int instanceCount )
+        public ConcurrentFactory( in SyntaxProcessorConfig config, int instanceCount )
 		{
-            if ( instanceCount <= 0    ) throw (new ArgumentException("instanceCount"));
-            if ( config        == null ) throw (new ArgumentNullException("config"));
+            if ( instanceCount <= 0 ) throw (new ArgumentException("instanceCount"));
 
             _Semaphore = new Semaphore( instanceCount, instanceCount );
             _Stack = new ConcurrentStack< SyntaxProcessor >();

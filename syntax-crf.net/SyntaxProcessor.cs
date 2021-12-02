@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using lingvo.core;
-using lingvo.crfsuite;
 using lingvo.postagger;
 using lingvo.tokenizing;
 
@@ -28,10 +27,7 @@ namespace lingvo.syntax
             CheckConfig( config );
 
             _Words              = new List< word_t >( DEFAULT_WORDSLIST_CAPACITY );
-            _PosTaggerProcessor = new PosTaggerProcessor( config.PosTaggerProcessorConfig,
-                                                          config.MorphoModel,
-                                                          config.MorphoAmbiguityModel
-                                                        );
+            _PosTaggerProcessor = new PosTaggerProcessor( config.PosTaggerProcessorConfig, config.MorphoModel, config.MorphoAmbiguityModel );
 
             switch ( config.ModelType )
             {
@@ -63,60 +59,39 @@ namespace lingvo.syntax
 		}
         #endregion
 
-        /*public List< word_t > Run( string text, bool splitBySmiles )
-        {
-            var words = _PosTaggerProcessor.Run( text, splitBySmiles );
-
-            _SyntaxScriber.Run( words );
-
-            return (words);
-        }*/
-
-        public SyntaxModelTypeEnum ModelType
-        {
-            get;
-            private set;
-        }
+        public SyntaxModelTypeEnum ModelType { get; }
 
         public List< word_t > Run( string text, bool splitBySmiles )
         {
             _Words.Clear();
-
             _PosTaggerProcessor.Run( text, splitBySmiles, ProcessSentCallback );
-
             return (_Words);
         }
         private void ProcessSentCallback( List< word_t > words )
         {
             _SyntaxScriber.Run( words );
-
             _Words.AddRange( words );
         }
 
         public void Run( string text, bool splitBySmiles, Tokenizer.ProcessSentCallbackDelegate processSentCallback )
         {
             _ProcessSentCallback = processSentCallback;
-
             _PosTaggerProcessor.Run( text, splitBySmiles, ProcessSentCallback_Callback );
-
             _ProcessSentCallback = null;
         }
         private void ProcessSentCallback_Callback( List< word_t > words )
         {
             _SyntaxScriber.Run( words );
-
             _ProcessSentCallback( words );
         }
 
         public List< word_t[] > Run_Details( string text, bool splitBySmiles )
         {
             var wordsBySents = _PosTaggerProcessor.Run_Details( text, splitBySmiles, true, true, true );
-
             foreach ( var words in wordsBySents )
             {
                 _SyntaxScriber.Run( words );
             }
-
             return (wordsBySents);
         }
     }

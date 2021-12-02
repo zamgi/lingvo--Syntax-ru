@@ -7,38 +7,32 @@ namespace lingvo.sentsplitting
     /// <summary>
     /// 
     /// </summary>
-    internal struct ngram_t< TValue >
+    internal struct ngram_t< T >
     {
-        public ngram_t( string[] _words, TValue _value )
+        public ngram_t( string[] _words, T _value )
         {
             words = _words;
             value = _value;
         }
+        public string[] words { get; }
+        public T        value { get; }
 
-        public string[] words { get; private set; }
-        public TValue   value { get; private set; }
-
-        public override string ToString()
-        {
-            return ('\'' + string.Join( "' '", words ) + "' (" + words.Length + "), '" + value + "'");
-        }
+        public override string ToString() => ('\'' + string.Join( "' '", words ) + "' (" + words.Length + "), '" + value + "'");
     }
 
     /// <summary>
     /// 
     /// </summary>
-    internal struct SearchResult< TValue >
+    internal struct SearchResult< T >
     {
         /// <summary>
         /// 
         /// </summary>
-        public sealed class Comparer : IComparer< SearchResult< TValue > >
+        public sealed class Comparer : IComparer< SearchResult< T > >
         {
-            public static readonly Comparer Instance = new Comparer();
+            public static Comparer Inst { get; } = new Comparer();
             private Comparer() { }
-
-            #region [.IComparer< SearchResult >.]
-            public int Compare( SearchResult< TValue > x, SearchResult< TValue > y )
+            public int Compare( SearchResult< T > x, SearchResult< T > y )
             {
                 var d = y.Length - x.Length;
                 if ( d != 0 )
@@ -52,19 +46,18 @@ namespace lingvo.sentsplitting
 
                 //return (y.Value - x.Value);
             }
-            #endregion
         }
 
-        public SearchResult( int startIndex, int length, TValue value )
+        public SearchResult( int startIndex, int length, T value )
         {
             StartIndex = startIndex;
             Length     = length;
             v          = value;
         }
 
-        public int    StartIndex { get; private set; }
-        public int    Length     { get; private set; }
-        public TValue v          { get; private set; }
+        public int StartIndex { get; }
+        public int Length     { get; }
+        public T   v          { get; }
 
         public override string ToString()
         {
@@ -80,34 +73,28 @@ namespace lingvo.sentsplitting
     /// <summary>
     /// 
     /// </summary>
-    internal struct SearchResultOfHead2Left< TValue >
+    internal struct SearchResultOfHead2Left< T >
     {
         /// <summary>
         /// 
         /// </summary>
-        public sealed class Comparer : IComparer< SearchResultOfHead2Left< TValue > >
+        public sealed class Comparer : IComparer< SearchResultOfHead2Left< T > >
         {
-            public static readonly Comparer Instance = new Comparer();
+            public static Comparer Inst { get; } = new Comparer();
             private Comparer() { }
-
-            #region [.IComparer< SearchResultOfHead2Left >.]
-            public int Compare( SearchResultOfHead2Left< TValue > x, SearchResultOfHead2Left< TValue > y )
-            {
-                return (y.Length - x.Length);
-            }
-            #endregion
+            public int Compare( SearchResultOfHead2Left< T > x, SearchResultOfHead2Left< T > y ) => (y.Length - x.Length);
         }
 
-        public SearchResultOfHead2Left( ss_word_t lastWord, int length, TValue value )
+        public SearchResultOfHead2Left( ss_word_t lastWord, int length, T value )
         {
             LastWord = lastWord;
             Length   = length;
             v        = value;
         }
 
-        public ss_word_t LastWord { get; private set; }
-        public int       Length   { get; private set; }
-        public TValue    v        { get; private set; }
+        public ss_word_t LastWord { get; }
+        public int       Length   { get; }
+        public T         v        { get; }
 
         public override string ToString()
         {
@@ -123,7 +110,7 @@ namespace lingvo.sentsplitting
     /// <summary>
     /// Class for searching string for one or multiple keywords using efficient Aho-Corasick search algorithm
     /// </summary>
-    internal sealed class AhoCorasick< TValue >
+    internal sealed class Searcher< T >
     {
         /// <summary>
         /// Tree node representing character and its transition and failure function
@@ -133,13 +120,11 @@ namespace lingvo.sentsplitting
             /// <summary>
             /// 
             /// </summary>
-            private sealed class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t< TValue > >
+            private sealed class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t< T > >
             {
-                public static readonly ngram_t_IEqualityComparer Instance = new ngram_t_IEqualityComparer();
+                public static ngram_t_IEqualityComparer Inst { get; } = new ngram_t_IEqualityComparer();
                 private ngram_t_IEqualityComparer() { }
-
-                #region [.IEqualityComparer< ngram_t >.]
-                public bool Equals( ngram_t< TValue > x, ngram_t< TValue > y )
+                public bool Equals( ngram_t< T > x, ngram_t< T > y )
                 {
                     var len = x.words.Length;
                     if ( len != y.words.Length )
@@ -156,17 +141,13 @@ namespace lingvo.sentsplitting
                     }
                     return (true);
                 }
-                public int GetHashCode( ngram_t< TValue > obj )
-                {
-                    return (obj.words.Length.GetHashCode());
-                }
-                #endregion
+                public int GetHashCode( ngram_t< T > obj ) => obj.words.Length;
             }
 
             /// <summary>
             /// Build tree from specified keywords
             /// </summary>
-            public static TreeNode BuildTree( IEnumerable< ngram_t< TValue > > ngrams )
+            public static TreeNode BuildTree( IEnumerable< ngram_t< T > > ngrams )
             {
                 // Build keyword tree and transition function
                 var root = new TreeNode( null, null );
@@ -272,11 +253,11 @@ namespace lingvo.sentsplitting
             /// Adds pattern ending in this node
             /// </summary>
             /// <param name="ngram">Pattern</param>
-            public void AddNgram( ngram_t< TValue > ngram )
+            public void AddNgram( ngram_t< T > ngram )
             {
                 if ( _Ngrams == null )
                 {
-                    _Ngrams = new HashSet< ngram_t< TValue > >( ngram_t_IEqualityComparer.Instance );
+                    _Ngrams = new HashSet< ngram_t< T > >( ngram_t_IEqualityComparer.Inst );
                 }
                 _Ngrams.Add( ngram );
             }
@@ -299,28 +280,19 @@ namespace lingvo.sentsplitting
             /// </summary>
             /// <param name="word">word</param>
             /// <returns>Returns TreeNode or null</returns>
-            public TreeNode GetTransition( string word )
-            {
-                TreeNode node;
-                if ( (_TransDict != null) && _TransDict.TryGetValue( word, out node ) )
-                    return (node);
-                return (null);
-            }
+            public TreeNode GetTransition( string word ) => (_TransDict != null) && _TransDict.TryGetValue( word, out var node ) ? node : null;
 
             /// <summary>
             /// Returns true if node contains transition to specified character
             /// </summary>
             /// <param name="c">Character</param>
             /// <returns>True if transition exists</returns>
-            public bool ContainsTransition( string word )
-            {
-                return ((_TransDict != null) && _TransDict.ContainsKey( word ));
-            }
+            public bool ContainsTransition( string word ) => ((_TransDict != null) && _TransDict.ContainsKey( word ));
             #endregion
 
             #region [.properties.]
             private Dictionary< string, TreeNode > _TransDict;
-            private HashSet< ngram_t< TValue > > _Ngrams;
+            private HashSet< ngram_t< T > > _Ngrams;
 
             /// <summary>
             /// Character
@@ -340,20 +312,16 @@ namespace lingvo.sentsplitting
             /// <summary>
             /// Transition function - list of descendant nodes
             /// </summary>
-            public ICollection< TreeNode > Transitions { get { return ((_TransDict != null) ? _TransDict.Values : null); } }
+            public ICollection< TreeNode > Transitions => ((_TransDict != null) ? _TransDict.Values : null);
 
             /// <summary>
             /// Returns list of patterns ending by this letter
             /// </summary>
-            public ICollection< ngram_t< TValue > > Ngrams { get { return (_Ngrams); } }
-            public bool HasNgrams { get { return (_Ngrams != null); } }
+            public ICollection< ngram_t< T > > Ngrams => _Ngrams;
+            public bool HasNgrams => (_Ngrams != null);
             #endregion
 
-            public override string ToString()
-            {
-                return ( ((Word != null) ? ('\'' + Word + '\'') : "ROOT") +
-                         ", transitions(descendants): " + ((_TransDict != null) ? _TransDict.Count : 0) + ", ngrams: " + ((_Ngrams != null) ? _Ngrams.Count : 0));
-            }
+            public override string ToString() => ((Word != null) ? ('\'' + Word + '\'') : "ROOT") + ", transitions(descendants): " + ((_TransDict != null) ? _TransDict.Count : 0) + ", ngrams: " + ((_Ngrams != null) ? _Ngrams.Count : 0);
         }
 
         /// <summary>
@@ -390,8 +358,8 @@ namespace lingvo.sentsplitting
         }
 
         #region [.private field's.]
-        private static SearchResult< TValue >[]            EMPTY_RESULT_1 = new SearchResult< TValue >[ 0 ];
-        private static SearchResultOfHead2Left< TValue >[] EMPTY_RESULT_2 = new SearchResultOfHead2Left< TValue >[ 0 ];
+        private static SearchResult< T >[]            EMPTY_RESULT_1 = new SearchResult< T >[ 0 ];
+        private static SearchResultOfHead2Left< T >[] EMPTY_RESULT_2 = new SearchResultOfHead2Left< T >[ 0 ];
         /// <summary>
         /// Root of keyword tree
         /// </summary>
@@ -403,7 +371,7 @@ namespace lingvo.sentsplitting
         /// Initialize search algorithm (Build keyword tree)
         /// </summary>
         /// <param name="keywords">Keywords to search for</param>
-        internal AhoCorasick( IList< ngram_t< TValue > > ngrams )
+        internal Searcher( IList< ngram_t< T > > ngrams )
         {
             _Root = TreeNode.BuildTree( ngrams );
             NgramMaxLength = (0 < ngrams.Count) ? ngrams.Max( ngram => ngram.words.Length ) : 0;
@@ -411,25 +379,25 @@ namespace lingvo.sentsplitting
         #endregion
 
         #region [.public method's & properties.]
-        internal int NgramMaxLength { get; private set; }
+        internal int NgramMaxLength { get; }
 
-        internal ICollection< SearchResult< TValue > > FindAll( DirectAccessList< ss_word_t > words )
+        internal ICollection< SearchResult< T > > FindAll( IList< ss_word_t > words )
         {
-            var ss = default(SortedSet< SearchResult< TValue > >);
+            var ss = default(SortedSet< SearchResult< T > >);
             var finder = Finder.Create( _Root );
 
             for ( int index = 0, len = words.Count; index < len; index++ )
             {
-                var node = finder.Find( words._Items[ index ].valueOriginal );
+                var node = finder.Find( words[ index ].valueOriginal );
 
                 if ( node.HasNgrams )
                 {
-                    if ( ss == null ) ss = new SortedSet< SearchResult< TValue > >( SearchResult< TValue >.Comparer.Instance );
+                    if ( ss == null ) ss = new SortedSet< SearchResult< T > >( SearchResult< T >.Comparer.Inst );
                     
                     foreach ( var ngram in node.Ngrams )
                     {
-                        var r = ss.Add( new SearchResult< TValue >( index - ngram.words.Length + 1, ngram.words.Length, ngram.value ) );
-                        System.Diagnostics.Debug.Assert( r );
+                        var r = ss.Add( new SearchResult< T >( index - ngram.words.Length + 1, ngram.words.Length, ngram.value ) );
+                        Debug.Assert( r );
                     }
                 }
             }
@@ -439,9 +407,9 @@ namespace lingvo.sentsplitting
             }
             return (EMPTY_RESULT_1);
         }
-        internal ICollection< SearchResultOfHead2Left< TValue > > FindOfHead2Left( ss_word_t headWord )
+        internal ICollection< SearchResultOfHead2Left< T > > FindOfHead2Left( ss_word_t headWord )
         {
-            var ss = default(SortedSet< SearchResultOfHead2Left< TValue > >);
+            var ss = default(SortedSet< SearchResultOfHead2Left< T > >);
             var finder = Finder.Create( _Root );            
             int index = 0;
 
@@ -456,9 +424,9 @@ namespace lingvo.sentsplitting
                         var wordIndex = index - ngram.words.Length + 1;
                         if ( wordIndex == 0 )
                         {
-                            if ( ss == null ) ss = new SortedSet< SearchResultOfHead2Left< TValue > >( SearchResultOfHead2Left< TValue >.Comparer.Instance );
+                            if ( ss == null ) ss = new SortedSet< SearchResultOfHead2Left< T > >( SearchResultOfHead2Left< T >.Comparer.Inst );
 
-                            var r = ss.Add( new SearchResultOfHead2Left< TValue >( word, ngram.words.Length, ngram.value ) );
+                            var r = ss.Add( new SearchResultOfHead2Left< T >( word, ngram.words.Length, ngram.value ) );
                             Debug.Assert( r );
                         }
                     }
@@ -473,9 +441,6 @@ namespace lingvo.sentsplitting
         }
         #endregion
 
-        public override string ToString()
-        {
-            return ("[" + _Root + "]");
-        }
+        public override string ToString() => ("[" + _Root + "]");
     }
 }

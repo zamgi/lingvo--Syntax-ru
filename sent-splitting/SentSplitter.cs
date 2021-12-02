@@ -251,8 +251,8 @@ namespace lingvo.sentsplitting
 
         public bool SplitBySmiles
         {
-            get { return (_SplitBySmiles); }
-            set { _SplitBySmiles = value;  }
+            get => _SplitBySmiles;
+            set => _SplitBySmiles = value;
         }
 
         #region [.ctor().]
@@ -280,14 +280,10 @@ namespace lingvo.sentsplitting
             _BufferPtrBase  = (char*) _BufferGCHandle.AddrOfPinnedObject().ToPointer();
         }
 
-        ~SentSplitter()
-        {
-            DisposeNativeResources();
-        }
+        ~SentSplitter() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
         private void DisposeNativeResources()
@@ -913,9 +909,6 @@ namespace lingvo.sentsplitting
                 return;
 
             _Sent.SetLength( length );
-#if DEBUG
-var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
-#endif
             if ( !IsCurrentSentContainsPunctuationOrWhitespace() )
             {
                 _Sents.Add( _Sent );
@@ -935,9 +928,6 @@ var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
                 return;
 
             _Sent.SetLength( length );
-#if DEBUG
-var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
-#endif
             if ( !IsCurrentSentContainsPunctuationOrWhitespace() )
             {
                 _Sents.Add( _Sent );
@@ -955,9 +945,6 @@ var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
                 return;
 
             _Sent.SetLength( length );
-#if DEBUG
-var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
-#endif
             if ( !IsCurrentSentContainsPunctuationOrWhitespace() )
             {
                 _OuterProcessSentCallback_Delegate( _Sent );
@@ -976,9 +963,6 @@ var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
                 return;
 
             _Sent.SetLength( length );
-#if DEBUG
-var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
-#endif
             if ( !IsCurrentSentContainsPunctuationOrWhitespace() )
             {
                 _OuterProcessSentCallback_Delegate( _Sent );
@@ -2570,10 +2554,7 @@ var xxx = new string( _BASE, _Sent.startIndex, _Sent.length );
             }
             return (true);
         }
-        unsafe private static char* GetMaxPtr( char* p1, char* p2 )
-        {
-            return (p1 > p2 ? p1 : p2);
-        }
+        unsafe private static char* GetMaxPtr( char* p1, char* p2 ) => (p1 > p2 ? p1 : p2);
         private static bool IsNoHasNextWordOrHasNotInRow( ss_word_t word )
         {
                         //---?!---(word.next.startPtr - word.endPtr() [-?!-]=[-?!-]> 1)---?!---//

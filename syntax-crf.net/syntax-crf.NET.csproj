@@ -9,7 +9,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>lingvo.syntax</RootNamespace>
     <AssemblyName>syntax-crf.net</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion> <LangVersion>latest</LangVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -63,9 +64,9 @@
       <Project>{97b9b41c-dabf-4d93-b111-85b8d86acba6}</Project>
       <Name>pos-tagger-crf.NET</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SentSplitter\SentSplitter.csproj">
+    <ProjectReference Include="..\sent-splitting\sent-splitting.csproj">
       <Project>{945a3caa-ef28-4344-8dbb-7ebeb4be0301}</Project>
-      <Name>SentSplitter</Name>
+      <Name>sent-splitting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

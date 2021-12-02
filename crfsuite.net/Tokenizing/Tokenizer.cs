@@ -923,9 +923,7 @@ namespace lingvo.tokenizing
 
         private Tokenizer( TokenizerConfig4NerModelBuilder config )
         {
-            config.UrlDetectorConfig.UrlExtractMode = UrlDetector.UrlExtractModeEnum.Position;
-
-            _UrlDetector           = new UrlDetector( config.UrlDetectorConfig );
+            _UrlDetector           = new UrlDetector( new UrlDetectorConfig() { Model = config.UrlDetectorConfig.Model, UrlExtractMode = UrlDetector.UrlExtractModeEnum.Position } );
             _BuildModelSent        = sent_t.CreateEmpty();
             _Words                 = new List< word_t >( DEFAULT_WORDSLIST_CAPACITY );
             _BuildModelWords       = new List< buildmodel_word_t >( DEFAULT_WORDSLIST_CAPACITY );

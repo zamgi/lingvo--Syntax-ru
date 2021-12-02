@@ -14,11 +14,7 @@ namespace lingvo.sentsplitting
     /// </summary>
     internal struct before_no_proper_t
     {
-        public before_no_proper_t( bool unstickFromDigits )
-        {
-            UnstickFromDigits = unstickFromDigits;
-        }
-
+        public before_no_proper_t( bool unstickFromDigits ) => UnstickFromDigits = unstickFromDigits;
         public bool UnstickFromDigits;
 
         public override string ToString()
@@ -33,10 +29,7 @@ namespace lingvo.sentsplitting
     /// </summary>
     internal struct before_proper_or_number_t
     {
-        public before_proper_or_number_t( 
-            bool digitsBefore, 
-            bool slashBefore, 
-            bool unstickFromDigits ) : this()
+        public before_proper_or_number_t( bool digitsBefore, bool slashBefore, bool unstickFromDigits )
         {
             DigitsBefore      = digitsBefore;
             SlashBefore       = slashBefore;
@@ -48,12 +41,7 @@ namespace lingvo.sentsplitting
         public bool DigitsBefore;
         public bool SlashBefore;
         public bool UnstickFromDigits;
-
-        public bool DigitsBeforeOrSlashBefore
-        {
-            get;
-            private set;
-        }
+        public bool DigitsBeforeOrSlashBefore { get; }
 
         public override string ToString()
         {
@@ -80,13 +68,8 @@ namespace lingvo.sentsplitting
     /// </summary>
     internal struct smile_t
     {
-        public smile_t( bool spaceBefore )
-        {
-            SpaceBefore = spaceBefore;
-        }
-
+        public smile_t( bool spaceBefore ) =>SpaceBefore = spaceBefore;
         public bool SpaceBefore;
-
         public override string ToString()
         {
             if ( SpaceBefore )
@@ -105,22 +88,13 @@ namespace lingvo.sentsplitting
         /// </summary>
         internal struct hashset_t
         {
-            public hashset_t( HashSet< string > values ) : this()
+            public hashset_t( HashSet< string > values )
             {
                 Values          = values;
                 ValuesMaxLength = Values.GetItemMaxLength();
             }
-
-            public HashSet< string > Values
-            { 
-                get; 
-                private set; 
-            }
-            public int               ValuesMaxLength
-            {
-                get;
-                private set;
-            }
+            public HashSet< string > Values { get; }
+            public int ValuesMaxLength { get; }
         }
 
         /// <summary>
@@ -128,7 +102,7 @@ namespace lingvo.sentsplitting
         /// </summary>
         internal struct dictionary_t< TValue >
         {
-            public dictionary_t( Dictionary< string, TValue > values ) : this()
+            public dictionary_t( Dictionary< string, TValue > values )
             {
                 Values                     = values;
                 ValuesMaxLength            = Values.GetItemMaxKeyLength();
@@ -136,33 +110,16 @@ namespace lingvo.sentsplitting
                 DiffBetweenMixAndMaxLength = (ValuesMaxLength - ValuesMinLength);
             }
 
-            public Dictionary< string, TValue > Values
-            { 
-                get; 
-                private set; 
-            }
-            public int                          ValuesMaxLength
-            {
-                get;
-                private set;
-            }
-            public int                          ValuesMinLength
-            {
-                get;
-                private set;
-            }
-            public int                          DiffBetweenMixAndMaxLength
-            {
-                get;
-                private set;
-            }
+            public Dictionary< string, TValue > Values { get; }
+            public int ValuesMaxLength { get; }
+            public int ValuesMinLength { get; }
+            public int DiffBetweenMixAndMaxLength { get; }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        [Flags]
-        internal enum SentCharType : byte
+        [Flags] internal enum SentCharType : byte
         {
             __UNDEFINE__ = 0x0,
 
@@ -218,32 +175,25 @@ namespace lingvo.sentsplitting
                                   select 
                                      xe.ToBeforeNoProper_ngrams()
                                  ).ToArray();
-            BeforeNoProperSearcher = new AhoCorasick< before_no_proper_t >( beforeNoProper );
+            BeforeNoProperSearcher = new Searcher< before_no_proper_t >( beforeNoProper );
 
             //-before-proper-or-number-
             var beforeProperOrNumber = (from xe in xdoc.Root.Element( "before-proper-or-number" ).Elements()
                                         select 
                                            xe.ToBeforeProperOrNumber_ngrams()
                                        ).ToArray();
-            BeforeProperOrNumberSearcher = new AhoCorasick< before_proper_or_number_t >( beforeProperOrNumber );
+            BeforeProperOrNumberSearcher = new Searcher< before_proper_or_number_t >( beforeProperOrNumber );
 
             var SENTCHARTYPE_MAP = InitializeSentPotentialEnds( Smiles, beforeNoProper, beforeProperOrNumber );
 
             //--//
             _SENTCHARTYPE_MAP_GCHandle = GCHandle.Alloc( SENTCHARTYPE_MAP, GCHandleType.Pinned );
             _SENTCHARTYPE_MAP          = (SentCharType*) _SENTCHARTYPE_MAP_GCHandle.AddrOfPinnedObject().ToPointer();
-
-            xdoc = null;
         }
-
-        ~SentSplitterModel()
-        {
-            DisposeNativeResources();
-        }
+        ~SentSplitterModel() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
         private void DisposeNativeResources()
@@ -255,47 +205,14 @@ namespace lingvo.sentsplitting
             }
         }
 
-        internal dictionary_t< smile_t >                  Smiles
-        { 
-            get; 
-            private set; 
-        }
-        internal hashset_t                                Interjections
-        { 
-            get; 
-            private set; 
-        }
-        internal hashset_t                                YandexCombinations
-        {
-            get;
-            private set;
-        }
-        internal hashset_t                                FileExtensions
-        { 
-            get; 
-            private set; 
-        }
-        internal AhoCorasick< before_no_proper_t >        BeforeNoProperSearcher
-        {
-            get;
-            private set;
-        }
-        internal AhoCorasick< before_proper_or_number_t > BeforeProperOrNumberSearcher
-        {
-            get;
-            private set;
-        }
+        internal dictionary_t< smile_t > Smiles { get; }
+        internal hashset_t Interjections { get; }
+        internal hashset_t YandexCombinations { get; }
+        internal hashset_t FileExtensions { get; }
+        internal Searcher< before_no_proper_t > BeforeNoProperSearcher { get; }
+        internal Searcher< before_proper_or_number_t > BeforeProperOrNumberSearcher { get; }
 
-        internal HashSet< string > UnstickFromDigits
-        { 
-            get; 
-            private set; 
-        }
-        /*internal SentCharType[] SENTCHARTYPE_MAP
-        {
-            get;
-            private set;
-        }*/
+        internal HashSet< string > UnstickFromDigits { get; private set; }
         internal int GetValuesMaxLength()
         {
             var valuesMaxLengths = new[]
@@ -307,22 +224,12 @@ namespace lingvo.sentsplitting
             };
             return (valuesMaxLengths.Max());
         }
-        internal int GetNgramMaxLength()
-        {
-            return (Math.Max( BeforeNoProperSearcher.NgramMaxLength, BeforeProperOrNumberSearcher.NgramMaxLength ));
-        }
+        internal int GetNgramMaxLength() => Math.Max( BeforeNoProperSearcher.NgramMaxLength, BeforeProperOrNumberSearcher.NgramMaxLength );
 
         private readonly GCHandle _SENTCHARTYPE_MAP_GCHandle;
-        internal SentCharType* _SENTCHARTYPE_MAP
-        {
-            get;
-            private set;
-        }
+        internal SentCharType* _SENTCHARTYPE_MAP { get; private set; }
 
-        private byte[] InitializeSentPotentialEnds( 
-            dictionary_t< smile_t >                smiles, 
-            ngram_t< before_no_proper_t >[]        beforeNoProper,
-            ngram_t< before_proper_or_number_t >[] beforeProperOrNumber )
+        private byte[] InitializeSentPotentialEnds( dictionary_t<smile_t> smiles, ngram_t<before_no_proper_t>[] beforeNoProper, ngram_t<before_proper_or_number_t>[] beforeProperOrNumber )
         {
             //---SENTCHARTYPE_MAP = new SentCharType[ char.MaxValue + 1 ];
             var SENTCHARTYPE_MAP = new byte[ char.MaxValue + 1 ];
@@ -420,39 +327,37 @@ namespace lingvo.sentsplitting
     /// <summary>
     /// 
     /// </summary>
-    public class SentSplitterConfig
+    public sealed class SentSplitterConfig : IDisposable
     {
-        public SentSplitterConfig()
+        private bool _Need_Dispose_SentSplitterModel;
+        public SentSplitterConfig() => SplitBySmiles = true;
+        public SentSplitterConfig( SentSplitterModel sentSplitterModel )
         {
+            Model = sentSplitterModel; _Need_Dispose_SentSplitterModel = false;
             SplitBySmiles = true;
         }
         public SentSplitterConfig( string sentSplitterResourcesXmlFilename )
         {
-            Model         = new SentSplitterModel( sentSplitterResourcesXmlFilename );
-            SplitBySmiles = true;
+            Model         = new SentSplitterModel( sentSplitterResourcesXmlFilename ); _Need_Dispose_SentSplitterModel = true;
+            SplitBySmiles = true;            
         }
-        public SentSplitterConfig( string sentSplitterResourcesXmlFilename,
-                                   string urlDetectorResourcesXmlFilename )
+        public SentSplitterConfig( string sentSplitterResourcesXmlFilename, string urlDetectorResourcesXmlFilename )
         {
-            Model             = new SentSplitterModel( sentSplitterResourcesXmlFilename );
+            Model             = new SentSplitterModel( sentSplitterResourcesXmlFilename ); _Need_Dispose_SentSplitterModel = true;
             UrlDetectorConfig = new UrlDetectorConfig( urlDetectorResourcesXmlFilename  );
             SplitBySmiles     = true;
         }
 
-        public SentSplitterModel Model
+        public SentSplitterModel Model { get; }
+        public UrlDetectorConfig UrlDetectorConfig { get; set; }
+        public bool SplitBySmiles { get; set; }
+
+        public void Dispose()
         {
-            get;
-            set;
-        }
-        public UrlDetectorConfig UrlDetectorConfig
-        {
-            get;
-            set;
-        }
-        public bool              SplitBySmiles
-        {
-            get;
-            set;
+            if ( _Need_Dispose_SentSplitterModel )
+            {
+                Model.Dispose();
+            }
         }
     }
 }

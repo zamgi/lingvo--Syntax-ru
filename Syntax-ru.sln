@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syntax-crf.net", "syntax-crf.net\syntax-crf.net.csproj", "{12ABBE81-48E0-4F47-BA3B-A1E740872592}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lingvo.core", "lingvo.core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "morphology", "morphology\morphology.csproj", "{94DEF3AA-46B3-477D-8874-A2F90297A743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentSplitter", "SentSplitter\SentSplitter.csproj", "{945A3CAA-EF28-4344-8DBB-7EBEB4BE0301}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sent-splitting", "sent-splitting\sent-splitting.csproj", "{945A3CAA-EF28-4344-8DBB-7EBEB4BE0301}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pos-tagger-crf.NET", "pos-tagger-crf.net\pos-tagger-crf.NET.csproj", "{97B9B41C-DABF-4D93-B111-85B8D86ACBA6}"
 EndProject

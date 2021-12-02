@@ -17,11 +17,7 @@ namespace lingvo.postagger
         private static readonly string[] PRETEXTS = new[] { "ОТ", "ДО", "НА", "С", "ПО", "ИЗ" };
         public const string UNION_AND = "И";
 
-        static PosTaggerResourcesModel()
-        {
-            Pretexts = new HashSet< string >( PRETEXTS );
-        }
-
+        static PosTaggerResourcesModel() => Pretexts = new HashSet< string >( PRETEXTS );
         public PosTaggerResourcesModel( string posTaggerResourcesXmlFilename )
         {
             var SPLIT_BY_SPACE = new[] { ' ' };
@@ -53,8 +49,7 @@ namespace lingvo.postagger
             Abbreviations = new HashSet< string >( abbreviations );
         }
 
-        private static Searcher CreateAbbreviationSearcher( 
-            string elementName, XDocument xdoc, string posTaggerResourcesXmlFilename )
+        private static Searcher CreateAbbreviationSearcher( string elementName, XDocument xdoc, string posTaggerResourcesXmlFilename )
         {
             const char DOT = '.';
             var SPLIT_BY_DOT = new[] { DOT };
@@ -166,31 +161,11 @@ namespace lingvo.postagger
             yield return (Enumerable.Repeat( str1, 1 ).Concat( Enumerable.Repeat( str2 + str3, 1 ) ));
         }
 
-        internal HashSet< string > Numbers
-        {
-            get;
-            private set;
-        }
-        internal HashSet< string > Abbreviations
-        {
-            get;
-            private set;
-        }
-        internal Searcher       PhrasesSearcher
-        {
-            get;
-            private set;
-        }
-        internal Searcher       AbbreviationsSearcher
-        {
-            get;
-            private set;
-        }
-        internal static HashSet< string > Pretexts
-        {
-            get;
-            private set;
-        }
+        internal HashSet< string > Numbers               { get; }
+        internal HashSet< string > Abbreviations         { get; }
+        internal Searcher          PhrasesSearcher       { get; }
+        internal Searcher          AbbreviationsSearcher { get; }
+        internal static HashSet< string > Pretexts { get; }
     }
 
     /// <summary>
@@ -198,10 +173,7 @@ namespace lingvo.postagger
     /// </summary>
     public sealed class PosTaggerProcessorConfig
     {
-        public PosTaggerProcessorConfig( string tokenizerResourcesXmlFilename, 
-                                         string posTaggerResourcesXmlFilename,
-                                         LanguageTypeEnum   languageType,                                          
-                                         SentSplitterConfig sentSplitterConfig )
+        public PosTaggerProcessorConfig( string tokenizerResourcesXmlFilename, string posTaggerResourcesXmlFilename, LanguageTypeEnum languageType, SentSplitterConfig sentSplitterConfig )
         {
             Model           = new PosTaggerResourcesModel( posTaggerResourcesXmlFilename );
             TokenizerConfig = new TokenizerConfig( tokenizerResourcesXmlFilename )
@@ -213,8 +185,7 @@ namespace lingvo.postagger
             };
         }
 
-        public PosTaggerProcessorConfig( TokenizerConfig tokenizerConfig, 
-                                         string posTaggerResourcesXmlFilename )
+        public PosTaggerProcessorConfig( TokenizerConfig tokenizerConfig, string posTaggerResourcesXmlFilename )
         {
             Model           = new PosTaggerResourcesModel( posTaggerResourcesXmlFilename );
             TokenizerConfig = tokenizerConfig;
@@ -227,30 +198,11 @@ namespace lingvo.postagger
             }
         }
 
-        public string                  ModelFilename
-        {
-            get;
-            set;
-        }
-        public string                  TemplateFilename
-        {
-            get;
-            set;
-        }
-        public TokenizerConfig         TokenizerConfig
-        {
-            get;
-            private set;
-        }
-        public PosTaggerResourcesModel Model
-        {
-            get;
-            private set;
-        }
+        public string                  ModelFilename    { get; set; }
+        public string                  TemplateFilename { get; set; }
+        public TokenizerConfig         TokenizerConfig  { get; }
+        public PosTaggerResourcesModel Model            { get; }
 
-        public LanguageTypeEnum LanguageType
-        {
-            get { return (TokenizerConfig.LanguageType); }
-        }
+        public LanguageTypeEnum LanguageType => TokenizerConfig.LanguageType;
     }
 }

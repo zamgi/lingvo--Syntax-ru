@@ -1,7 +1,5 @@
-﻿using System;
-
+﻿using lingvo.morphology;
 using lingvo.postagger;
-using lingvo.morphology;
 
 namespace lingvo.syntax
 {
@@ -13,46 +11,22 @@ namespace lingvo.syntax
     /// <summary>
     /// 
     /// </summary>
-    public sealed class SyntaxProcessorConfig
+    public struct SyntaxProcessorConfig
     {
         public SyntaxProcessorConfig( PosTaggerProcessorConfig     config, 
                                       IMorphoModel                 morphoModel,
-                                      MorphoAmbiguityResolverModel morphoAmbiguityModel )
+                                      MorphoAmbiguityResolverModel morphoAmbiguityModel ) : this()
         {
             PosTaggerProcessorConfig = config;
             MorphoModel              = morphoModel;
             MorphoAmbiguityModel     = morphoAmbiguityModel;
         }
 
-        public PosTaggerProcessorConfig     PosTaggerProcessorConfig
-        {
-            get;
-            private set;
-        }
-        public IMorphoModel                 MorphoModel
-        {
-            get;
-            set;
-        }
-        public MorphoAmbiguityResolverModel MorphoAmbiguityModel
-        {
-            get;
-            set;
-        }
-        public SyntaxModelTypeEnum          ModelType
-        {
-            get;
-            set;
-        }
-        public string                       ModelFilename
-        {
-            get;
-            set;
-        }
-        public string                       TemplateFilename
-        {
-            get;
-            set;
-        }
+        public PosTaggerProcessorConfig     PosTaggerProcessorConfig { get; }
+        public IMorphoModel                 MorphoModel              { get; set; }
+        public MorphoAmbiguityResolverModel MorphoAmbiguityModel     { get; set; }
+        public SyntaxModelTypeEnum          ModelType                { get; set; }
+        public string                       ModelFilename            { get; set; }
+        public string                       TemplateFilename         { get; set; }
     }
 }

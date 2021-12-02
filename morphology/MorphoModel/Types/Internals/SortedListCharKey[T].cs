@@ -6,7 +6,7 @@ namespace lingvo.morphology
     /// <summary>
     /// 
     /// </summary>
-	internal struct SortedListCharKey< TValue > where TValue : class
+	internal struct SortedListCharKey< T > where T : class
 	{
         private const int MAX_CAPACITY_THRESHOLD = 0x7FFFFFFF /*int.MaxValue*/ - 0x400 * 0x400 /*1MB*/; /* => 2146435071 == 0x7fefffff*/
 
@@ -15,8 +15,8 @@ namespace lingvo.morphology
         /// </summary>
         internal struct Tuple
         {            
-            public TValue Value;
-            public char   Key;
+            public T    Value;
+            public char Key;
         }
 
         private static readonly Tuple[] EMPTY_ARRAY = new Tuple[ 0 ];
@@ -56,7 +56,7 @@ namespace lingvo.morphology
 
 		public void InitArrayAsEmpty() => _Array = EMPTY_ARRAY;
 
-		public TValue this[ char key ]
+		public T this[ char key ]
 		{
 			get
 			{
@@ -80,7 +80,7 @@ namespace lingvo.morphology
 			}
 		}
 
-		public void Add( char key, TValue value )
+		public void Add( char key, T value )
 		{
             int n = InternalBinarySearch( /*_Array,0, _Size,*/ key );
             if ( n >= 0 )
@@ -126,7 +126,7 @@ namespace lingvo.morphology
             }
 			return (n);
 		}
-		private void Insert( int index, char key, TValue value )
+		private void Insert( int index, char key, T value )
 		{
             if ( _Size == _Array.Length )
             {
@@ -139,7 +139,7 @@ namespace lingvo.morphology
             _Array[ index ] = new Tuple() { Key = key, Value = value };
 			_Size++;
 		}
-		public bool TryGetValue( char key, out TValue value )
+		public bool TryGetValue( char key, out T value )
 		{
             int n = IndexOfKey( key );
             if ( n >= 0 )
@@ -147,7 +147,7 @@ namespace lingvo.morphology
                 value = _Array[ n ].Value;
 				return (true);
 			}
-			value = default(TValue);
+			value = default(T);
 			return (false);
 		}
 		public void RemoveAt( int index )

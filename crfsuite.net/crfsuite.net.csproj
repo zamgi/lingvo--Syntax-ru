@@ -68,9 +68,9 @@
       <Project>{a64092d5-b7cc-4aab-8cc2-571882da64d8}</Project>
       <Name>lingvo.core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SentSplitter\SentSplitter.csproj">
+    <ProjectReference Include="..\sent-splitting\sent-splitting.csproj">
       <Project>{945a3caa-ef28-4344-8dbb-7ebeb4be0301}</Project>
-      <Name>SentSplitter</Name>
+      <Name>sent-splitting</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

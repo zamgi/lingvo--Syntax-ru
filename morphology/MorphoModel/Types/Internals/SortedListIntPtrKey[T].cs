@@ -6,7 +6,7 @@ namespace lingvo.morphology
     /// <summary>
     /// 
     /// </summary>
-	internal struct SortedListIntPtrKey< TValue > where TValue : class
+	internal struct SortedListIntPtrKey< T > where T : class
 	{
         private const int MAX_CAPACITY_THRESHOLD = 0x7FFFFFFF /*int.MaxValue*/ - 0x400 * 0x400 /*1MB*/; /* => 2146435071 == 0x7fefffff*/
 
@@ -15,7 +15,7 @@ namespace lingvo.morphology
         /// </summary>
         internal struct Tuple
         {            
-            public TValue Value;
+            public T Value;
             public IntPtr Key;
 #if DEBUG
             public override string ToString()
@@ -32,7 +32,7 @@ namespace lingvo.morphology
                 {
                     s = "NULL";
                 }
-                var v = (Value is ICollection) ? ((ICollection) Value).Count.ToString() : Value.ToString();
+                var v = (Value is ICollection< T > col) ? col.Count.ToString() : Value.ToString();
                 return (s + ", " + v);
             }
 #endif
@@ -70,7 +70,7 @@ namespace lingvo.morphology
 		public int Count => _Size;
         public Tuple[] Array => _Array;
 
-		public TValue this[ IntPtr key ]
+		public T this[ IntPtr key ]
 		{
 			get
 			{
@@ -94,7 +94,7 @@ namespace lingvo.morphology
 			}
 		}
 
-        public void Add( IntPtr key, TValue value )
+        public void Add( IntPtr key, T value )
 		{
             int n = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
             if ( n >= 0 )
@@ -136,7 +136,7 @@ namespace lingvo.morphology
 			return (n);
 		}
         public int IndexOfKeyCore( IntPtr key ) => InternalBinarySearch( /*_Array, 0, _Size,*/ key );
-	 	public /*private*/ void Insert( int index, IntPtr key, TValue value )
+	 	public /*private*/ void Insert( int index, IntPtr key, T value )
 		{
             if ( _Size == _Array.Length )
             {
@@ -149,9 +149,9 @@ namespace lingvo.morphology
             _Array[ index ] = new Tuple() { Key = key, Value = value };
             _Size++;
 		}
-        public TValue GetValue( int index ) => _Array[ index ].Value;
-        public void SetValue( int index, TValue value ) => _Array[ index ].Value = value;
-		public bool TryGetValue( IntPtr key, out TValue value )
+        public T GetValue( int index ) => _Array[ index ].Value;
+        public void SetValue( int index, T value ) => _Array[ index ].Value = value;
+		public bool TryGetValue( IntPtr key, out T value )
 		{
             int n = IndexOfKey( key );
             if ( n >= 0 )

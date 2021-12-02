@@ -139,9 +139,9 @@
       <Project>{97b9b41c-dabf-4d93-b111-85b8d86acba6}</Project>
       <Name>pos-tagger-crf.NET</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SentSplitter\SentSplitter.csproj">
+    <ProjectReference Include="..\sent-splitting\sent-splitting.csproj">
       <Project>{945a3caa-ef28-4344-8dbb-7ebeb4be0301}</Project>
-      <Name>SentSplitter</Name>
+      <Name>sent-splitting</Name>
     </ProjectReference>
     <ProjectReference Include="..\syntax-crf.net\syntax-crf.net.csproj">
       <Project>{12abbe81-48e0-4f47-ba3b-a1e740872592}</Project>

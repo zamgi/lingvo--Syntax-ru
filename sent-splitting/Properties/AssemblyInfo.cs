@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SentSplitter")]
+[assembly: AssemblyTitle("sent-splitting")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("zamgi")]
-[assembly: AssemblyProduct("SentSplitter")]
+[assembly: AssemblyProduct("sent-splitting")]
 [assembly: AssemblyCopyright("Copyright © zamgi 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

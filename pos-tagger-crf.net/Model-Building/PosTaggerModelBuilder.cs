@@ -27,7 +27,7 @@ namespace lingvo.postagger
 			
 			_PosTaggerScriber  = PosTaggerScriber.Create4ModelBuilder( templateFilename );
             _PosTaggerInputTypeProcessor = CreatePosTaggerInputTypeProcessor( languageType );
-            _UrlDetector                 = new UrlDetector( urlDetectorConfig );
+            _UrlDetector                 = new UrlDetector( in urlDetectorConfig );
             _Words                       = new List< word_t >();
 		}
 
