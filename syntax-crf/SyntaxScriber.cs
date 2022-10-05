@@ -9,6 +9,8 @@ using lingvo.crfsuite;
 using lingvo.morphology;
 using lingvo.postagger;
 using lingvo.tokenizing;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.syntax
 {
@@ -19,7 +21,7 @@ namespace lingvo.syntax
     {
         public const byte U_BYTE = (byte) 'U';
 
-        public static byte get_Case            ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_Case            ( MorphoAttributeEnum ma )
         {
             //var ma = word.morphology.MorphoAttribute;
             if ( (ma & MorphoAttributeEnum.Nominative) == MorphoAttributeEnum.Nominative )
@@ -57,7 +59,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_Number          ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_Number          ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Singular) == MorphoAttributeEnum.Singular )
             {
@@ -70,7 +72,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_Mood            ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_Mood            ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Imperative) == MorphoAttributeEnum.Imperative )
             {
@@ -103,7 +105,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_Voice           ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_Voice           ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Active) == MorphoAttributeEnum.Active )
             {
@@ -116,7 +118,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_VerbTransitivity( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_VerbTransitivity( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Transitive) == MorphoAttributeEnum.Transitive )
             {
@@ -129,7 +131,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_Form            ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_Form            ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Short) == MorphoAttributeEnum.Short )
             {
@@ -138,7 +140,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_ConjunctionType ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_ConjunctionType ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Coordinating) == MorphoAttributeEnum.Coordinating )
             {
@@ -151,7 +153,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_PronounType     ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_PronounType     ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Interrogative) == MorphoAttributeEnum.Interrogative )
             {
@@ -184,7 +186,7 @@ namespace lingvo.syntax
 
             return (U_BYTE);
         }
-        public static byte get_NounType        ( MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public static byte get_NounType        ( MorphoAttributeEnum ma )
         {
             if ( (ma & MorphoAttributeEnum.Proper) == MorphoAttributeEnum.Proper )
             {
@@ -227,7 +229,7 @@ namespace lingvo.syntax
         private const byte VERTICAL_SLASH = (byte) '|';
         private const byte DASH           = (byte) '-';
         private const byte ZERO           = (byte) '\0';
-        private const byte O              = (byte) 'O';        
+        private const byte _O_            = (byte) 'O';        
 
         private const int UTF8_BUFFER_SIZE         = 1024 * 4;             //4KB
         private const int ATTRIBUTE_MAX_LENGTH     = UTF8_BUFFER_SIZE / 4; //1KB
@@ -268,7 +270,7 @@ namespace lingvo.syntax
             ReAllocPinnedWordsBuffer( PINNED_WORDS_BUFFER_SIZE );
 		}
 
-        private void ReAllocPinnedWordsBuffer( int newBufferSize )
+        [M(O.AggressiveInlining)] private void ReAllocPinnedWordsBuffer( int newBufferSize )
         {
             DisposePinnedWordsBuffer();
 
@@ -277,7 +279,7 @@ namespace lingvo.syntax
             _PinnedWordsBufferGCHandle = GCHandle.Alloc( pinnedWordsBuffer, GCHandleType.Pinned );
             _PinnedWordsBufferPtrBase  = (PinnedWord_t*) _PinnedWordsBufferGCHandle.AddrOfPinnedObject().ToPointer();
         }
-        private void DisposePinnedWordsBuffer()
+        [M(O.AggressiveInlining)] private void DisposePinnedWordsBuffer()
         {
             if ( _PinnedWordsBufferPtrBase != null )
             {
@@ -600,7 +602,7 @@ namespace lingvo.syntax
                 case 'y':
                 #region
                 {
-                    *(_AttributeBufferPtr++) = O; //SINTAXINPUTTYPE_OTHER == "O"
+                    *(_AttributeBufferPtr++) = _O_; //SINTAXINPUTTYPE_OTHER == "O"
                 }
                 #endregion
                 break;
@@ -610,7 +612,6 @@ namespace lingvo.syntax
                 #endif
             }
         }
-
     }
 
 
@@ -1106,9 +1107,5 @@ namespace lingvo.syntax
                 #endif
             }
         }
-
     }
 }
-
-
-

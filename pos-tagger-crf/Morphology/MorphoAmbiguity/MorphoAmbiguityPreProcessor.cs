@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 using lingvo.morphology;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.postagger
 {
@@ -28,8 +31,8 @@ namespace lingvo.postagger
             MorphoAttributeEnum.Neuter    |
             MorphoAttributeEnum.General;
 
-        private static bool IsCaseAnycase( MorphoAttributeEnum morphoAttribute ) => ((morphoAttribute & MorphoAttributeEnum.Anycase) == MorphoAttributeEnum.Anycase);
-        private static bool IsGenderGeneral( MorphoAttributeEnum morphoAttribute ) => ((morphoAttribute & MorphoAttributeEnum.General) == MorphoAttributeEnum.General);
+        [M(O.AggressiveInlining)] private static bool IsCaseAnycase( MorphoAttributeEnum morphoAttribute ) => ((morphoAttribute & MorphoAttributeEnum.Anycase) == MorphoAttributeEnum.Anycase);
+        [M(O.AggressiveInlining)] private static bool IsGenderGeneral( MorphoAttributeEnum morphoAttribute ) => ((morphoAttribute & MorphoAttributeEnum.General) == MorphoAttributeEnum.General);
         #endregion
 
         #region [.ctor().]
@@ -299,7 +302,7 @@ b) Для цепочки:
 
             #endregion
 
-            #region commented
+            #region comm.
             /*
             #region [.Case_1__1.]
             var wma_0 = wordMorphoAmbiguities[ 0 ];
@@ -776,7 +779,7 @@ b) Для цепочки:
         }
         private bool Case_1__1_stepII_2( WordMorphoAmbiguity_t wma_2 )
         {
-            System.Diagnostics.Debug.Assert( _Mats_0.Count == _Mats_1.Count, "_Mats_0.Count != _Mats_1.Count" );
+            Debug.Assert( _Mats_0.Count == _Mats_1.Count, "_Mats_0.Count != _Mats_1.Count" );
 
             var len_0 = _Mats_0.Count /*|| _Mats_1.Count*/;
             var len_2 = wma_2.MorphoAmbiguityTuples.Count;
@@ -1205,7 +1208,7 @@ b) Для цепочки:
     /// </summary>
     internal static class MorphoAmbiguityPreProcessorExt
     {
-        public static void AddIfNotExists( this List< MorphoAmbiguityTuple_t > mats, MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] public static void AddIfNotExists( this List< MorphoAmbiguityTuple_t > mats, MorphoAmbiguityTuple_t mat )
         {
             for ( int i = 0, len = mats.Count; i < len; i++ )
             {
@@ -1218,7 +1221,7 @@ b) Для цепочки:
             mats.Add( mat );
         }
 
-        private static bool Equals( in MorphoAmbiguityTuple_t x, in MorphoAmbiguityTuple_t y )
+        [M(O.AggressiveInlining)] private static bool Equals( in MorphoAmbiguityTuple_t x, in MorphoAmbiguityTuple_t y )
         {
             if ( !WordFormMorphology_t.Equals( in x.WordFormMorphology, in y.WordFormMorphology ) )
                 return (false);

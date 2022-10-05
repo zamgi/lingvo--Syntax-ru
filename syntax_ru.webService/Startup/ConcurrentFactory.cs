@@ -2,47 +2,53 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
-using lingvo.classify;
+using lingvo.tokenizing;
 
 namespace lingvo.syntax.webService
 {
     /// <summary>
     /// 
     /// </summary>
-	public sealed class ConcurrentFactory
+	public sealed class ConcurrentFactory : IDisposable
 	{
-		private readonly Semaphore                     _Semaphore;
-        private readonly ConcurrentStack< Classifier > _Stack;
+		private readonly SemaphoreSlim                      _Semaphore;
+        private readonly ConcurrentStack< SyntaxProcessor > _Stack;
 
-        public ConcurrentFactory( ClassifierConfig config, IModel model, IConfig cfg )
-		{            
-            if ( config == null     ) throw (new ArgumentNullException( nameof(config) ));
-            if ( model  == null     ) throw (new ArgumentNullException( nameof(model) ));
-            
-			Config = cfg ?? throw (new ArgumentNullException( nameof(cfg) ));
-			var instanceCount = cfg.CONCURRENT_FACTORY_INSTANCE_COUNT;
+        public ConcurrentFactory( in SyntaxProcessorConfig config, IConfig opts )
+		{
+			var instanceCount = opts.CONCURRENT_FACTORY_INSTANCE_COUNT;
             if ( instanceCount <= 0 ) throw (new ArgumentException( nameof(instanceCount) ));
+			Config = opts ?? throw (new ArgumentNullException( nameof(opts) ));
 
-            _Semaphore = new Semaphore( instanceCount, instanceCount );
-            _Stack     = new ConcurrentStack< Classifier >();
+            _Semaphore = new SemaphoreSlim( instanceCount, instanceCount );
+            _Stack     = new ConcurrentStack< SyntaxProcessor >();
             for ( int i = 0; i < instanceCount; i++ )
 			{
-                _Stack.Push( new Classifier( config, model ) );
+                _Stack.Push( new SyntaxProcessor( config ) );
 			}			
 		}
+        public void Dispose()
+        {
+            foreach ( var worker in _Stack )
+            {
+				worker.Dispose();
+			}
+			_Stack.Clear();
+        }
 
 		public IConfig Config { get; }
 
-        public IList< ClassifyInfo > Run( string text )
-		{
-			_Semaphore.WaitOne();
-			var worker = default(Classifier);
-			var result = default(IList< ClassifyInfo >);
+        public async Task< List< word_t[] > > Run_Details( string text, bool splitBySmiles )
+        {
+			await _Semaphore.WaitAsync().ConfigureAwait( false );
+			var worker = default(SyntaxProcessor);
+			var result = default(List< word_t[] >);
 			try
 			{
                 worker = Pop( _Stack );
-                result = worker.MakeClassify( text );
+                result = worker.Run_Details( text, splitBySmiles );
 			}
 			finally
 			{

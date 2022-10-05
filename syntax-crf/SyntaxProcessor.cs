@@ -22,7 +22,7 @@ namespace lingvo.syntax
         #endregion
 
         #region [.ctor().]
-        public SyntaxProcessor( SyntaxProcessorConfig config )
+        public SyntaxProcessor( in SyntaxProcessorConfig config )
 		{
             CheckConfig( config );
 

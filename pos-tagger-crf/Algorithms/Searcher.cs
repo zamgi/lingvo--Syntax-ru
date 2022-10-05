@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 
 using lingvo.tokenizing;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.postagger
 {
@@ -14,7 +16,7 @@ namespace lingvo.postagger
         /// </summary>
         public sealed class Comparer : IComparer< SearchResult >
         {
-            public static Comparer Inst { get; } = new Comparer();
+            public static Comparer Inst { [M(O.AggressiveInlining)] get; } = new Comparer();
             private Comparer() { }
             public int Compare( SearchResult x, SearchResult y )
             {
@@ -26,14 +28,14 @@ namespace lingvo.postagger
             }
         }
 
-        public SearchResult( int startIndex, int length )
+        [M(O.AggressiveInlining)] public SearchResult( int startIndex, int length )
         {
             StartIndex = startIndex;
             Length     = length;
         }
 
-        public int StartIndex { get; }
-        public int Length     { get; }
+        public int StartIndex { [M(O.AggressiveInlining)] get; }
+        public int Length     { [M(O.AggressiveInlining)] get; }
 
         public override string ToString() => $"[{StartIndex}:{Length}]";
     }
@@ -51,10 +53,10 @@ namespace lingvo.postagger
             /// <summary>
             /// 
             /// </summary>
-            private sealed class StringsIEqualityComparer : IEqualityComparer< string[] >
+            private sealed class StringsEqualityComparer : IEqualityComparer< string[] >
             {
-                public static StringsIEqualityComparer Inst { get; } = new StringsIEqualityComparer();
-                private StringsIEqualityComparer() { }
+                public static StringsEqualityComparer Inst { [M(O.AggressiveInlining)] get; } = new StringsEqualityComparer();
+                private StringsEqualityComparer() { }
                 public bool Equals( string[] x, string[] y )
                 {
                     var len = x.Length;
@@ -184,9 +186,9 @@ namespace lingvo.postagger
             /// Adds pattern ending in this node
             /// </summary>
             /// <param name="ngram">Pattern</param>
-            public void AddNgram( string[] ngram )
+            [M(O.AggressiveInlining)] public void AddNgram( string[] ngram )
             {
-                if ( _Ngrams == null ) _Ngrams = new HashSet< string[] >( StringsIEqualityComparer.Inst );
+                if ( _Ngrams == null ) _Ngrams = new HashSet< string[] >( StringsEqualityComparer.Inst );
                 _Ngrams.Add( ngram );
             }
 
@@ -194,7 +196,7 @@ namespace lingvo.postagger
             /// Adds trabsition node
             /// </summary>
             /// <param name="node">Node</param>
-            public void AddTransition( TreeNode node )
+            [M(O.AggressiveInlining)] public void AddTransition( TreeNode node )
             {
                 if ( _TransDict == null ) _TransDict = new Dictionary< string, TreeNode >();
                 _TransDict.Add( node.Word, node );
@@ -205,49 +207,48 @@ namespace lingvo.postagger
             /// </summary>
             /// <param name="c">Character</param>
             /// <returns>Returns TreeNode or null</returns>
-            public TreeNode GetTransition( string word ) => (_TransDict != null) && _TransDict.TryGetValue( word, out var node ) ? node : null;
+            [M(O.AggressiveInlining)] public TreeNode GetTransition( string word ) => (_TransDict != null) && _TransDict.TryGetValue( word, out var node ) ? node : null;
 
             /// <summary>
             /// Returns true if node contains transition to specified character
             /// </summary>
             /// <param name="c">Character</param>
             /// <returns>True if transition exists</returns>
-            public bool ContainsTransition( string word ) => ((_TransDict != null) && _TransDict.ContainsKey( word ));
+            [M(O.AggressiveInlining)] public bool ContainsTransition( string word ) => ((_TransDict != null) && _TransDict.ContainsKey( word ));
             #endregion
 
-            #region [.properties.]
+            #region [.props.]
             private Dictionary< string, TreeNode > _TransDict;
             private HashSet< string[] > _Ngrams;
 
             /// <summary>
             /// Character
             /// </summary>
-            public string Word { get; }
+            public string Word { [M(O.AggressiveInlining)] get; }
 
             /// <summary>
             /// Parent tree node
             /// </summary>
-            public TreeNode Parent { get; }
+            public TreeNode Parent { [M(O.AggressiveInlining)] get; }
 
             /// <summary>
             /// Failure function - descendant node
             /// </summary>
-            public TreeNode Failure { get; internal set; }
+            public TreeNode Failure { [M(O.AggressiveInlining)] get; [M(O.AggressiveInlining)] internal set; }
 
             /// <summary>
             /// Transition function - list of descendant nodes
             /// </summary>
-            public ICollection< TreeNode > Transitions => ((_TransDict != null) ? _TransDict.Values : null);
+            public ICollection< TreeNode > Transitions { [M(O.AggressiveInlining)] get => ((_TransDict != null) ? _TransDict.Values : null); }
 
             /// <summary>
             /// Returns list of patterns ending by this letter
             /// </summary>
-            public ICollection< string[] > Ngrams => _Ngrams;
-            public bool HasNgrams => (_Ngrams != null);
+            public ICollection< string[] > Ngrams { [M(O.AggressiveInlining)] get => _Ngrams; }
+            public bool HasNgrams { [M(O.AggressiveInlining)] get => (_Ngrams != null); }
             #endregion
 
-            public override string ToString() => ((Word != null) ? ('\'' + Word + '\'') : "ROOT") +
-                                                 ", transitions(descendants): " + ((_TransDict != null) ? _TransDict.Count : 0) + ", ngrams: " + ((_Ngrams != null) ? _Ngrams.Count : 0);
+            public override string ToString() => $"{((Word != null) ? $"'{Word}'" : "ROOT")}, transitions(descendants): {((_TransDict != null) ? _TransDict.Count : 0)}, ngrams: {((_Ngrams != null) ? _Ngrams.Count : 0)}";
         }
 
         /// <summary>
@@ -308,8 +309,8 @@ namespace lingvo.postagger
             }
             return (null);
         }
-        public ICollection< SearchResult > FindAllIngnoreCase( List< word_t > words ) => FindAllIngnoreCaseInternal( words );
-        public ICollection< SearchResult > FindAllSensitiveCase( List< word_t > words ) => FindAllSensitiveCaseInternal( words );
+        [M(O.AggressiveInlining)] public ICollection< SearchResult > FindAllIngnoreCase( List< word_t > words ) => FindAllIngnoreCaseInternal( words );
+        [M(O.AggressiveInlining)] public ICollection< SearchResult > FindAllSensitiveCase( List< word_t > words ) => FindAllSensitiveCaseInternal( words );
 
         private SortedSet< SearchResult > FindAllIngnoreCaseInternal( List< word_t > words )
         {

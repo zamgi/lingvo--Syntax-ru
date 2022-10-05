@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
@@ -27,7 +28,7 @@ namespace lingvo.syntax.webService.Controllers
 #endif
         #endregion
 
-        [HttpPost] public IActionResult Run( [FromBody] InitParamsVM m )
+        [HttpPost] public async Task< IActionResult > Run( [FromBody] InitParamsVM m )
         {
             try
             {
@@ -43,19 +44,19 @@ namespace lingvo.syntax.webService.Controllers
                 antiBot.MarkRequestEx( m.Text );
                 #endregion
 #if DEBUG
-                _Logger.LogInformation( $"start Find '{m.Text}'..." );
+                _Logger.LogInformation( $"start process: '{m.Text}'..." );
 #endif
-                var p = _ConcurrentFactory.Run( m.Text );
-                var result = new ResultVM( m, p, _ConcurrentFactory.Config );
+                var sents = await _ConcurrentFactory.Run_Details( m.Text, m.SplitBySmiles );
+                var result = new ResultVM( m, sents );
 #if DEBUG
-                _Logger.LogInformation( $"end Find '{m.Text}'." );
+                _Logger.LogInformation( $"end process: '{m.Text}'." );
 #endif
                 return Ok( result );
             }
             catch ( Exception ex )
             {
 #if DEBUG
-                _Logger.LogError( $"Error while find: '{m.Text}' => {ex}" );
+                _Logger.LogError( $"Error while process: '{m.Text}' => {ex}" );
 #endif
                 return Ok( new ResultVM( m, ex ) );
             }

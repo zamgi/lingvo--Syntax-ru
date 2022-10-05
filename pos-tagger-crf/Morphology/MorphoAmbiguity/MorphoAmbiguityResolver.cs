@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 using lingvo.core;
 using lingvo.crfsuite;
 using lingvo.morphology;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.postagger
 {
@@ -41,13 +44,13 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
     internal static class MA
     {
         private const byte   ZERO = (byte) '\0';
-        private const byte   O    = (byte) 'O';
+        private const byte   _O_  = (byte) 'O';
         private const double PROBABILITY_EQUAL_THRESHOLD = 0.000001d;
 
         /// <summary>
         /// Part-Of-Speech => (p/w) crf-field
         /// </summary>
-        public static byte get_CRF_W_field_value( MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] public static byte get_CRF_W_field_value( MorphoAmbiguityTuple_t mat )
         {
             switch ( mat.Word.posTaggerOutputType )
             {
@@ -80,12 +83,12 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     }
                     return ((byte) 'T'); //all-other-punctuation
             }
-            return (O);
+            return (_O_);
         }
         /// <summary>
         /// Person => (a) crf-field
         /// </summary>
-        public static byte get_CRF_A_field_value( MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] public static byte get_CRF_A_field_value( MorphoAmbiguityTuple_t mat )
         {
             switch ( mat.WordFormMorphology.PartOfSpeech )
             {
@@ -124,7 +127,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         */
         #endregion
 
-        #region [.commented. previous.]
+        #region comm. prev.
         /*/// <summary>
         /// Case => (b) crf-field, (e) for Verb-class (Verb, Predicative, Infinitive, AdverbialParticiple, AuxiliaryVerb, Participle)
         /// </summary>
@@ -176,7 +179,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// Case => (b) crf-field, (e) for Verb-class (Verb, Predicative, Infinitive, AdverbialParticiple, AuxiliaryVerb, Participle)
         /// </summary>
-        public static byte get_CRF_B_field_value( MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] public static byte get_CRF_B_field_value( MorphoAmbiguityTuple_t mat )
         {
             switch ( mat.WordFormMorphology.PartOfSpeech )
             {
@@ -314,7 +317,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// Number => (c) crf-field
         /// </summary>
-        public static byte get_CRF_C_field_value( MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] public static byte get_CRF_C_field_value( MorphoAmbiguityTuple_t mat )
         {
             switch ( mat.WordFormMorphology.PartOfSpeech )
             {
@@ -340,7 +343,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// Gender => (d) crf-field
         /// </summary>
-        public static byte get_CRF_D_field_value( MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] public static byte get_CRF_D_field_value( MorphoAmbiguityTuple_t mat )
         {
             switch ( mat.WordFormMorphology.PartOfSpeech )
             {
@@ -370,9 +373,9 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// O => (y) crf-field
         /// </summary>
-        public static byte get_CRF_Y_field_value() => O;
+        [M(O.AggressiveInlining)] public static byte get_CRF_Y_field_value() => _O_;
 
-        unsafe public static MorphoAttributeEnum ToMorphoAttributes( byte* value )
+        [M(O.AggressiveInlining)] unsafe public static MorphoAttributeEnum ToMorphoAttributes( byte* value )
         {
             var morphoAttributes = default(MorphoAttributeEnum);
 
@@ -453,7 +456,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (morphoAttributes);
         }
 
-        public static bool IsSingleItemAndEmptyMorphoAttribute( List< MorphoAmbiguityTuple_t > mats ) => ((mats.Count == 1) && mats[ 0 ].WordFormMorphology.IsEmptyMorphoAttribute());
+        [M(O.AggressiveInlining)] public static bool IsSingleItemAndEmptyMorphoAttribute( List< MorphoAmbiguityTuple_t > mats ) => ((mats.Count == 1) && mats[ 0 ].WordFormMorphology.IsEmptyMorphoAttribute());
 
         /*
         Так же возможен вариант, когда два токена объединились по четырем морфохарактеристикам, но при это имеют разный регистр первой буквы:
@@ -462,7 +465,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             путина		Noun	Nominative, Singular, Feminine, Inanimate, Common
         В этом случае отбирать тот вариант, с каким регистром написано в тексте.                     
         */
-        public static bool IsFirstPreference( MorphoAmbiguityTuple_t first, MorphoAmbiguityTuple_t second )
+        [M(O.AggressiveInlining)] public static bool IsFirstPreference( MorphoAmbiguityTuple_t first, MorphoAmbiguityTuple_t second )
         {
             if ( second == default(MorphoAmbiguityTuple_t) )
                 return (true);
@@ -476,7 +479,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
             return (false);
         }
-        public static bool IsProbabilityEqual( double probability1, double probability2 ) => (Math.Abs( probability2 - probability1 ) <= PROBABILITY_EQUAL_THRESHOLD);
+        [M(O.AggressiveInlining)] public static bool IsProbabilityEqual( double probability1, double probability2 ) => (Math.Abs( probability2 - probability1 ) <= PROBABILITY_EQUAL_THRESHOLD);
     }
 
     /// <summary>
@@ -491,7 +494,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         public MorphoAmbiguityTuple_t max_morphoAmbiguityTuple_3;
         public MorphoAmbiguityTuple_t max_morphoAmbiguityTuple_4;
 
-        public static probability_t Create() => new probability_t() { max_probability = double.MinValue, };
+        [M(O.AggressiveInlining)] public static probability_t Create() => new probability_t() { max_probability = double.MinValue, };
     }
 
 
@@ -535,10 +538,10 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         private WordMorphoAmbiguity_t         _Wma_0, _Wma_1, _Wma_2;
         private MorphoAmbiguityTuple_t        _MatThreegram_0, _MatThreegram_1, _MatThreegram_2;
 
-        #if DEBUG
-            private readonly System.Text.StringBuilder _sb_attr_debug = new System.Text.StringBuilder();
-            private readonly char[] _chars_attr_debug = new char[ ATTRIBUTE_MAX_LENGTH * 10 ];
-        #endif
+#if DEBUG
+        private readonly StringBuilder _sb_attr_debug = new StringBuilder();
+        private readonly char[] _chars_attr_debug = new char[ ATTRIBUTE_MAX_LENGTH * 10 ];
+#endif
         #endregion
 
         #region [.ctor().]
@@ -574,14 +577,10 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             //_MatThreegrams = new MorphoAmbiguityTuple_t[ MAT_THREEGRAMS_SIZE ];
 		}
 
-        ~MorphoAmbiguityResolver_3g()
-        {
-            DisposeNativeResources();
-        }
+        ~MorphoAmbiguityResolver_3g() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
         private void DisposeNativeResources()
@@ -604,17 +603,12 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 		/// </summary>
 		/// <param name="templatePath">путь к файлу шаблона</param>
 		/// <returns>Шаблон</returns>
-        private static CRFTemplateFile LoadTemplate( string templatePath )
-		{
-			var result = CRFTemplateFileLoader.Load( templatePath );
-			CheckTemplate( result );
-			return (result);
-		}
+        private static CRFTemplateFile LoadTemplate( string templatePath ) => CheckTemplate( CRFTemplateFileLoader.Load( templatePath ) );
 		/// <summary>
         /// Проверить правильность шаблона
 		/// </summary>
         /// <param name="crfTemplateFile">Шаблон</param>
-		private static void CheckTemplate( CRFTemplateFile crfTemplateFile )
+		private static CRFTemplateFile CheckTemplate( CRFTemplateFile crfTemplateFile )
 		{
 			foreach ( CRFNgram ngram in crfTemplateFile.CRFNgrams )
 			{
@@ -627,15 +621,16 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                         case  1: 
                             break;
                         default:
-					        throw (new Exception("Аттрибут '" + crfAttribute.AttributeName + "' содержащит недопустимое значение индекса морфо-атрибута: '" + crfAttribute.Position + '\''));                            
+					        throw (new Exception($"Аттрибут '{crfAttribute.AttributeName}' содержащит недопустимое значение индекса морфо-атрибута: '{crfAttribute.Position}'"));
                     }
 				}
 			}
+            return (crfTemplateFile);
 		}
         #endregion
 
 
-        public void Resolve( List< WordMorphoAmbiguity_t > wordMorphoAmbiguities )
+        [M(O.AggressiveInlining)] public void Resolve( List< WordMorphoAmbiguity_t > wordMorphoAmbiguities )
         {
             #region [.init.]
             _WordMorphoAmbiguities      = wordMorphoAmbiguities;
@@ -820,7 +815,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             #endregion            
         }
         
-        private IEnumerable< int > IteratedOverThreeGramsWMA()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverThreeGramsWMA()
         {
             for ( int i = 3, len = _WordMorphoAmbiguitiesCount; i < len; i++ )
             {
@@ -832,7 +827,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private IEnumerable< int > IteratedOverThreeGramsMAT()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverThreeGramsMAT()
         {
             if ( _Wma_1.IsPunctuation() )
             {
@@ -867,7 +862,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 }
             }
         }
-        private IEnumerable< int > IteratedOverThreeGramsMAT_4FirstWMA()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverThreeGramsMAT_4FirstWMA()
         {
             /*if ( _Wma_0.IsPunctuation() )
             {
@@ -904,7 +899,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 }
             }
         }
-        private IEnumerable< int > IteratedOverThreeGramsMAT_4LastWMA()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverThreeGramsMAT_4LastWMA()
         {
             if ( _Wma_2.IsPunctuation() )
             {
@@ -940,7 +935,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 }
             }
         }
-        private IEnumerable< int > IteratedOverThreeGramsMAT_42WMA()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverThreeGramsMAT_42WMA()
         {
             /*if ( _Wma_0.IsPunctuation() )
             {
@@ -968,7 +963,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private double? TaggingThreeGramsMAT()
+        [M(O.AggressiveInlining)] private double? TaggingThreeGramsMAT()
         {
             var marginal = default(double?);
 
@@ -980,7 +975,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_0 );
                 var f1 = default(float);
                 #region commented
-                /*var attr1 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr1 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr1, out f1 ) )
                 {
                     if ( marginal.HasValue )
@@ -1027,7 +1022,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_2 );
                 var f2 = default(float);
                 #region commented
-                /*var attr2 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr2 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr2, out f2 ) )
                 {
                     if ( marginal.HasValue )
@@ -1056,7 +1051,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingBiGramsMAT_42WMA()
+        [M(O.AggressiveInlining)] private double? TaggingBiGramsMAT_42WMA()
         {
             var marginal = default(double?);
 
@@ -1068,7 +1063,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_0 );
                 var f1 = default(float);
                 #region commented
-                /*var attr1 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr1 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr1, out f1 ) )
                 {
                     if ( marginal.HasValue )
@@ -1106,7 +1101,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_2 );
                 var f2 = default(float);
                 #region commented
-                /*var attr2 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr2 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr2, out f2 ) )
                 {
                     if ( marginal.HasValue )
@@ -1139,7 +1134,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private double? BrimFirstMAT()
+        [M(O.AggressiveInlining)] private double? BrimFirstMAT()
         {
             var marginal = default(double?);
 
@@ -1179,7 +1174,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_0 );
                 var f0 = default(float);
                 #region commented
-                /*var attr1 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr1 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr1, out f1 ) )
                 {
                     if ( marginal.HasValue )
@@ -1197,7 +1192,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -1207,7 +1202,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimMiddleMAT()
+        [M(O.AggressiveInlining)] private double? BrimMiddleMAT()
         {
             var marginal = default(double?);
 
@@ -1247,7 +1242,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_1 );
                 var f1 = default(float);
                 #region commented
-                /*var attr2 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr2 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr2, out f2 ) )
                 {
                     if ( marginal.HasValue )
@@ -1265,7 +1260,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -1275,7 +1270,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimLastMAT()
+        [M(O.AggressiveInlining)] private double? BrimLastMAT()
         {
             var marginal = default(double?);
 
@@ -1315,7 +1310,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 FillMat5CharsBufferWithZero( _AttributeBufferPtr, _MatThreegram_2 );
                 var f2 = default(float);
                 #region commented
-                /*var attr3 = System.Text.Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
+                /*var attr3 = Encoding.UTF8.GetString( _AttributeBuffer, 0, (int) (_AttributeBufferPtr - _AttributeBufferPtrBase) ); //new string( _AttributeBufferPtrBase );                
                 if ( _ModelDictionary.TryGetValue( attr3, out f3 ) )
                 {
                     if ( marginal.HasValue )
@@ -1333,7 +1328,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -1344,7 +1339,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private void AppendAttrValueFirstMAT ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueFirstMAT ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-0,1] */
 
@@ -1361,7 +1356,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueMiddleMAT( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueMiddleMAT( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-1,0,1] */
 
@@ -1382,7 +1377,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueLastMAT  ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueLastMAT  ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-1,0] */
 
@@ -1400,7 +1395,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        unsafe private static byte* CopyToZero( byte* src, byte* dist )
+        [M(O.AggressiveInlining)] unsafe private static byte* CopyToZero( byte* src, byte* dist )
         {
             for ( ; ; dist++, src++ )
             {
@@ -1411,7 +1406,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 *dist = *src;
             }
         }
-        unsafe private static void FillMat5CharsBufferWithZero( byte* ptr, MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] unsafe private static void FillMat5CharsBufferWithZero( byte* ptr, MorphoAmbiguityTuple_t mat )
         {
             *(ptr++) = SEMICOLON;
             *(ptr++) = MA.get_CRF_W_field_value( mat );
@@ -1422,7 +1417,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             *(ptr  ) = ZERO;
         }
 
-        private static byte GetAttrValue( int columnIndex, MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] private static byte GetAttrValue( int columnIndex, MorphoAmbiguityTuple_t mat )
         {
             switch ( columnIndex )
             {
@@ -1454,7 +1449,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private static void SetBestWordMorphology( MorphoAmbiguityTuple_t max_morphoAmbiguityTuple, WordMorphoAmbiguity_t wma )
+        [M(O.AggressiveInlining)] private static void SetBestWordMorphology( MorphoAmbiguityTuple_t max_morphoAmbiguityTuple, WordMorphoAmbiguity_t wma )
         {
             if ( max_morphoAmbiguityTuple != default(MorphoAmbiguityTuple_t) )
             {
@@ -1522,10 +1517,10 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         private WordMorphoAmbiguity_t         _Wma_0, _Wma_1, _Wma_2, _Wma_3, _Wma_4;
         private MorphoAmbiguityTuple_t        _Mat_0, _Mat_1, _Mat_2, _Mat_3, _Mat_4;
 
-        #if DEBUG
-            private readonly System.Text.StringBuilder _sb_attr_debug = new System.Text.StringBuilder();
-            private readonly char[] _chars_attr_debug = new char[ ATTRIBUTE_MAX_LENGTH * 10 ];
-        #endif
+#if DEBUG
+        private readonly StringBuilder _sb_attr_debug = new StringBuilder();
+        private readonly char[] _chars_attr_debug = new char[ ATTRIBUTE_MAX_LENGTH * 10 ];
+#endif
         #endregion
 
         #region [.ctor().]
@@ -1572,14 +1567,10 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             _AttributeBufferPtrBase  = (byte*) _AttributeBufferGCHandle.AddrOfPinnedObject().ToPointer();
 		}
 
-        ~MorphoAmbiguityResolver_5g()
-        {
-            DisposeNativeResources();
-        }
+        ~MorphoAmbiguityResolver_5g() => DisposeNativeResources();
         public void Dispose()
         {
             DisposeNativeResources();
-
             GC.SuppressFinalize( this );
         }
         private void DisposeNativeResources()
@@ -1599,17 +1590,12 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 		/// </summary>
 		/// <param name="templatePath">путь к файлу шаблона</param>
 		/// <returns>Шаблон</returns>
-        private static CRFTemplateFile LoadTemplate( string templatePath )
-		{
-			var result = CRFTemplateFileLoader.Load( templatePath );
-			CheckTemplate( result );
-			return (result);
-		}
+        private static CRFTemplateFile LoadTemplate( string templatePath ) => CheckTemplate( CRFTemplateFileLoader.Load( templatePath ) );
 		/// <summary>
         /// Проверить правильность шаблона
 		/// </summary>
         /// <param name="crfTemplateFile">Шаблон</param>
-		private static void CheckTemplate( CRFTemplateFile crfTemplateFile )
+		private static CRFTemplateFile CheckTemplate( CRFTemplateFile crfTemplateFile )
 		{
 			foreach ( CRFNgram ngram in crfTemplateFile.CRFNgrams )
 			{
@@ -1624,10 +1610,11 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                         case  2: 
                             break;
                         default:
-					        throw (new Exception("Аттрибут '" + crfAttribute.AttributeName + "' содержащит недопустимое значение индекса морфо-атрибута: '" + crfAttribute.Position + '\''));                            
+                            throw (new Exception( $"Аттрибут '{crfAttribute.AttributeName}' содержащит недопустимое значение индекса морфо-атрибута: '{crfAttribute.Position}'" ));
                     }
 				}
 			}
+            return (crfTemplateFile);
 		}
         #endregion
 
@@ -1716,7 +1703,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             #endregion            
         }
 
-        private IEnumerable< int > IteratedOverFirstMAT()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverFirstMAT()
         {
             if ( _Wma_0.IsPunctuation() )
             {
@@ -1752,7 +1739,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private double? TaggingFirstMAT()
+        [M(O.AggressiveInlining)] private double? TaggingFirstMAT()
         {
             var marginal = default(double?);
 
@@ -1783,8 +1770,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-
-        private double? BrimFirstMAT()
+        [M(O.AggressiveInlining)] private double? BrimFirstMAT()
         {
             var marginal = default(double?);
 
@@ -1834,7 +1820,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -1845,7 +1831,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private void AppendAttrValueFirstMAT( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueFirstMAT( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [0,1,2] */
 
@@ -1872,7 +1858,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// sent from 2-word's => [(0,1)];[(-1,0)]
         /// </summary>
-        private void Resolve42()
+        [M(O.AggressiveInlining)] private void Resolve42()
         {
             //_MorphoAmbiguityResolver_3g.Resolve( _WordMorphoAmbiguities );
         //return;
@@ -1904,7 +1890,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             SetBestWordMorphology( prob.max_morphoAmbiguityTuple_1, _Wma_1 );
         }
 
-        private IEnumerable< int > IteratedOverMAT42()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverMAT42()
         {
             /*if ( _Wma_0.IsPunctuation() )
             {
@@ -1932,7 +1918,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private double? TaggingMAT42()
+        [M(O.AggressiveInlining)] private double? TaggingMAT42()
         {
             var marginal = default(double?);
 
@@ -1995,7 +1981,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private double? BrimFirstMAT42()
+        [M(O.AggressiveInlining)] private double? BrimFirstMAT42()
         {
             var marginal = default(double?);
 
@@ -2043,7 +2029,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2053,7 +2039,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimLastMAT42()
+        [M(O.AggressiveInlining)] private double? BrimLastMAT42()
         {
             var marginal = default(double?);
 
@@ -2101,7 +2087,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2112,7 +2098,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private void AppendAttrValueFirstMAT42( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueFirstMAT42( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [0,1] */
 
@@ -2129,7 +2115,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueLastMAT42 ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueLastMAT42 ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-1,0] */
 
@@ -2153,7 +2139,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// sent from 3-word's => [(0,1,2)];[(-1,0,1)];[(-2,-1,0)]
         /// </summary>
-        private void Resolve43()
+        [M(O.AggressiveInlining)] private void Resolve43()
         {
             #region [.second/middle-wma.]
             var prob = probability_t.Create();
@@ -2202,7 +2188,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             #endregion
         }
 
-        private IEnumerable< int > IteratedOverSecondMAT43()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverSecondMAT43()
         {
             if ( _Wma_1.IsPunctuation() )
             {
@@ -2240,7 +2226,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 //}
             }
         }
-        private IEnumerable< int > IteratedOverLastMAT43()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverLastMAT43()
         {
             if ( _Wma_2.IsPunctuation() )
             {
@@ -2282,7 +2268,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private double? TaggingSecondMAT43()
+        [M(O.AggressiveInlining)] private double? TaggingSecondMAT43()
         {
             var marginal = default(double?);
 
@@ -2300,7 +2286,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingLastMAT43()
+        [M(O.AggressiveInlining)] private double? TaggingLastMAT43()
         {
             var marginal = default(double?);
 
@@ -2332,7 +2318,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private double? BrimSecondMAT43()
+        [M(O.AggressiveInlining)] private double? BrimSecondMAT43()
         {
             var marginal = default(double?);
 
@@ -2382,7 +2368,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2392,7 +2378,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimLastMAT43()
+        [M(O.AggressiveInlining)] private double? BrimLastMAT43()
         {
             var marginal = default(double?);
 
@@ -2442,7 +2428,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2453,7 +2439,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private void AppendAttrValueSecondMAT43( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueSecondMAT43( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-1,0,1] */
 
@@ -2474,7 +2460,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueLastMAT43  ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueLastMAT43  ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-2,-1,0] */
 
@@ -2502,7 +2488,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// sent from 4-word's => [(0,1,2)];[(0,1,2);(-1,0,1)];[(-2,-1,0);(-1,0,1)];[(-2,-1,0)]
         /// </summary>
-        private void Resolve44()
+        [M(O.AggressiveInlining)] private void Resolve44()
         {
             #region [.second-wma.]
             var prob = probability_t.Create();
@@ -2574,7 +2560,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             #endregion
         }
 
-        private IEnumerable< int > IteratedOverSecondMAT44()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverSecondMAT44()
         {
             if ( _Wma_1.IsPunctuation() )
             {
@@ -2619,7 +2605,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 //}
             }
         }
-        private IEnumerable< int > IteratedOverPreLastMAT44()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverPreLastMAT44()
         {
             if ( _Wma_2.IsPunctuation() )
             {
@@ -2667,7 +2653,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 //}
             }
         }
-        private IEnumerable< int > IteratedOverLastMAT44()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverLastMAT44()
         {
             if ( _Wma_3.IsPunctuation() )
             {
@@ -2709,7 +2695,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private double? TaggingSecondMAT44()
+        [M(O.AggressiveInlining)] private double? TaggingSecondMAT44()
         {
             var marginal = default(double?);
 
@@ -2727,7 +2713,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingPreLastMAT44()
+        [M(O.AggressiveInlining)] private double? TaggingPreLastMAT44()
         {
             var marginal = default(double?);
 
@@ -2745,7 +2731,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingLastMAT44()
+        [M(O.AggressiveInlining)] private double? TaggingLastMAT44()
         {
             var marginal = default(double?);
 
@@ -2777,7 +2763,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private double? BrimSecondMAT44()
+        [M(O.AggressiveInlining)] private double? BrimSecondMAT44()
         {
             var marginal = default(double?);
 
@@ -2827,7 +2813,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2837,7 +2823,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimPreLastMAT44()
+        [M(O.AggressiveInlining)] private double? BrimPreLastMAT44()
         {
             var marginal = default(double?);
 
@@ -2887,7 +2873,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2897,7 +2883,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimLastMAT44()
+        [M(O.AggressiveInlining)] private double? BrimLastMAT44()
         {
             var marginal = default(double?);
 
@@ -2947,7 +2933,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -2958,7 +2944,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private void AppendAttrValueSecondMAT44 ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueSecondMAT44 ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-1,0,1,2] */
 
@@ -2983,7 +2969,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValuePreLastMAT44( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValuePreLastMAT44( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-2,-1,0,1] */
 
@@ -3008,7 +2994,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueLastMAT44   ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueLastMAT44   ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-2,-1,0] */
 
@@ -3036,7 +3022,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         /// <summary>
         /// sent from 5-&-more-word's => [(0,1,2)];[(0,1,2);(-1,0,1)];[(-2,-1,0);(-1,0,1);(0,1,2)];[(-2,-1,0);(-1,0,1)];[(-2,-1,0)]
         /// </summary>
-        private void Resolve45()
+        [M(O.AggressiveInlining)] private void Resolve45()
         {
             #region [.second-wma.]
             var prob = probability_t.Create();
@@ -3134,7 +3120,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             #endregion
         }
 
-        private IEnumerable< int > IteratedOverWMA45()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverWMA45()
         {
             yield return (0);
 
@@ -3150,7 +3136,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private IEnumerable< int > IteratedOverSecondMAT45()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverSecondMAT45()
         {
             if ( _Wma_1.IsPunctuation() )
             {
@@ -3195,7 +3181,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 //}
             }
         }
-        private IEnumerable< int > IteratedOverMiddleMAT45()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverMiddleMAT45()
         {
             if ( _Wma_2.IsPunctuation() )
             {
@@ -3249,7 +3235,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 //}
             }
         }
-        private IEnumerable< int > IteratedOverPreLastMAT45()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverPreLastMAT45()
         {
             if ( _Wma_3.IsPunctuation() )
             {
@@ -3306,7 +3292,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 //}
             }
         }
-        private IEnumerable< int > IteratedOverLastMAT45()
+        [M(O.AggressiveInlining)] private IEnumerable< int > IteratedOverLastMAT45()
         {
             if ( _Wma_4.IsPunctuation() )
             {
@@ -3348,7 +3334,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private double? TaggingSecondMAT45()
+        [M(O.AggressiveInlining)] private double? TaggingSecondMAT45()
         {
             var marginal = default(double?);
 
@@ -3366,7 +3352,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingMiddleMAT45()
+        [M(O.AggressiveInlining)] private double? TaggingMiddleMAT45()
         {
             var marginal = default(double?);
 
@@ -3384,7 +3370,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingPreLastMAT45()
+        [M(O.AggressiveInlining)] private double? TaggingPreLastMAT45()
         {
             var marginal = default(double?);
 
@@ -3402,7 +3388,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? TaggingLastMAT45()
+        [M(O.AggressiveInlining)] private double? TaggingLastMAT45()
         {
             var marginal = default(double?);
 
@@ -3434,7 +3420,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private double? BrimSecondMAT45()
+        [M(O.AggressiveInlining)] private double? BrimSecondMAT45()
         {
             var marginal = default(double?);
 
@@ -3484,7 +3470,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -3494,7 +3480,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimMiddleMAT45()
+        [M(O.AggressiveInlining)] private double? BrimMiddleMAT45()
         {
             var marginal = default(double?);
 
@@ -3544,7 +3530,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -3554,7 +3540,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimPreLastMAT45()
+        [M(O.AggressiveInlining)] private double? BrimPreLastMAT45()
         {
             var marginal = default(double?);
 
@@ -3604,7 +3590,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -3614,7 +3600,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
 
             return (marginal);
         }
-        private double? BrimLastMAT45()
+        [M(O.AggressiveInlining)] private double? BrimLastMAT45()
         {
             var marginal = default(double?);
 
@@ -3664,7 +3650,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                     var attr_len = (int) (_AttributeBufferPtr - _AttributeBufferPtrBase);                        
                     fixed ( char* chars_ptr = _chars_attr_debug )
                     {
-                        var chars_len = System.Text.Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
+                        var chars_len = Encoding.UTF8.GetChars( _AttributeBufferPtrBase, attr_len, chars_ptr, _chars_attr_debug.Length );
                         var s_debug = new string( chars_ptr, 0, chars_len );
                         _sb_attr_debug.Append( s_debug ).Append( '\t' );
                     }
@@ -3675,7 +3661,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             return (marginal);
         }
 
-        private void AppendAttrValueSecondMAT45 ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueSecondMAT45 ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-1,0,1,2] */
 
@@ -3700,7 +3686,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueMiddleMAT45 ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueMiddleMAT45 ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-2,-1,0,1,2] */
 
@@ -3729,7 +3715,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValuePreLastMAT45( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValuePreLastMAT45( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-2,-1,0,1] */
 
@@ -3754,7 +3740,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 default: throw (new ArgumentException("position: " + crfAttribute.Position));
             }
         }
-        private void AppendAttrValueLastMAT45   ( CRFAttribute crfAttribute )
+        [M(O.AggressiveInlining)] private void AppendAttrValueLastMAT45   ( CRFAttribute crfAttribute )
         {
             /* crfAttribute.Position = [-2,-1,0] */
 
@@ -3778,7 +3764,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
         #endregion
 
 
-        unsafe private static byte* CopyToZero( byte* src, byte* dist )
+        [M(O.AggressiveInlining)] unsafe private static byte* CopyToZero( byte* src, byte* dist )
         {
             for ( ; ; dist++, src++ )
             {
@@ -3789,7 +3775,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
                 *dist = *src;
             }
         }
-        unsafe private static void FillMat5CharsBufferWithZero( byte* ptr, MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] unsafe private static void FillMat5CharsBufferWithZero( byte* ptr, MorphoAmbiguityTuple_t mat )
         {
             *(ptr++) = SEMICOLON;
             *(ptr++) = MA.get_CRF_W_field_value( mat );
@@ -3800,7 +3786,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             *(ptr  ) = ZERO;
         }
 
-        private static byte GetAttrValue( int columnIndex, MorphoAmbiguityTuple_t mat )
+        [M(O.AggressiveInlining)] private static byte GetAttrValue( int columnIndex, MorphoAmbiguityTuple_t mat )
         {
             switch ( columnIndex )
             {
@@ -3832,7 +3818,7 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
 
-        private static void SetBestWordMorphology( MorphoAmbiguityTuple_t max_morphoAmbiguityTuple, WordMorphoAmbiguity_t wma )
+        [M(O.AggressiveInlining)] private static void SetBestWordMorphology( MorphoAmbiguityTuple_t max_morphoAmbiguityTuple, WordMorphoAmbiguity_t wma )
         {
             if ( max_morphoAmbiguityTuple != default(MorphoAmbiguityTuple_t) )
             {
@@ -3845,5 +3831,4 @@ O	w[-1]|a[-1]|w[0]|a[0]=E|U|N|U	w[-1]|b[-1]|w[0]|b[0]=E|I:2|N|I:2	w[-1]|c[-1]|w[
             }
         }
     }
-
 }

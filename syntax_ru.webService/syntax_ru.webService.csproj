@@ -35,7 +35,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="5.0.15" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
   </ItemGroup>
@@ -49,5 +48,9 @@
     <ProjectReference Include="..\sent-splitting\sent-splitting.csproj" />
     <ProjectReference Include="..\syntax-crf\syntax-crf.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo ------------ copy native crfsuite_.dll ------------&#xD;&#xA;copy &quot;..\[lib]\crfsuite_x64.dll&quot; &quot;$(ProjectDir)\bin&quot;&#xD;&#xA;copy &quot;..\[lib]\crfsuite_x86.dll&quot; &quot;$(ProjectDir)\bin&quot;&#xD;&#xA;copy &quot;..\[lib]\libcrfsuite.so&quot; &quot;$(ProjectDir)\bin&quot;" />
+  </Target>
 
 </Project>

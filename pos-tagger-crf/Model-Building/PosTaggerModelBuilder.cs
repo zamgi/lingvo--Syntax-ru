@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 using lingvo.core;
 using lingvo.tokenizing;
 using lingvo.urls;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.postagger
 {
@@ -26,8 +27,8 @@ namespace lingvo.postagger
 
         public PosTaggerModelBuilder( string templateFilename, LanguageTypeEnum languageType, UrlDetectorConfig urlDetectorConfig )
         {
-            templateFilename.ThrowIfNullOrWhiteSpace( "templateFilename" );
-            urlDetectorConfig.ThrowIfNull( "urlDetectorConfig" );
+            templateFilename.ThrowIfNullOrWhiteSpace( nameof(templateFilename) );
+            urlDetectorConfig.ThrowIfNull( nameof(urlDetectorConfig) );
 			
 			_PosTaggerScriber            = PosTaggerScriber.Create4ModelBuilder( templateFilename );
             _PosTaggerInputTypeProcessor = CreatePosTaggerInputTypeProcessor( languageType );
@@ -68,7 +69,7 @@ namespace lingvo.postagger
             return (sentNumber);
         }
 
-        unsafe private bool ReadNextSent( TextReader textReader, ref int lineNumber )
+        [M(O.AggressiveInlining)] unsafe private bool ReadNextSent( TextReader textReader, ref int lineNumber )
         {
             _Words.Clear();
 
@@ -134,7 +135,7 @@ namespace lingvo.postagger
             return (true);
         }
 
-        private static PosTaggerOutputType ToPosTaggerOutputType( string value ) => (PosTaggerOutputType) Enum.Parse( typeof(PosTaggerOutputType), value, true );
+        [M(O.AggressiveInlining)] private static PosTaggerOutputType ToPosTaggerOutputType( string value ) => (PosTaggerOutputType) Enum.Parse( typeof(PosTaggerOutputType), value, true );
         private static IPosTaggerInputTypeProcessor CreatePosTaggerInputTypeProcessor( LanguageTypeEnum languageType )
         {
             switch ( languageType )

@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 using lingvo.core;
 using lingvo.morphology;
 using lingvo.ner;
 using lingvo.tokenizing;
 using MorphoAmbiguityResolver = lingvo.postagger.MorphoAmbiguityResolver_5g;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
+using System.Diagnostics;
 
 namespace lingvo.postagger
 {
     /// <summary>
     /// 
     /// </summary>
-    internal sealed class /*struct*/ MorphoAmbiguityTuple_t
+    unsafe internal sealed class /*struct*/ MorphoAmbiguityTuple_t
     {
         /// <summary>
         /// 
@@ -27,14 +29,19 @@ namespace lingvo.postagger
             Punctuation,
         }
 
-        unsafe public MorphoAmbiguityTuple_t( word_t word, in WordFormMorphology_t wordFormMorphology, PunctuationTypeEnum punctuationType )
+        #region [.cctor().]
+        private static CharType* _CTM;
+        static MorphoAmbiguityTuple_t() => _CTM = xlat_Unsafe.Inst._CHARTYPE_MAP;
+        #endregion
+
+        public MorphoAmbiguityTuple_t( word_t word, in WordFormMorphology_t wordFormMorphology, PunctuationTypeEnum punctuationType )
         {
             Word               = word;
             WordFormMorphology = wordFormMorphology;
             PunctuationType    = punctuationType;
         }
 
-        unsafe public static PunctuationTypeEnum GetPunctuationType( word_t word )
+        [M(O.AggressiveInlining)] public static PunctuationTypeEnum GetPunctuationType( word_t word )
         {
             if ( word.posTaggerOutputType == PosTaggerOutputType.Punctuation )
             {
@@ -42,32 +49,27 @@ namespace lingvo.postagger
                 {
                     return (PunctuationTypeEnum.PunctuationQuote);
                 }
-                else
+                
+                fixed ( char* _base = word.valueOriginal )
                 {
-                    fixed ( char* _base = word.valueOriginal )
+                    var ct = *(_CTM + *_base);
+                    if ( (ct & CharType.IsQuote) == CharType.IsQuote )
                     {
-                        var ct = *(xlat_Unsafe.Inst._CHARTYPE_MAP + *_base);
-                        if ( (ct & CharType.IsQuote) == CharType.IsQuote )
-                        {
-                            word.nerInputType = NerInputType.Q;
-                            return (PunctuationTypeEnum.PunctuationQuote);
-                        }
-                        else
-                        if ( (ct & CharType.IsBracket) == CharType.IsBracket )
-                        {
-                            return (PunctuationTypeEnum.PunctuationBracket);
-                        }
-                        else
-                        {
-                            return (PunctuationTypeEnum.Punctuation);
-                        }
+                        word.nerInputType = NerInputType.Q;
+                        return (PunctuationTypeEnum.PunctuationQuote);
+                    }
+                    else if ( (ct & CharType.IsBracket) == CharType.IsBracket )
+                    {
+                        return (PunctuationTypeEnum.PunctuationBracket);
+                    }
+                    else
+                    {
+                        return (PunctuationTypeEnum.Punctuation);
                     }
                 }
             }
-            else
-            {
-                return (PunctuationTypeEnum.__NonPunctuation__);
-            }
+
+            return (PunctuationTypeEnum.__NonPunctuation__);
         }
 
         public word_t               Word;
@@ -77,26 +79,26 @@ namespace lingvo.postagger
         public override string ToString() => ((PunctuationType != PunctuationTypeEnum.__NonPunctuation__) ? $"{{{PunctuationType}}}, " : string.Empty) + 
                                              $"Word: {Word}, WordFormMorphology: {WordFormMorphology}";
     }
+
     /// <summary>
     /// 
     /// </summary>
     internal sealed class /*struct*/ WordMorphoAmbiguity_t
     {        
-        public WordMorphoAmbiguity_t( 
-            word_t                                      word, 
-            MorphoAmbiguityTuple_t.PunctuationTypeEnum  punctuationType, 
-            List< MorphoAmbiguityTuple_t >              morphoAmbiguityTuples )
+        public WordMorphoAmbiguity_t( word_t                                      word, 
+                                      MorphoAmbiguityTuple_t.PunctuationTypeEnum  punctuationType, 
+                                      List< MorphoAmbiguityTuple_t >              morphoAmbiguityTuples )
         {
             Word                  = word;
             PunctuationType       = punctuationType;
             MorphoAmbiguityTuples = morphoAmbiguityTuples;
         }
 
-        public readonly word_t                                     Word;
-        public readonly MorphoAmbiguityTuple_t.PunctuationTypeEnum PunctuationType;
-        public readonly List< MorphoAmbiguityTuple_t >             MorphoAmbiguityTuples;
+        public word_t                                     Word                  { [M(O.AggressiveInlining)] get; }
+        public MorphoAmbiguityTuple_t.PunctuationTypeEnum PunctuationType       { [M(O.AggressiveInlining)] get; }
+        public List< MorphoAmbiguityTuple_t >             MorphoAmbiguityTuples { [M(O.AggressiveInlining)] get; }
 
-        public bool IsPunctuation() => (PunctuationType != MorphoAmbiguityTuple_t.PunctuationTypeEnum.__NonPunctuation__);
+        [M(O.AggressiveInlining)] public bool IsPunctuation() => (PunctuationType != MorphoAmbiguityTuple_t.PunctuationTypeEnum.__NonPunctuation__);
         public void SetWordMorphologyAsUndefined()
         {
             var wma = MorphoAmbiguityTuples[ 0 ];
@@ -127,6 +129,7 @@ namespace lingvo.postagger
         public override string ToString() => ((PunctuationType != MorphoAmbiguityTuple_t.PunctuationTypeEnum.__NonPunctuation__) ? $"{{{PunctuationType}}}, " : string.Empty) +
                                              $"MorphoAmbiguityTuples: {MorphoAmbiguityTuples.Count}, Word: {Word}";
     }
+
     /// <summary>
     /// 
     /// </summary>
@@ -136,7 +139,6 @@ namespace lingvo.postagger
         private const int DEFAULT_WORDFORMMORPHOLOGY_COUNT = 5;
 
         private List< List< MorphoAmbiguityTuple_t > > _MorphoAmbiguityTuples_Buffer;
-
         public static WordMorphoAmbiguityFactory Create()
         {
             var o = new WordMorphoAmbiguityFactory();
@@ -148,7 +150,7 @@ namespace lingvo.postagger
             return (o);
         }
 
-        unsafe public WordMorphoAmbiguity_t Create( word_t word, int wordIdex )
+        public WordMorphoAmbiguity_t Create( word_t word, int wordIdex )
         {
             while ( _MorphoAmbiguityTuples_Buffer.Count <= wordIdex )
             {
@@ -162,7 +164,7 @@ namespace lingvo.postagger
 
             return (new WordMorphoAmbiguity_t( word, punctuationType, buffer ));
         }
-        unsafe public WordMorphoAmbiguity_t Create( word_t word, int wordIdex, WordFormMorphology_t[] wordFormMorphologies )
+        public WordMorphoAmbiguity_t Create( word_t word, int wordIdex, WordFormMorphology_t[] wordFormMorphologies )
         {
             while ( _MorphoAmbiguityTuples_Buffer.Count <= wordIdex )
             {
@@ -185,10 +187,12 @@ namespace lingvo.postagger
     /// </summary>
     unsafe public sealed class PosTaggerMorphoAnalyzer : IDisposable
     {
+#if DEBUG
         #region [.cctor().]
         private static CharType* _CTM;
         static PosTaggerMorphoAnalyzer() => _CTM = xlat_Unsafe.Inst._CHARTYPE_MAP;
         #endregion
+#endif
 
         #region [.private field's.]
         private readonly MorphoAnalyzer                _MorphoAnalyzer;
@@ -615,7 +619,7 @@ namespace lingvo.postagger
         */
         #endregion
 
-        private  static void CorrectPosTaggerOutputType( word_t word, PartOfSpeechEnum singlePartOfSpeech )
+        [M(O.AggressiveInlining)] private  static void CorrectPosTaggerOutputType( word_t word, PartOfSpeechEnum singlePartOfSpeech )
         {
             switch ( singlePartOfSpeech )
             {
@@ -682,7 +686,7 @@ namespace lingvo.postagger
                     throw (new ArgumentException(singlePartOfSpeech.ToString()));
             }
         }
-        private  static PosTaggerOutputType ToPosTaggerOutputType( PartOfSpeechEnum singlePartOfSpeech )
+        [M(O.AggressiveInlining)] private  static PosTaggerOutputType ToPosTaggerOutputType( PartOfSpeechEnum singlePartOfSpeech )
         {
             switch ( singlePartOfSpeech )
             {
@@ -704,7 +708,7 @@ namespace lingvo.postagger
                     throw (new ArgumentException(singlePartOfSpeech.ToString()));
             }
         }
-        internal static PartOfSpeechEnum?   ToPartOfSpeech       ( PosTaggerOutputType posTaggerOutputType )
+        [M(O.AggressiveInlining)] internal static PartOfSpeechEnum?   ToPartOfSpeech       ( PosTaggerOutputType posTaggerOutputType )
         {
             switch ( posTaggerOutputType )
             {
@@ -751,8 +755,8 @@ namespace lingvo.postagger
         - если слово написано с [_Заглавной_]    буквы и это часть речи      NOUN; ADJECTIVE; ADVERB и {_не_первое_} слово в предложении, то отбирать с [_заглавной_] буквы;
         - если слово написано с [_Заглавной_]    буквы и это часть речи _не_ NOUN; ADJECTIVE; ADVERB и {_не_первое_} слово в предложении, то отбирать [_все_] варианты;
         */
-        #endregion        
-        private static WordFormMorphologyModeEnum GetWordFormMorphologyMode( word_t word, int wordindex )
+        #endregion
+        [M(O.AggressiveInlining)] private static WordFormMorphologyModeEnum GetWordFormMorphologyMode( word_t word, int wordindex )
         {
             if ( wordindex == 0 )
             {
@@ -776,8 +780,8 @@ namespace lingvo.postagger
             {
                 return (WordFormMorphologyModeEnum.FirstStartsWithLowerAfterUpperLetter);
             }
-        }  
-        /*private static WordFormMorphologyModeEnum GetWordFormMorphologyMode( word_t word, bool wordFirstCharIsUpper, int wordindex )
+        }
+        /*[M(O.AggressiveInlining)] private static WordFormMorphologyModeEnum GetWordFormMorphologyMode( word_t word, bool wordFirstCharIsUpper, int wordindex )
         {
             if ( wordindex == 0 )
             {
@@ -801,6 +805,7 @@ namespace lingvo.postagger
             {
                 return (WordFormMorphologyModeEnum.FirstStartsWithLowerAfterUpperLetter);
             }
-        }        */
+        }
+        */
     }
 }

@@ -31,20 +31,11 @@ namespace lingvo.postagger
     /// <summary>
     /// 
     /// </summary>
-    internal sealed class ByteIntPtr_EqualityComparer : IEqualityComparer< IntPtr >
+    unsafe internal sealed class ByteIntPtr_EqualityComparer : IEqualityComparer< IntPtr >
     {
         public ByteIntPtr_EqualityComparer() { }
-        unsafe private static int getLength( byte* ptr )
-        {
-            for ( var i = 0; ; i++ )
-            {
-                if ( *ptr == 0 )
-                    return (i);
-                ptr++;
-            }
-        }
 
-        unsafe public bool Equals( IntPtr x, IntPtr y )
+        public bool Equals( IntPtr x, IntPtr y )
         {
             var x_ptr = (byte*) x.ToPointer();
             var y_ptr = (byte*) y.ToPointer();
@@ -60,7 +51,7 @@ namespace lingvo.postagger
                     return (true);
             }
         }
-        unsafe public int GetHashCode( IntPtr obj )
+        public int GetHashCode( IntPtr obj )
         {
             byte* ptr = (byte*) obj.ToPointer();
             int num = 5381;
@@ -84,10 +75,10 @@ namespace lingvo.postagger
         private NativeMemAllocationMediator _NativeMemAllocator;
         public MorphoAmbiguityResolverModel( in MorphoAmbiguityResolverConfig config )
         {
-            config                    .ThrowIfNull("config");
-            config.ModelFilename      .ThrowIfNullOrWhiteSpace("ModelFilename");
-            config.TemplateFilename_5g.ThrowIfNullOrWhiteSpace("TemplateFilename_5g");
-            config.TemplateFilename_3g.ThrowIfNullOrWhiteSpace("TemplateFilename_3g");
+            config                    .ThrowIfNull( nameof(config) );
+            config.ModelFilename      .ThrowIfNullOrWhiteSpace( nameof(config.ModelFilename) );
+            config.TemplateFilename_5g.ThrowIfNullOrWhiteSpace( nameof(config.TemplateFilename_5g) );
+            config.TemplateFilename_3g.ThrowIfNullOrWhiteSpace( nameof(config.TemplateFilename_3g) );
 
             Config = config;
 
@@ -102,6 +93,9 @@ namespace lingvo.postagger
         }
         private void DisposeNativeResources() => _NativeMemAllocator.Dispose();
 
+        /// <summary>
+        /// 
+        /// </summary>
         unsafe private struct key_t
         {
             public char* ptr;
@@ -117,7 +111,7 @@ namespace lingvo.postagger
             var dict = new Dictionary< IntPtr, float >( 500_000, new ByteIntPtr_EqualityComparer() );
 
             const int BYTE_BUFFER_SZIE = 4096;
-            byte* bytesBuffer = stackalloc byte[ BYTE_BUFFER_SZIE ];
+            var bytesBuffer = stackalloc byte[ BYTE_BUFFER_SZIE ];
 
             var encoding = Encoding.UTF8;
 
@@ -168,7 +162,7 @@ namespace lingvo.postagger
                     }
                     if ( key.ptr == ((char*) 0) )
                     {
-                        throw (new InvalidDataException("Invalid data foramt: '" + line + '\'' ));
+                        throw (new InvalidDataException( $"Invalid data foramt: '{line}'" ));
                     }
 #if DEBUG
                     //Debug.Assert( key.Length * sizeof(char) <= BYTE_BUFFER_SZIE );
@@ -188,7 +182,7 @@ namespace lingvo.postagger
             return (dict);
         }
 
-        public MorphoAmbiguityResolverConfig Config { get; }
-        public Dictionary< IntPtr, float > DictionaryBytes { get; }
+        public MorphoAmbiguityResolverConfig Config          { get; }
+        public Dictionary< IntPtr, float >   DictionaryBytes { get; }
     }
 }

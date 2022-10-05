@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+
 using lingvo.morphology;
 using lingvo.postagger;
 using lingvo.sentsplitting;
 using lingvo.tokenizing;
-using static lingvo.morphology.MorphoModelConfig;
+using TreeDictionaryTypeEnum = lingvo.morphology.MorphoModelConfig.TreeDictionaryTypeEnum;
 
 namespace lingvo.syntax
 {
@@ -44,12 +45,6 @@ namespace lingvo.syntax
         public static readonly SyntaxModelTypeEnum    SYNTAX_MODEL_TYPE    = ConfigurationManager.AppSettings[ "SYNTAX_MODEL_TYPE"    ].ToEnum< SyntaxModelTypeEnum >();
         public static readonly SyntaxModelSubTypeEnum SYNTAX_MODEL_SUBTYPE = ConfigurationManager.AppSettings[ "SYNTAX_MODEL_SUBTYPE" ].ToEnum< SyntaxModelSubTypeEnum >();
 
-        //public static readonly int MAX_INPUTTEXT_LENGTH                = ConfigurationManager.AppSettings[ "MAX_INPUTTEXT_LENGTH"                ].ToInt32();
-        //public static readonly int CONCURRENT_FACTORY_INSTANCE_COUNT   = ConfigurationManager.AppSettings[ "CONCURRENT_FACTORY_INSTANCE_COUNT"   ].ToInt32();
-        //public static readonly int SAME_IP_INTERVAL_REQUEST_IN_SECONDS = ConfigurationManager.AppSettings[ "SAME_IP_INTERVAL_REQUEST_IN_SECONDS" ].ToInt32();
-        //public static readonly int SAME_IP_MAX_REQUEST_IN_INTERVAL     = ConfigurationManager.AppSettings[ "SAME_IP_MAX_REQUEST_IN_INTERVAL"     ].ToInt32();        
-        //public static readonly int SAME_IP_BANNED_INTERVAL_IN_SECONDS  = ConfigurationManager.AppSettings[ "SAME_IP_BANNED_INTERVAL_IN_SECONDS"  ].ToInt32();
-
         private static string[] ToFilesArray( this string value )
         {
             var array = value.Split( new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries )
@@ -57,23 +52,7 @@ namespace lingvo.syntax
                              .ToArray();
             return (array);
         }
-
-        private static bool Try2Bool( this string value, bool defaultValue )
-        {
-            if ( value != null )
-            {
-                if ( bool.TryParse( value, out var result ) )
-                {
-                    return (result);
-                }
-            }
-            return (defaultValue);
-        }
-
         private static T ToEnum< T >( this string value ) where T : struct => (T) Enum.Parse( typeof(T), value, true );
-        private static int ToInt32( this string value ) => int.Parse( value );
-
-
 
 
         public static string GetSyntaxModelFilename( SyntaxModelTypeEnum syntaxModelType, SyntaxModelSubTypeEnum syntaxModelsubType )

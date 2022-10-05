@@ -42,7 +42,7 @@ namespace lingvo.morphology
 		/// часть речи
 		public PartOfSpeechEnum PartOfSpeech;
 
-        public override string ToString() => ('[' + Form + ", " + PartOfSpeech + ']');
+        public override string ToString() => $"[{Form}, {PartOfSpeech}]";
 	}
 
 	/// <summary>
@@ -63,9 +63,9 @@ namespace lingvo.morphology
 		/// формы слова
 		public List< WordForm_t > Forms;
 
-        public bool HasForms => (Forms != null && Forms.Count != 0);
+        public bool HasForms { [M(O.AggressiveInlining)] get => (Forms != null && Forms.Count != 0); }
 
-        public override string ToString() => ('[' + Word + ", {" + string.Join( ",", Forms ) + "}]");
+        public override string ToString() => $"[{Word}, {{{string.Join( ",", Forms )}}}]";
 	}
 
     /// <summary>
@@ -100,6 +100,7 @@ namespace lingvo.morphology
         /// нормальная форма
         public string NormalForm
         {
+            [M(O.AggressiveInlining)] 
             get
             {
                 if ( _NormalForm == null )
@@ -113,20 +114,19 @@ namespace lingvo.morphology
             }
         }
         /// часть речи
-        public readonly PartOfSpeechEnum PartOfSpeech;
+        public PartOfSpeechEnum    PartOfSpeech    { [M(O.AggressiveInlining)] get; }
         /// морфохарактеристики
-        public readonly MorphoAttributeEnum MorphoAttribute;
+        public MorphoAttributeEnum MorphoAttribute { [M(O.AggressiveInlining)] get; }
 
-        public bool IsEmpty() => (MorphoAttribute == MorphoAttributeEnum.__UNDEFINED__) &&
-                                 (PartOfSpeech == PartOfSpeechEnum.Other)               &&
-                                 ((_NormalForm == null) && ((IntPtr) _Base == IntPtr.Zero));
-        public bool IsEmptyMorphoAttribute() => (MorphoAttribute == MorphoAttributeEnum.__UNDEFINED__);
-        public bool IsEmptyNormalForm() => ((_NormalForm == null) && ((IntPtr) _Base == IntPtr.Zero));
+        [M(O.AggressiveInlining)] public bool IsEmpty() => (MorphoAttribute == MorphoAttributeEnum.__UNDEFINED__) &&
+                                                           (PartOfSpeech == PartOfSpeechEnum.Other)               &&
+                                                           ((_NormalForm == null) && ((IntPtr) _Base == IntPtr.Zero));
+        [M(O.AggressiveInlining)] public bool IsEmptyMorphoAttribute() => (MorphoAttribute == MorphoAttributeEnum.__UNDEFINED__);
+        [M(O.AggressiveInlining)] public bool IsEmptyNormalForm() => ((_NormalForm == null) && ((IntPtr) _Base == IntPtr.Zero));
 
-        public override string ToString() => ('[' + NormalForm + ", " + PartOfSpeech + ", " + MorphoAttribute + "]");
+        public override string ToString() => $"[{NormalForm}, {PartOfSpeech}, {MorphoAttribute}]";
 
-        public static bool Equals( WordFormMorphology_t x, WordFormMorphology_t y ) => Equals( in x, in y );
-        public static bool Equals( in WordFormMorphology_t x, in WordFormMorphology_t y )
+        [M(O.AggressiveInlining)] public static bool Equals( in WordFormMorphology_t x, in WordFormMorphology_t y )
         {
             return ( (x.MorphoAttribute == y.MorphoAttribute) &&
                      (x.PartOfSpeech    == y.PartOfSpeech   ) &&
@@ -148,8 +148,8 @@ namespace lingvo.morphology
 		public PartOfSpeechEnum PartOfSpeech;
         public bool             IsSinglePartOfSpeech;
 
-        public bool HasWordFormMorphologies => (WordFormMorphologies != null && WordFormMorphologies.Count != 0);
+        public bool HasWordFormMorphologies { [M(O.AggressiveInlining)] get => (WordFormMorphologies != null && WordFormMorphologies.Count != 0); }
 
-        public override string ToString() => ("[" /*+ Word + ", "*/ + PartOfSpeech + ", {" + (HasWordFormMorphologies ? string.Join( ",", WordFormMorphologies ) : "NULL") + "}]");
+        public override string ToString() => $"[{PartOfSpeech}, {{{(HasWordFormMorphologies ? string.Join( ",", WordFormMorphologies ) : "NULL")}}}]";
 	}
 }
