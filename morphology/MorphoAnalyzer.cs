@@ -19,7 +19,7 @@ namespace lingvo.morphology
 
         public MorphoAnalyzer( IMorphoModel model )
         {
-            model.ThrowIfNull("model");
+            model.ThrowIfNull( nameof(model) );
 
             _MorphoModel               = model;
             _WordFormMorphologies      = new List< WordFormMorphology_t >();
@@ -183,8 +183,7 @@ namespace lingvo.morphology
 
 				var wordFormString = wordForm.Form;
 
-                PartOfSpeechEnum partOfSpeechExists;
-                if ( _UniqueWordFormsDictionary.TryGetValue( wordFormString, out partOfSpeechExists ) )
+                if ( _UniqueWordFormsDictionary.TryGetValue( wordFormString, out var partOfSpeechExists ) )
                 {
                     if ( (partOfSpeechExists & partOfSpeechForm) != partOfSpeechForm )
                     {

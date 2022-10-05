@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 using lingvo.core;
 
 namespace lingvo.morphology
 {
-	/// <summary>
+    /// <summary>
     /// Морфо-модель
-	/// </summary>
+    /// </summary>
     internal sealed class MorphoModel : MorphoModelBase, IMorphoModel
 	{
         /// словарь слов
@@ -31,7 +30,7 @@ namespace lingvo.morphology
                     throw (new ArgumentException(config.TreeDictionaryType.ToString()));
             }
 
-            Initialization( in config );
+            Initialization( config );
         }
         public void Dispose() { }
 
@@ -106,13 +105,7 @@ namespace lingvo.morphology
 		}
 
         /// получение морфотипа по его имени
-        private MorphoType GetMorphoTypeByName( string name )
-        {
-            MorphoType value;
-            if ( _MorphoTypesDictionary.TryGetValue( name, out value ) )
-                return (value);
-            return (null);
-        }
+        private MorphoType GetMorphoTypeByName( string name ) => _MorphoTypesDictionary.TryGetValue( name, out var value ) ? value : default;
 
         /// сохранение морфотипа
         private void AddMorphoType2Dictionary( MorphoType_pair_t? morphoTypePair )
@@ -242,43 +235,39 @@ namespace lingvo.morphology
         private MorphoForm CreateMorphoForm( MorphoType morphoType, string line, List< MorphoAttributePair > morphoAttributePairs )
 		{
 			int index = line.IndexOf( ':' );
-			if (index < 0)
-				throw (new MorphoFormatException());
+            if ( index < 0 ) throw (new MorphoFormatException());
 
             var ending = StringsHelper.ToLowerInvariant( line.Substring( 0, index ).Trim() );
-			if (ending == EMPTY_ENDING)
-				ending = string.Empty;
+			if (ending == EMPTY_ENDING) ending = string.Empty;
 
             morphoAttributePairs.Clear();
 			var attributes = line.Substring( index + 1 ).Split( MORPHO_ATTRIBUTE_SEPARATOR, StringSplitOptions.RemoveEmptyEntries );
 			foreach ( var attribute in attributes )
 			{
-				var attr = attribute.Trim();
-				if ( !string.IsNullOrEmpty( attr ) )
-				{
-                    var morphoAttribute = default(MorphoAttributeEnum);
-                    if ( Enum.TryParse( attr, true, out morphoAttribute ) )
-                    {
-                        //---morphoAttributePairs.Add( _MorphoAttributeList.GetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute ) );                        
+                if ( attribute.IsNullOrWhiteSpace() ) continue;
 
-                        var map = _MorphoAttributeList.TryGetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute );
-                        if ( map.HasValue )
-                        {
-                            morphoAttributePairs.Add( map.Value );
-                        }
-#if DEBUG
-                        //TOO MANY ERRORS AFTER last (2016.12.28) getting morpho-dcitionaries from 'lingvo-[ilook]'
-                        else
-                        {
-                            _ModelLoadingErrorCallback( "Error in morpho-attribute: '" + attr + '\'', line );
-                        }
-#endif
+                var attr = attribute.Trim();
+                if ( Enum.TryParse< MorphoAttributeEnum >( attr, true, out var morphoAttribute ) )
+                {
+                    //---morphoAttributePairs.Add( _MorphoAttributeList.GetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute ) );                        
+
+                    var map = _MorphoAttributeList.TryGetMorphoAttributePair( morphoType.MorphoAttributeGroup, morphoAttribute );
+                    if ( map.HasValue )
+                    {
+                        morphoAttributePairs.Add( map.Value );
                     }
+#if DEBUG
+                    //TOO MANY ERRORS AFTER last (2016.12.28) getting morpho-dcitionaries from 'lingvo-[ilook]'
                     else
                     {
-                        _ModelLoadingErrorCallback( "Unknown morpho-attribute: '" + attr + '\'', line );
+                        _ModelLoadingErrorCallback( "Error in morpho-attribute: '" + attr + '\'', line );
                     }
-				}
+#endif
+                }
+                else
+                {
+                    _ModelLoadingErrorCallback( "Unknown morpho-attribute: '" + attr + '\'', line );
+                }
 			}
             var morphoForm = new MorphoForm( ending, morphoAttributePairs );
             return (morphoForm);
@@ -297,8 +286,7 @@ namespace lingvo.morphology
             string pos    = m.Groups[ 2 ].Value;
             string name   = line.Substring( prefix.Length );
 
-            var partOfSpeech = default(PartOfSpeechEnum);
-            if ( Enum.TryParse( pos, true, out partOfSpeech ) )
+            if ( Enum.TryParse< PartOfSpeechEnum >( pos, true, out var partOfSpeech ) )
             {
                 var morphoType = new MorphoType( _PartOfSpeechList.GetPartOfSpeech( partOfSpeech ) );
                 var morphoTypePair = new MorphoType_pair_t()
@@ -329,17 +317,10 @@ namespace lingvo.morphology
 
         #region [.IMorphoModel.]
         public bool TryGetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
-        {
-            return (_TreeDictionary.GetWordFormMorphologies( wordUpper, result, wordFormMorphologyMode ));
-        }
+            => _TreeDictionary.GetWordFormMorphologies( wordUpper, result, wordFormMorphologyMode );
         unsafe public bool TryGetWordFormMorphologies( char* wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
-        {
-            return (_TreeDictionary.GetWordFormMorphologies( wordUpper, result, wordFormMorphologyMode ));
-        }
-        public bool TryGetWordForms( string wordUpper, ICollection< WordForm_t > result )
-        {
-            return (_TreeDictionary.GetWordForms( wordUpper, result ));
-        }
+            => _TreeDictionary.GetWordFormMorphologies( wordUpper, result, wordFormMorphologyMode );
+        public bool TryGetWordForms( string wordUpper, ICollection< WordForm_t > result ) => _TreeDictionary.GetWordForms( wordUpper, result );
         #endregion
     }
 }

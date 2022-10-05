@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using lingvo.core;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -16,29 +17,22 @@ namespace lingvo.morphology
         /// коллекция информаций о формах слова
         private List< BaseMorphoForm > _BaseMorphoForms;
 
-        public TreeDictionaryClassic() => _Slots = new Dictionary<char, TreeDictionaryClassic>();
+        public TreeDictionaryClassic() => _Slots = new Dictionary< char, TreeDictionaryClassic >();
 
         #region [.append words.]
         /// добавление слова и всех его форм в словарь
         /// word - слово
         /// pMorphoType - морфотип
         /// nounType - тип сущетсвительного
-        unsafe public void AddWord( string word, MorphoType morphoType, MorphoAttributePair? nounType )
+        [M(O.AggressiveInlining)] unsafe public void AddWord( string word, MorphoType morphoType, MorphoAttributePair? nounType )
         {
-            #region
-            //if ( word == "он" )
-            //{
-            //    System.Diagnostics.Debugger.Break();
-            //} 
-            #endregion
-
             if ( morphoType.MorphoForms.Length != 0 )
             {
-                var len = word.Length - morphoType.MorphoForms[ 0 ].Ending.Length;
+                var len   = word.Length - morphoType.MorphoForms[ 0 ].Ending.Length;
                 var _base = (0 <= len) ? word.Substring( 0, len ) : word;
                 var baseMorphoForm = new BaseMorphoForm( _base, morphoType, nounType );
-                var _baseUpper = StringsHelper.ToUpperInvariant( _base );
-                fixed ( char* baseUpper_ptr = _baseUpper )
+                var baseUpper      = StringsHelper.ToUpperInvariant( _base );
+                fixed ( char* baseUpper_ptr = baseUpper )
                 {
                     AddWordPart( baseUpper_ptr, baseMorphoForm );
                 }
@@ -48,11 +42,10 @@ namespace lingvo.morphology
         /// добавление части слова
         /// wordPart - оставшася часть слова
         /// pBase - базовая форма
-        unsafe private void AddWordPart( char* wordPart, BaseMorphoForm baseMorphoForm )
+        [M(O.AggressiveInlining)] unsafe private void AddWordPart( char* wordPart, BaseMorphoForm baseMorphoForm )
         {
             var first_char = *wordPart;
-            if ( first_char == '\0' )
-            /// сохранение характеристик
+            if ( first_char == '\0' ) // сохранение характеристик
             {
                 if ( _BaseMorphoForms == null )
                 {
@@ -62,14 +55,13 @@ namespace lingvo.morphology
             }
             else
             {
-                TreeDictionaryClassic value;
-                if ( !_Slots.TryGetValue( first_char, out value ) )
+                if ( !_Slots.TryGetValue( first_char, out var _next ) )
                 {
-                    /// добавление новой буквы
-                    value = new TreeDictionaryClassic();
-                    _Slots.Add( first_char, value );
+                    // добавление новой буквы
+                    _next = new TreeDictionaryClassic();
+                    _Slots.Add( first_char, _next );
                 }
-                value.AddWordPart( wordPart + 1, baseMorphoForm );
+                _next.AddWordPart( wordPart + 1, baseMorphoForm );
             }
         }
         #endregion
@@ -77,7 +69,7 @@ namespace lingvo.morphology
         /// получение морфологических свойств слова
         /// word - слово
         /// result - коллекция информаций о формах слова
-        unsafe public bool GetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
+        [M(O.AggressiveInlining)] unsafe public bool GetWordFormMorphologies( string wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
         {
             result.Clear();
             fixed ( char* word_ptr = wordUpper )
@@ -87,7 +79,7 @@ namespace lingvo.morphology
             }
             return (result.Count != 0);
         }
-        unsafe public bool GetWordFormMorphologies( char*  wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
+        [M(O.AggressiveInlining)] unsafe public bool GetWordFormMorphologies( char*  wordUpper, ICollection< WordFormMorphology_t > result, WordFormMorphologyModeEnum wordFormMorphologyMode )
         {
             result.Clear();            
             {
@@ -100,7 +92,7 @@ namespace lingvo.morphology
         /// получение всех форм слова
         /// word - слово
         /// result - коллекция форм слова
-        unsafe public bool GetWordForms( string wordUpper, ICollection< WordForm_t > result )
+        [M(O.AggressiveInlining)] unsafe public bool GetWordForms( string wordUpper, ICollection< WordForm_t > result )
         {
             result.Clear();
             fixed ( char* word_ptr = wordUpper )
@@ -121,26 +113,18 @@ namespace lingvo.morphology
         {
             FillWordFormMorphologies_Core( word, wordLength, fullWordLength, result, wordFormMorphologyMode );
             var first_char = *word;
-            if ( first_char != '\0' )
+            if ( (first_char != '\0') && _Slots.TryGetValue( first_char, out var _next ) )
             {
-                TreeDictionaryClassic value;
-                if ( _Slots.TryGetValue( first_char, out value ) )
-                {
-                    value.FillWordFormMorphologies( word + 1, wordLength - 1, fullWordLength, result, wordFormMorphologyMode );
-                }
+                _next.FillWordFormMorphologies( word + 1, wordLength - 1, fullWordLength, result, wordFormMorphologyMode );
             }
         }
         unsafe private void FillWordForms( char* word, int wordLength, int fullWordLength, ICollection< WordForm_t > result )
         {
             FillWordForms_Core( word, wordLength, fullWordLength, result );
             var first_char = *word;
-            if ( first_char != '\0' )
+            if ( (first_char != '\0') && _Slots.TryGetValue( first_char, out var _next ) )
             {
-                TreeDictionaryClassic value;
-                if ( _Slots.TryGetValue( first_char, out value ) )
-                {
-                    value.FillWordForms( word + 1, wordLength - 1, fullWordLength, result );
-                }
+                _next.FillWordForms( word + 1, wordLength - 1, fullWordLength, result );
             }
         }
 
@@ -177,7 +161,7 @@ namespace lingvo.morphology
                     else
                     if ( !StringsHelper.IsEqual( morphoForm.EndingUpper, wordPart, wordPartLength ) )
                         continue;
-                    #region commented
+                    #region comm.
                     /*
                     if ( baseLength == letterIndex )
                     {
@@ -272,7 +256,7 @@ namespace lingvo.morphology
                     else
                     if ( !StringsHelper.IsEqual( morphoForm.EndingUpper, wordPart, wordPartLength ) )
                         continue;
-                    #region commented
+                    #region comm.
                     /*
                     if ( baseLength == letterIndex )
                     {
@@ -291,7 +275,7 @@ namespace lingvo.morphology
                     var partOfSpeech = baseMorphoForm.MorphoType.PartOfSpeech;
                     foreach ( var _morphoForm in morphoForms )
                     {
-                        /// получение словоформы
+                        //получение словоформы
                         var wordForm = baseMorphoForm.Base + _morphoForm.Ending;
 
                         var wf = new WordForm_t( wordForm, partOfSpeech );

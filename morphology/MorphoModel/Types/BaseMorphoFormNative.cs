@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Text;
 
 using lingvo.core;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -90,31 +92,30 @@ namespace lingvo.morphology
         }
 
         /// получение основы
-        public char* Base => _Base;
+        public char* Base { [M(O.AggressiveInlining)] get => _Base; }
         /// окончания морфо-форм
-        public char*[] MorphoFormEndings => _MorphoFormEndings;
+        public char*[] MorphoFormEndings { [M(O.AggressiveInlining)] get => _MorphoFormEndings; }
         /// часть речи
-        public PartOfSpeechEnum PartOfSpeech => _PartOfSpeech;
+        public PartOfSpeechEnum PartOfSpeech { [M(O.AggressiveInlining)] get => _PartOfSpeech; }
 
         /// получение нормальной формы
-        public string GetNormalForm() => StringsHelper.CreateWordForm( _Base, _MorphoFormEndings[ 0 ] );
+        [M(O.AggressiveInlining)] public string GetNormalForm() => StringsHelper.CreateWordForm( _Base, _MorphoFormEndings[ 0 ] );
 
         public override string ToString()
         {
-            const string format = "[base: '{0}', normal-form: '{1}', pos: '{2}', {{morpho-form-endings: '{3}'}}]";
+            const string FORMAT = "[base: '{0}', normal-form: '{1}', pos: '{2}', {{morpho-form-endings: '{3}'}}]";
 
             var sb = new StringBuilder();
             foreach ( var morphoFormEnding in MorphoFormEndings )
             {
-                if ( sb.Length != 0 )
-                    sb.Append( ", " );
+                if ( sb.Length != 0 ) sb.Append( ", " );
                 sb.Append( StringsHelper.ToString( morphoFormEnding ) );
             }
 
             var _base = StringsHelper.ToString( Base );
             var normalForm = GetNormalForm();
 
-            return (string.Format( format, _base, normalForm, PartOfSpeech, sb.ToString() ));
+            return (string.Format( FORMAT, _base, normalForm, PartOfSpeech, sb.ToString() ));
         }
     }
 }

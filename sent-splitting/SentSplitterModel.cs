@@ -6,6 +6,8 @@ using System.Xml.Linq;
 
 using lingvo.core;
 using lingvo.urls;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.sentsplitting
 {
@@ -150,38 +152,33 @@ namespace lingvo.sentsplitting
                                 xe.Value.Trim(),
                                 new smile_t( xe.AttrValueIsTrue( "space-before" ) )
                             );
-            Smiles = new dictionary_t< smile_t >( smiles.ToDictionary( false ) );
+            _Smiles = new dictionary_t< smile_t >( smiles.ToDictionary( false ) );
 
             //-interjections-
             var interjections = from xe in xdoc.Root.Element( "interjections" ).Elements()
                                 select 
                                    xe.Value.Trim().TrimEndDot();
-            Interjections = new hashset_t( interjections.ToHashset( true ) );
+            _Interjections = new hashset_t( interjections.ToHashset( true ) );
 
             //-yandex-combinations-
             var yandexCombinations = from xe in xdoc.Root.Element( "yandex-combinations" ).Elements()
                                      select
                                         xe.Value.Trim().TrimStartDot();
-            YandexCombinations = new hashset_t( yandexCombinations.ToHashset( true ) );
+            _YandexCombinations = new hashset_t( yandexCombinations.ToHashset( true ) );
 
             //-file-extensions-
             var fileExtensions = from xe in xdoc.Root.Element( "file-extensions" ).Elements()
                                  select 
                                     xe.Value.Trim().TrimStartDot();
-            FileExtensions = new hashset_t( fileExtensions.ToHashset( true ) );
+            _FileExtensions = new hashset_t( fileExtensions.ToHashset( true ) );
 
+            var bef_loader = before_proper_loader_t.Create();
             //-before-no-proper-
-            var beforeNoProper = (from xe in xdoc.Root.Element( "before-no-proper" ).Elements()
-                                  select 
-                                     xe.ToBeforeNoProper_ngrams()
-                                 ).ToArray();
+            var beforeNoProper = bef_loader.ToBeforeNoProper_ngrams( xdoc.Root.Element( "before-no-proper" ).Elements() ).ToList();
             BeforeNoProperSearcher = new Searcher< before_no_proper_t >( beforeNoProper );
 
             //-before-proper-or-number-
-            var beforeProperOrNumber = (from xe in xdoc.Root.Element( "before-proper-or-number" ).Elements()
-                                        select 
-                                           xe.ToBeforeProperOrNumber_ngrams()
-                                       ).ToArray();
+            var beforeProperOrNumber = bef_loader.ToBeforeProperOrNumber_ngrams( xdoc.Root.Element( "before-proper-or-number" ).Elements() ).ToList();
             BeforeProperOrNumberSearcher = new Searcher< before_proper_or_number_t >( beforeProperOrNumber );
 
             var SENTCHARTYPE_MAP = InitializeSentPotentialEnds( Smiles, beforeNoProper, beforeProperOrNumber );
@@ -205,14 +202,22 @@ namespace lingvo.sentsplitting
             }
         }
 
-        internal dictionary_t< smile_t > Smiles { get; }
-        internal hashset_t Interjections { get; }
-        internal hashset_t YandexCombinations { get; }
-        internal hashset_t FileExtensions { get; }
-        internal Searcher< before_no_proper_t > BeforeNoProperSearcher { get; }
-        internal Searcher< before_proper_or_number_t > BeforeProperOrNumberSearcher { get; }
+        private dictionary_t< smile_t > _Smiles;
+        internal ref readonly dictionary_t< smile_t > Smiles { [M(O.AggressiveInlining)] get => ref _Smiles; }
 
-        internal HashSet< string > UnstickFromDigits { get; private set; }
+        private hashset_t _Interjections;
+        internal ref readonly hashset_t Interjections { [M(O.AggressiveInlining)] get => ref _Interjections; }
+
+        private hashset_t _YandexCombinations;
+        internal ref readonly hashset_t YandexCombinations { [M(O.AggressiveInlining)] get => ref _YandexCombinations; }
+
+        private hashset_t _FileExtensions;
+        internal ref readonly hashset_t FileExtensions { [M(O.AggressiveInlining)] get => ref _FileExtensions; }
+
+        internal Searcher< before_no_proper_t > BeforeNoProperSearcher { [M(O.AggressiveInlining)] get; }
+        internal Searcher< before_proper_or_number_t > BeforeProperOrNumberSearcher { [M(O.AggressiveInlining)] get; }
+
+        internal HashSet< string > UnstickFromDigits { [M(O.AggressiveInlining)] get; private set; }
         internal int GetValuesMaxLength()
         {
             var valuesMaxLengths = new[]
@@ -227,9 +232,9 @@ namespace lingvo.sentsplitting
         internal int GetNgramMaxLength() => Math.Max( BeforeNoProperSearcher.NgramMaxLength, BeforeProperOrNumberSearcher.NgramMaxLength );
 
         private readonly GCHandle _SENTCHARTYPE_MAP_GCHandle;
-        internal SentCharType* _SENTCHARTYPE_MAP { get; private set; }
+        internal SentCharType* _SENTCHARTYPE_MAP { [M(O.AggressiveInlining)] get; private set; }
 
-        private byte[] InitializeSentPotentialEnds( dictionary_t<smile_t> smiles, ngram_t<before_no_proper_t>[] beforeNoProper, ngram_t<before_proper_or_number_t>[] beforeProperOrNumber )
+        private byte[] InitializeSentPotentialEnds( in dictionary_t< smile_t > smiles, IList< ngram_t< before_no_proper_t > > beforeNoProper, IList< ngram_t< before_proper_or_number_t > > beforeProperOrNumber )
         {
             //---SENTCHARTYPE_MAP = new SentCharType[ char.MaxValue + 1 ];
             var SENTCHARTYPE_MAP = new byte[ char.MaxValue + 1 ];
@@ -333,7 +338,7 @@ namespace lingvo.sentsplitting
         public SentSplitterConfig() => SplitBySmiles = true;
         public SentSplitterConfig( SentSplitterModel sentSplitterModel )
         {
-            Model = sentSplitterModel; _Need_Dispose_SentSplitterModel = false;
+            Model         = sentSplitterModel; _Need_Dispose_SentSplitterModel = false;
             SplitBySmiles = true;
         }
         public SentSplitterConfig( string sentSplitterResourcesXmlFilename )

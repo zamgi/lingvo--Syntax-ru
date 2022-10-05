@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 
 using lingvo.core;
-
 using M = System.Runtime.CompilerServices.MethodImplAttribute;
 using O = System.Runtime.CompilerServices.MethodImplOptions;
 
@@ -25,7 +24,7 @@ namespace lingvo.morphology
             /// </summary>
             public sealed class EqualityComparer : IEqualityComparer< Pair >
             {
-                public static EqualityComparer Inst { get; } = new EqualityComparer();
+                public static EqualityComparer Inst { [M(O.AggressiveInlining)] get; } = new EqualityComparer();
                 private EqualityComparer() { }
                 public bool Equals( Pair x, Pair y )
                 {
@@ -41,7 +40,7 @@ namespace lingvo.morphology
                     if ( x.BaseMorphoForm.MorphoFormEndings[ 0 ] != y.BaseMorphoForm.MorphoFormEndings[ 0 ] )
                         return (false);
 
-                    #region commented
+                    #region comm.
                     /*
                     var len = x.BaseMorphoForm.MorphoFormEndings.Length;
                     if ( len != y.BaseMorphoForm.MorphoFormEndings.Length )
@@ -81,7 +80,7 @@ namespace lingvo.morphology
                        );
             }
 #if DEBUG
-            public override string ToString() => (BaseMorphoForm + ", " + MorphoAttribute);
+            public override string ToString() => $"{BaseMorphoForm}, {MorphoAttribute}";
 #endif
         }
 
@@ -121,9 +120,9 @@ namespace lingvo.morphology
 
                 internal Enumerator( PairSet set )
 	            {
-		            this._Set     = set;
-		            this._Index   = 0;
-		            this._Current = default(Pair);
+		            _Set     = set;
+		            _Index   = 0;
+		            _Current = default;
 	            }
                 public void Dispose() { }
 
@@ -134,27 +133,29 @@ namespace lingvo.morphology
                         _Current = _Set._Slots[ _Index ].Value;
                         _Index++;
                         if ( _Current.BaseMorphoForm != null )
-                        {                            
+                        {
                             return (true);
                         }
+                        #region comm.
                         /*var slot = _Set._Slots[ _Index ];
                         if ( 0 <= slot.hashCode )
-			            {
+                        {
                             _Current = slot.value;
-				            _Index++;
-				            return (true);
-			            }
-			            _Index++;
-                        */
+                            _Index++;
+                            return (true);
+                        }
+                        _Index++;
+                        */ 
+                        #endregion
                     }
-                    _Index = _Set._Count + 1;
-		            _Current = default(Pair);
+                    _Index   = _Set._Count + 1;
+		            _Current = default;
 		            return (false);
 	            }
 	            void IEnumerator.Reset()
 	            {
 		            _Index   = 0;
-                    _Current = default(Pair);
+                    _Current = default;
 	            }
             }            
 
@@ -164,8 +165,8 @@ namespace lingvo.morphology
 		    private int    _FreeList;
             private Pair.EqualityComparer _Comparer = Pair.EqualityComparer.Inst;
 
-            internal Slot[] Slots => _Slots; 
-            public int Count => _Count; 
+            internal Slot[] Slots { [M(O.AggressiveInlining)] get => _Slots; } 
+            public int Count { [M(O.AggressiveInlining)] get => _Count; }
 		    public PairSet( int capacity )
 		    {
 			    _Buckets  = new int [ capacity ];
@@ -173,7 +174,7 @@ namespace lingvo.morphology
 			    _FreeList = -1;
 		    }
 
-            public bool TryAddOrGetExists( Pair keyValue, ref Pair existsValue )
+            [M(O.AggressiveInlining)] public bool TryAddOrGetExists( Pair keyValue, ref Pair existsValue )
 		    {
                 #region [.find exists.]
                 int hash = (keyValue.GetHashCode() & 0x7FFFFFFF);
@@ -217,7 +218,7 @@ namespace lingvo.morphology
                 return (true);
                 #endregion
             }
-            public void Clear()
+            [M(O.AggressiveInlining)] public void Clear()
             {
                 if ( 0 < _Count )
 	            {
@@ -228,23 +229,23 @@ namespace lingvo.morphology
 	            }                    
             }
 		    
-            private void Resize()
+            [M(O.AggressiveInlining)] private void Resize()
 		    {
-                int n1 = checked( _Count * 2 + 1 );
-                int[]  buckets = new int[ n1 ];
-                Slot[] slots   = new Slot[ n1 ];
+                int new_size = checked( _Count * 2 + 1 );
+                var buckets = new int[ new_size ];
+                var slots   = new Slot[ new_size ];
                 Array.Copy( _Slots, 0, slots, 0, _Count );
                 for ( int i = 0; i < _Count; i++ )
                 {
-                    int n2 = slots[ i ].HashCode % n1;
-                    slots[ i ].Next = buckets[ n2 ] - 1;
-                    buckets[ n2 ] = i + 1;
+                    int n = slots[ i ].HashCode % new_size;
+                    slots[ i ].Next = buckets[ n ] - 1;
+                    buckets[ n ] = i + 1;
                 }
                 _Buckets = buckets;
                 _Slots   = slots;
 		    }
 
-            public Enumerator GetEnumerator() => new Enumerator( this );
+            [M(O.AggressiveInlining)] public Enumerator GetEnumerator() => new Enumerator( this );
             IEnumerator< Pair > IEnumerable< Pair >.GetEnumerator() => new Enumerator( this );
             IEnumerator IEnumerable.GetEnumerator() => new Enumerator( this );
 	    }
@@ -288,7 +289,7 @@ namespace lingvo.morphology
         /// коллекция информаций о формах слова
         private SortedListIntPtrKey< Pair[] > _Endings;
         
-        private bool HasEndings() => (_Endings.Array != null);
+        [M(O.AggressiveInlining)] private bool HasEndings() => (_Endings.Tuples != null);
         #endregion
 
         #region [.ctor().]
@@ -303,7 +304,7 @@ namespace lingvo.morphology
             _Slots.Trim();
             for ( int i = 0, len = _Slots.Count; i < len; i++ )
             {
-                _Slots.Array[ i ].Value.Trim();
+                _Slots.Tuples[ i ].Value.Trim();
             }
         }
         #endregion
@@ -338,7 +339,7 @@ namespace lingvo.morphology
                         tuplesOffset = _this._Endings.Count;
                         tuples       = new SortedListIntPtrKey< Pair[] >.Tuple[ len + tuplesOffset ];
 
-                        Array.Copy( _this._Endings.Array, tuples, tuplesOffset );
+                        Array.Copy( _this._Endings.Tuples, tuples, tuplesOffset );
                         #region comm. prev.
                         //for ( int i = 0; i < tuplesOffset; i++ )
                         //{
@@ -351,7 +352,7 @@ namespace lingvo.morphology
                     {
                         var p = morphoType.MorphoFormEndingUpperAndMorphoAttributes[ i ];
                         var pairs_current_len = p.MorphoAttributes.Length;
-                        var pairs_current = new Pair[ pairs_current_len ];
+                        var pairs_current     = new Pair[ pairs_current_len ];
                         for ( int j = 0; j < pairs_current_len; j++ )
                         {
                             var ma = MorphoAttributePair.GetMorphoAttribute( morphoType, p.MorphoAttributes[ j ], in nounType );
@@ -403,7 +404,7 @@ namespace lingvo.morphology
                         tuplesOffset = _this._Endings.Count;
                         tuples       = new SortedListIntPtrKey< Pair[] >.Tuple[ len + tuplesOffset ];
 
-                        Array.Copy( _this._Endings.Array, tuples, tuplesOffset );
+                        Array.Copy( _this._Endings.Tuples, tuples, tuplesOffset );
                         #region comm. prev.
                         //for ( int i = 0; i < tuplesOffset; i++ )
                         //{
@@ -468,7 +469,7 @@ namespace lingvo.morphology
                         tuplesOffset = _this._Endings.Count;
                         tuples       = new SortedListIntPtrKey< Pair[] >.Tuple[ len + tuplesOffset ];
 
-                        Array.Copy( _this._Endings.Array, tuples, tuplesOffset );
+                        Array.Copy( _this._Endings.Tuples, tuples, tuplesOffset );
                         #region comm. prev.
                         //for ( int i = 0; i < tuplesOffset; i++ )
                         //{

@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 
+using lingvo.core;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
+
 namespace lingvo.morphology
 {
     /// <summary>
@@ -15,16 +19,16 @@ namespace lingvo.morphology
         /// </summary>
         internal struct Tuple
         {            
-            public T Value;
+            public T      Value;
             public IntPtr Key;
 #if DEBUG
             public override string ToString()
             {
-                var s = default(string);
+                string s;
                 if ( Key != IntPtr.Zero )
                 {
-                    s = lingvo.core.StringsHelper.ToString( Key );
-                    if ( string.IsNullOrEmpty( s ) )
+                    s = StringsHelper.ToString( Key );
+                    if ( s.IsNullOrEmpty() )
                         s = "_";
                     s = '\'' + s + '\'';
                 }
@@ -40,80 +44,80 @@ namespace lingvo.morphology
 
         private static readonly Tuple[] EMPTY_ARRAY = new Tuple[ 0 ];
 
-        private Tuple[] _Array;
-		private ushort  _Size;
+        private Tuple[] _Tuples;
+		private ushort  _Count;
 
+		public int Count { [M(O.AggressiveInlining)] get => _Count; }
+        public Tuple[] Tuples { [M(O.AggressiveInlining)] get => _Tuples; }
 		public int Capacity
 		{
-			get => _Array.Length;
+			get => _Tuples.Length;
 			private set
 			{
-                if ( value != _Array.Length )
+                if ( value != _Tuples.Length )
 				{
                     if ( 0 < value )
 					{
                         var destinationArray = new Tuple[ value ];
-                        if ( 0 < _Size )
+                        if ( 0 < _Count )
 						{
-                            System.Array.Copy( _Array, 0, destinationArray, 0, _Size );
+                            Array.Copy( _Tuples, 0, destinationArray, 0, _Count );
 						}
-                        _Array = destinationArray;
+                        _Tuples = destinationArray;
 					}
                     else
                     {
-                        _Array = EMPTY_ARRAY;
+                        _Tuples = EMPTY_ARRAY;
                     }
 				}
 			}
 		}
 
-		public int Count => _Size;
-        public Tuple[] Array => _Array;
-
 		public T this[ IntPtr key ]
 		{
 			get
 			{
-                int n = IndexOfKey( key );
-                if ( n >= 0 )
+                var i = IndexOfKey( key );
+                if ( 0 <= i )
                 {
-                    return _Array[ n ].Value;
+                    return _Tuples[ i ].Value;
                 }
+
                 throw (new KeyNotFoundException());
                 //return default(TValue);
 			}
 			set
 			{
-                int n = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
-                if ( n >= 0 )
+                var i = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
+                if ( 0 <= i )
                 {
-                    _Array[ n ].Value = value;
-                    return;
+                    _Tuples[ i ].Value = value;
                 }
-                Insert( ~n, key, value );
+                else
+                {
+                    Insert( ~i, key, value );
+                }                
 			}
 		}
-
         public void Add( IntPtr key, T value )
 		{
-            int n = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
-            if ( n >= 0 )
+            var i = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
+            if ( 0 <= i )
 			{
-                throw (new ArgumentException(n.ToString(), "n"));
+                throw (new ArgumentException( i.ToString(), "n" ));
 			}
-            Insert( ~n, key, value );
+            Insert( ~i, key, value );
 		}
-
 		public void Clear()
 		{
-            System.Array.Clear( _Array, 0, _Size );
-			_Size = 0;
+            Array.Clear( _Tuples, 0, _Count );
+			_Count = 0;
 		}
 		public bool ContainsKey( IntPtr key ) => (IndexOfKey( key ) >= 0);
 
 		private void EnsureCapacity( int min )
 		{
-            int n = _Array.Length * 3;
+            int n = _Tuples.Length * 3;
             //int n = (_Array.Length == 0) ? 4 : (_Array.Length * 2);            
             if ( MAX_CAPACITY_THRESHOLD < n )
             {
@@ -128,35 +132,35 @@ namespace lingvo.morphology
 
         public int IndexOfKey( IntPtr key )
 		{
-            int n = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
-            if ( n < 0 )
+            var i = InternalBinarySearch( /*_Array, 0, _Size,*/ key ); //Array.BinarySearch< IntPtr >( _Keys, 0, _Size, key ); //
+            if ( i < 0 )
             {
                 return (-1);
             }
-			return (n);
+			return (i);
 		}
         public int IndexOfKeyCore( IntPtr key ) => InternalBinarySearch( /*_Array, 0, _Size,*/ key );
 	 	public /*private*/ void Insert( int index, IntPtr key, T value )
 		{
-            if ( _Size == _Array.Length )
+            if ( _Count == _Tuples.Length )
             {
-                EnsureCapacity( _Size + 1 );
+                EnsureCapacity( _Count + 1 );
             }
-            if ( index < _Size )
+            if ( index < _Count )
             {
-                System.Array.Copy( _Array, index, _Array, index + 1, _Size - index );
+                Array.Copy( _Tuples, index, _Tuples, index + 1, _Count - index );
             }
-            _Array[ index ] = new Tuple() { Key = key, Value = value };
-            _Size++;
+            _Tuples[ index ] = new Tuple() { Key = key, Value = value };
+            _Count++;
 		}
-        public T GetValue( int index ) => _Array[ index ].Value;
-        public void SetValue( int index, T value ) => _Array[ index ].Value = value;
-		public bool TryGetValue( IntPtr key, out T value )
+        public T GetValue( int index ) => _Tuples[ index ].Value;
+        public void SetValue( int index, T value ) => _Tuples[ index ].Value = value;
+		[M(O.AggressiveInlining)] public bool TryGetValue( IntPtr key, out T value )
 		{
-            int n = IndexOfKey( key );
-            if ( n >= 0 )
+            var i = IndexOfKey( key );
+            if ( 0 <= i )
 			{
-                value = _Array[ n ].Value;
+                value = _Tuples[ i ].Value;
 				return (true);
 			}
 			value = default;
@@ -164,51 +168,49 @@ namespace lingvo.morphology
 		}
 		public void RemoveAt( int index )
 		{
-            if ( index < 0 || _Size <= index )
+            if ( index < 0 || _Count <= index ) throw (new ArgumentOutOfRangeException( nameof(index) ));
+            
+			_Count--;
+            if ( index < _Count )
             {
-                throw (new ArgumentOutOfRangeException( "index" ));
+                Array.Copy( _Tuples, index + 1, _Tuples, index, _Count - index );
             }
-			_Size--;
-            if ( index < _Size )
-            {
-                System.Array.Copy( _Array, index + 1, _Array, index, _Size - index );
-            }
-            _Array[ _Size ] = default;
+            _Tuples[ _Count ] = default;
 		}
 		public bool Remove( IntPtr key )
 		{
-            int n = IndexOfKey( key );
-            if ( n >= 0 )
+            var i = IndexOfKey( key );
+            if ( 0 <= i )
             {
-                RemoveAt( n );
+                RemoveAt( i );
             }
-            return (n >= 0);
+            return (0 <= i);
 		}
 
 		public void TrimExcess()
 		{
-            int n = (int) ((double) _Array.Length * 0.9);
-            if ( _Size < n )
+            var n = (int) ((double) _Tuples.Length * 0.9);
+            if ( _Count < n )
             {
-                Capacity = _Size;
+                Capacity = _Count;
             }
 		}
-        public void Trim() => Capacity = _Size;
+        public void Trim() => Capacity = _Count;
 
         public void SetArray( Tuple[] array )
         {
-            _Array = array;
-            _Size  = (ushort) array.Length;
+            _Tuples = array;
+            _Count  = (ushort) array.Length;
         }
 
-        private int InternalBinarySearch( /*tuple_t[] array, int index, int length,*/ IntPtr value )
+        [M(O.AggressiveInlining)] private int InternalBinarySearch( /*tuple_t[] array, int index, int length,*/ IntPtr value )
         {
             int i  = /*index*/ 0;
-            int n1 = /*index +*/ _Size - 1;
+            int n1 = /*index +*/ _Count - 1;
             while ( i <= n1 )
             {
                 int n2 = i + ((n1 - i) >> 1);
-                int n3 = CompareRoutine( _Array[ n2 ].Key, value );
+                int n3 = CompareRoutine( _Tuples[ n2 ].Key, value );
                 if ( n3 == 0 )
                 {
                     return (n2);
@@ -224,7 +226,7 @@ namespace lingvo.morphology
             }
             return (~i);
         }
-        unsafe internal static int CompareRoutine( IntPtr x, IntPtr y )
+        [M(O.AggressiveInlining)] unsafe internal static int CompareRoutine( IntPtr x, IntPtr y )
         {
             if ( x == y )
                 return (0);

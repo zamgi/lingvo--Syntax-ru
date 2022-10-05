@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
+
 namespace lingvo.sentsplitting
 {
     /// <summary>
     /// 
     /// </summary>
-    internal struct ngram_t< T >
+    internal readonly struct ngram_t< T >
     {
         public ngram_t( string[] _words, T _value )
         {
@@ -23,7 +26,7 @@ namespace lingvo.sentsplitting
     /// <summary>
     /// 
     /// </summary>
-    internal struct SearchResult< T >
+    internal readonly struct SearchResult< T >
     {
         /// <summary>
         /// 
@@ -73,7 +76,7 @@ namespace lingvo.sentsplitting
     /// <summary>
     /// 
     /// </summary>
-    internal struct SearchResultOfHead2Left< T >
+    internal readonly struct SearchResultOfHead2Left< T >
     {
         /// <summary>
         /// 
@@ -120,10 +123,10 @@ namespace lingvo.sentsplitting
             /// <summary>
             /// 
             /// </summary>
-            private sealed class ngram_t_IEqualityComparer : IEqualityComparer< ngram_t< T > >
+            private sealed class ngram_t_equalityComparer : IEqualityComparer< ngram_t< T > >
             {
-                public static ngram_t_IEqualityComparer Inst { get; } = new ngram_t_IEqualityComparer();
-                private ngram_t_IEqualityComparer() { }
+                public static ngram_t_equalityComparer Inst { get; } = new ngram_t_equalityComparer();
+                private ngram_t_equalityComparer() { }
                 public bool Equals( ngram_t< T > x, ngram_t< T > y )
                 {
                     var len = x.words.Length;
@@ -255,23 +258,17 @@ namespace lingvo.sentsplitting
             /// <param name="ngram">Pattern</param>
             public void AddNgram( ngram_t< T > ngram )
             {
-                if ( _Ngrams == null )
-                {
-                    _Ngrams = new HashSet< ngram_t< T > >( ngram_t_IEqualityComparer.Inst );
-                }
+                if ( _Ngrams == null ) _Ngrams = new HashSet< ngram_t< T > >( ngram_t_equalityComparer.Inst );
                 _Ngrams.Add( ngram );
             }
 
             /// <summary>
-            /// Adds trabsition node
+            /// Adds transition node
             /// </summary>
             /// <param name="node">Node</param>
             public void AddTransition( TreeNode node )
             {
-                if ( _TransDict == null )
-                {
-                    _TransDict = new Dictionary< string, TreeNode >();
-                }
+                if ( _TransDict == null ) _TransDict = new Dictionary< string, TreeNode >();
                 _TransDict.Add( node.Word, node );
             }
 
@@ -290,35 +287,35 @@ namespace lingvo.sentsplitting
             public bool ContainsTransition( string word ) => ((_TransDict != null) && _TransDict.ContainsKey( word ));
             #endregion
 
-            #region [.properties.]
+            #region [.props.]
             private Dictionary< string, TreeNode > _TransDict;
             private HashSet< ngram_t< T > > _Ngrams;
 
             /// <summary>
             /// Character
             /// </summary>
-            public string Word { get; private set; }
+            public string Word { [M(O.AggressiveInlining)] get; private set; }
 
             /// <summary>
             /// Parent tree node
             /// </summary>
-            public TreeNode Parent { get; private set; }
+            public TreeNode Parent { [M(O.AggressiveInlining)] get; private set; }
 
             /// <summary>
             /// Failure function - descendant node
             /// </summary>
-            public TreeNode Failure { get; internal set; }
+            public TreeNode Failure { [M(O.AggressiveInlining)] get; internal set; }
 
             /// <summary>
             /// Transition function - list of descendant nodes
             /// </summary>
-            public ICollection< TreeNode > Transitions => ((_TransDict != null) ? _TransDict.Values : null);
+            public ICollection< TreeNode > Transitions { [M(O.AggressiveInlining)] get => ((_TransDict != null) ? _TransDict.Values : null); }
 
             /// <summary>
             /// Returns list of patterns ending by this letter
             /// </summary>
-            public ICollection< ngram_t< T > > Ngrams => _Ngrams;
-            public bool HasNgrams => (_Ngrams != null);
+            public ICollection< ngram_t< T > > Ngrams { [M(O.AggressiveInlining)] get => _Ngrams; }
+            public bool HasNgrams { [M(O.AggressiveInlining)] get => (_Ngrams != null); }
             #endregion
 
             public override string ToString() => ((Word != null) ? ('\'' + Word + '\'') : "ROOT") + ", transitions(descendants): " + ((_TransDict != null) ? _TransDict.Count : 0) + ", ngrams: " + ((_Ngrams != null) ? _Ngrams.Count : 0);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace lingvo.morphology
@@ -12,20 +11,20 @@ namespace lingvo.morphology
         private static readonly MorphoForm[] EMPTY = new MorphoForm[ 0 ];
 
         private readonly MorphoAttributeGroupEnum _MorphoAttributeGroup;
-        private readonly PartOfSpeechEnum         _PartOfSpeech;
-	    /// формы
+        private readonly PartOfSpeechEnum _PartOfSpeech;
+        /// формы
         private MorphoForm[] _MorphoForms;
-	    /// самое длинное окончание
-	    private int _MaxEndingLength;
+        /// самое длинное окончание
+        private int _MaxEndingLength;
 
         internal MorphoType( PartOfSpeechBase partOfSpeechBase )
         {
-            _MorphoForms          = EMPTY;
+            _MorphoForms = EMPTY;
             _MorphoAttributeGroup = partOfSpeechBase.MorphoAttributeGroup;
-            _PartOfSpeech         = partOfSpeechBase.PartOfSpeech;
+            _PartOfSpeech = partOfSpeechBase.PartOfSpeech;
         }
 
-	    /// добавление морфоформы
+        /// добавление морфоформы
         /*internal void AddMorphoForm( MorphoForm morphoForm )
         {
             if ( morphoForm != null )
@@ -45,7 +44,7 @@ namespace lingvo.morphology
                 throw (new NullPointerException());
             }
         }*/
-        internal void SetMorphoForms( List< MorphoForm > morphoForms )
+        internal void SetMorphoForms( List<MorphoForm> morphoForms )
         {
             _MorphoForms = morphoForms.ToArray();
             if ( morphoForms.Count != 0 )
@@ -58,29 +57,14 @@ namespace lingvo.morphology
             }
         }
 
-	    /// получение типов атрибутов
-        public MorphoAttributeGroupEnum MorphoAttributeGroup
-        {
-            get { return (_MorphoAttributeGroup); }
-        }
-        public PartOfSpeechEnum         PartOfSpeech
-        {
-            get { return (_PartOfSpeech); }
-        }
-	    /// получение форм
-        public MorphoForm[] MorphoForms
-        {
-            get { return (_MorphoForms); }
-        }
-	    /// получение длины самого длинного окончания
-        public int MaxEndingLength
-        {
-            get { return (_MaxEndingLength); }
-        }
+        /// получение типов атрибутов
+        public MorphoAttributeGroupEnum MorphoAttributeGroup => _MorphoAttributeGroup;
+        public PartOfSpeechEnum PartOfSpeech => _PartOfSpeech;
+        /// получение форм
+        public MorphoForm[] MorphoForms => _MorphoForms;
+        /// получение длины самого длинного окончания
+        public int MaxEndingLength => _MaxEndingLength;
 
-        public override string ToString()
-        {
-            return ("[" + PartOfSpeech + ", " + MorphoAttributeGroup + ", {" + string.Join( ",", (IEnumerable< MorphoForm >) MorphoForms ) + "}]");
-        }
+        public override string ToString() => $"[{PartOfSpeech}, {MorphoAttributeGroup}, {{{string.Join( ",", (IEnumerable< MorphoForm >) MorphoForms )}}}]";
     }
 }

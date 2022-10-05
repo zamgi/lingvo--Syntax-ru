@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
+
 namespace lingvo.morphology
 {
     /// <summary>
@@ -14,9 +17,9 @@ namespace lingvo.morphology
         /// </summary>
 		internal struct Slot
 		{                
-            internal int    hashCode;
-            internal int    next;
-            internal IntPtr value;
+            internal int    HashCode;
+            internal int    Next;
+            internal IntPtr Value;
 		}
 
         /// <summary>
@@ -33,9 +36,9 @@ namespace lingvo.morphology
 
             internal Enumerator( IntPtrSet set )
 	        {
-		        this._Set     = set;
-		        this._Index   = 0;
-		        this._Current = default;
+		        _Set     = set;
+		        _Index   = 0;
+		        _Current = default;
 	        }
             public void Dispose() { }
 
@@ -43,14 +46,14 @@ namespace lingvo.morphology
 	        {
                 while ( _Index < _Set._Count )
 		        {
-                    _Current = _Set._Slots[ _Index ].value;
+                    _Current = _Set._Slots[ _Index ].Value;
                     _Index++;
                     if ( _Current != IntPtr.Zero )
                     {                            
                         return (true);
                     }
                 }
-                _Index = _Set._Count + 1;
+                _Index   = _Set._Count + 1;
 		        _Current = default;
 		        return (false);
 	        }
@@ -66,27 +69,28 @@ namespace lingvo.morphology
 		private int    _Count;
 		private int    _FreeList;
 
-        internal Slot[] Slots => _Slots;
-        public int Count => _Count;
-		public IntPtrSet( int capacity )
+        internal Slot[] Slots { [M(O.AggressiveInlining)] get => _Slots; }
+        public int Count { [M(O.AggressiveInlining)] get => _Count; }
+
+		[M(O.AggressiveInlining)] public IntPtrSet( int capacity )
 		{
 			_Buckets  = new int [ capacity ];
 			_Slots    = new Slot[ capacity ];
 			_FreeList = -1;
 		}
 
-        public bool Add( IntPtr value )
+        [M(O.AggressiveInlining)] public bool Add( IntPtr value )
 		{
             #region [.find exists.]
             int hash = (value.GetHashCode() & 0x7FFFFFFF);
             for ( int i = _Buckets[ hash % _Buckets.Length ] - 1; 0 <= i; )
             {
                 var slot = _Slots[ i ];
-                if ( /*(slot.hashCode == hash) &&*/ (slot.value == value) )
+                if ( /*(slot.hashCode == hash) &&*/ (slot.Value == value) )
                 {
                     return (false);
                 }
-                i = slot.next;
+                i = slot.Next;
             }
             #endregion
 
@@ -95,7 +99,7 @@ namespace lingvo.morphology
             if ( 0 <= _FreeList )
             {
                 n1 = _FreeList;
-                _FreeList = _Slots[ n1 ].next;
+                _FreeList = _Slots[ n1 ].Next;
             }
             else
             {
@@ -109,17 +113,16 @@ namespace lingvo.morphology
             int n2 = hash % _Buckets.Length;
             _Slots[ n1 ] = new Slot() 
             {
-                hashCode = hash,
-                value    = value,
-                next     = _Buckets[ n2 ] - 1,
+                HashCode = hash,
+                Value    = value,
+                Next     = _Buckets[ n2 ] - 1,
             };
             _Buckets[ n2 ] = n1 + 1;
 
             return (true);
             #endregion
         }
-
-        public void Clear()
+        [M(O.AggressiveInlining)] public void Clear()
         {
             if ( 0 < _Count )
 	        {
@@ -130,23 +133,23 @@ namespace lingvo.morphology
 	        }                    
         }
 
-		private void Resize()
+		[M(O.AggressiveInlining)] private void Resize()
 		{
-            int n1 = checked( _Count * 2 + 1 );
-            int[]  buckets = new int[ n1 ];
-            Slot[] slots   = new Slot[ n1 ];
+            int new_size = checked( _Count * 2 + 1 );
+            var buckets = new int[ new_size ];
+            var slots   = new Slot[ new_size ];
             Array.Copy( _Slots, 0, slots, 0, _Count );
             for ( int i = 0; i < _Count; i++ )
             {
-                int n2 = slots[ i ].hashCode % n1;
-                slots[ i ].next = buckets[ n2 ] - 1;
-                buckets[ n2 ] = i + 1;
+                int n = slots[ i ].HashCode % new_size;
+                slots[ i ].Next = buckets[ n ] - 1;
+                buckets[ n ] = i + 1;
             }
             _Buckets = buckets;
             _Slots   = slots;
 		}
 
-        public Enumerator GetEnumerator() => new Enumerator( this );
+        [M(O.AggressiveInlining)] public Enumerator GetEnumerator() => new Enumerator( this );
         IEnumerator< IntPtr > IEnumerable< IntPtr >.GetEnumerator() => new Enumerator( this );
         IEnumerator IEnumerable.GetEnumerator() => new Enumerator( this );
     }

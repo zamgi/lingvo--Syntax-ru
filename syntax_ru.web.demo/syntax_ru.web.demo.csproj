@@ -135,7 +135,7 @@
       <Project>{94def3aa-46b3-477d-8874-a2f90297a743}</Project>
       <Name>morphology</Name>
     </ProjectReference>
-    <ProjectReference Include="..\pos-tagger-crf.net\pos-tagger-crf.NET.csproj">
+    <ProjectReference Include="..\pos-tagger-crf\pos-tagger-crf.csproj">
       <Project>{97b9b41c-dabf-4d93-b111-85b8d86acba6}</Project>
       <Name>pos-tagger-crf.NET</Name>
     </ProjectReference>
@@ -143,7 +143,7 @@
       <Project>{945a3caa-ef28-4344-8dbb-7ebeb4be0301}</Project>
       <Name>sent-splitting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\syntax-crf.net\syntax-crf.net.csproj">
+    <ProjectReference Include="..\syntax-crf\syntax-crf.csproj">
       <Project>{12abbe81-48e0-4f47-ba3b-a1e740872592}</Project>
       <Name>syntax-crf.net</Name>
     </ProjectReference>

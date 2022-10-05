@@ -113,6 +113,16 @@ namespace lingvo.urls
             Position,           
         }
 
+        #region [.cctor().]
+        private static readonly CharType* _CTM;
+        private static readonly char*     _UIM;
+        static UrlDetector()
+        {
+            _CTM = xlat_Unsafe.Inst._CHARTYPE_MAP;
+            _UIM = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
+        }
+        #endregion
+
         #region [.private field's.]
         private const int DEFAULT_LIST_CAPACITY                              = 100;
         private const int ALLOCATEURL_BYFIRSTLEVELDOMAIN_MAXRECURSIONNESTING = 10;
@@ -130,9 +140,7 @@ namespace lingvo.urls
         private readonly char[]               _URIschemesBuffer;       //buffer for URI-schemes (left) part of url
         private readonly GCHandle             _URIschemesBufferGCHandle;
         private char*                         _UriSchBufferPtrBase;
-        private readonly url_t                _Url;
-        private readonly CharType*            _CTM;  //xlat.CHARTYPE_MAP
-        private readonly char*                _UIM;  //xlat.UPPER_INVARIANT_MAP        
+        private readonly url_t                _Url;  
         private char*                         _BASE; //start pointer into text
         private char*                         _Ptr;  //current pointer into text
         #endregion
@@ -153,9 +161,6 @@ namespace lingvo.urls
             _Url                        = new url_t();
             _Urlstructs                 = new List< url_struct_t >( DEFAULT_LIST_CAPACITY );
 			
-            _CTM = xlat_Unsafe.Inst._CHARTYPE_MAP;
-            _UIM = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
-
             //-1-
             _FirstLevelDomainBuffer         = new char[ _FirstLevelDomainsMaxLength + 1 ];
             _FirstLevelDomainBufferGCHandle = GCHandle.Alloc( _FirstLevelDomainBuffer, GCHandleType.Pinned );
@@ -726,7 +731,7 @@ namespace lingvo.urls
     /// <summary>
     /// 
     /// </summary>
-    internal static class UrlDetectorExt
+    internal static class UrlDetectorExtensions
     {
         public static HashSet< string > ToHashset_4Urls( this IEnumerable< string > seq )
             => new HashSet< string >( seq.Select( d => (d != null) ? d.Trim().ToUpperInvariant() : null ).Where( d => !string.IsNullOrEmpty( d ) ) );

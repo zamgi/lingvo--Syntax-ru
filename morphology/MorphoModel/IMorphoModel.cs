@@ -37,23 +37,11 @@ namespace lingvo.morphology
         /// нулевое окончание
         protected const string EMPTY_ENDING = "_";
         /// регулярное выражение для префикса морфотипа
-        protected Regex MORPHOTYPE_PREFIX_REGEXP
-        {
-            get;
-            private set;
-        }
+        protected Regex MORPHOTYPE_PREFIX_REGEXP    { get; private set; }
         /// разделитель морфоатрибутов
-        protected char[] MORPHO_ATTRIBUTE_SEPARATOR
-        {
-            get;
-            private set;
-        }
+        protected char[] MORPHO_ATTRIBUTE_SEPARATOR { get; private set; }
         /// разделитель в словаре слов
-        protected char[] WORDS_DICTIONARY_SEPARATOR
-        {
-            get;
-            private set;
-        }
+        protected char[] WORDS_DICTIONARY_SEPARATOR { get; private set; }
 
         protected const char UNDERLINE     = '_';
         protected const char TABULATION    = '\t';
@@ -111,11 +99,8 @@ namespace lingvo.morphology
             public char* MorphoTypeName;
             public char* PartOfSpeech;
 
-            public override string ToString()
-            {
-                return ("MorphoTypeName: '" + StringsHelper.ToString( MorphoTypeName ) + 
-                        "', PartOfSpeech: '" + StringsHelper.ToString( PartOfSpeech ) + '\'');
-            }
+            public override string ToString() => ("MorphoTypeName: '" + StringsHelper.ToString( MorphoTypeName ) + 
+                                                  "', PartOfSpeech: '" + StringsHelper.ToString( PartOfSpeech ) + '\'');
         }
         unsafe protected static bool TryParseLineWords( char* lineBase, ref ParsedLineWords_unsafe plw )
         {
@@ -201,16 +186,16 @@ namespace lingvo.morphology
     {
         public static IMorphoModel Create( in MorphoModelConfig config )
         {
-            config.ThrowIfNull( "config" );
+            config.ThrowIfNull( nameof(config) );
 
             switch ( config.TreeDictionaryType )
             {
                 case MorphoModelConfig.TreeDictionaryTypeEnum.Classic:
                 case MorphoModelConfig.TreeDictionaryTypeEnum.FastMemPlenty:
-                    return (new MorphoModel( in config ));
+                    return (new MorphoModel( config ));
 
                 case MorphoModelConfig.TreeDictionaryTypeEnum.Native:
-                    return (new MorphoModelNative( in config ));
+                    return (new MorphoModelNative( config ));
 
                 default:
                     throw (new ArgumentException( config.TreeDictionaryType.ToString() ));

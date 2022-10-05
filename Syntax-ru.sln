@@ -1,29 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syntax-crf.net", "syntax-crf.net\syntax-crf.net.csproj", "{12ABBE81-48E0-4F47-BA3B-A1E740872592}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[lib]", "[lib]", "{D1486073-D5F6-49AA-8D68-6CAB7D0BCD10}"
-	ProjectSection(SolutionItems) = preProject
-		[lib]\log4net.dll = [lib]\log4net.dll
-		[lib]\Newtonsoft.Json.dll = [lib]\Newtonsoft.Json.dll
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syntax-crf", "syntax-crf\syntax-crf.csproj", "{12ABBE81-48E0-4F47-BA3B-A1E740872592}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "captcha", "captcha\captcha.csproj", "{ADA45B0D-9218-4E16-880D-825D022A5684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "crfsuite.net", "crfsuite.net\crfsuite.net.csproj", "{0E34915B-130F-40F4-B0BC-F543ABE52CEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "crfsuite.net", "crfsuite.net\crfsuite.net.csproj", "{0E34915B-130F-40F4-B0BC-F543ABE52CEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lingvo.core", "lingvo.core\lingvo.core.csproj", "{A64092D5-B7CC-4AAB-8CC2-571882DA64D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lingvo.core", "lingvo.core\lingvo.core.csproj", "{A64092D5-B7CC-4AAB-8CC2-571882DA64D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "morphology", "morphology\morphology.csproj", "{94DEF3AA-46B3-477D-8874-A2F90297A743}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "morphology", "morphology\morphology.csproj", "{94DEF3AA-46B3-477D-8874-A2F90297A743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sent-splitting", "sent-splitting\sent-splitting.csproj", "{945A3CAA-EF28-4344-8DBB-7EBEB4BE0301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sent-splitting", "sent-splitting\sent-splitting.csproj", "{945A3CAA-EF28-4344-8DBB-7EBEB4BE0301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pos-tagger-crf.NET", "pos-tagger-crf.net\pos-tagger-crf.NET.csproj", "{97B9B41C-DABF-4D93-B111-85B8D86ACBA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pos-tagger-crf", "pos-tagger-crf\pos-tagger-crf.csproj", "{97B9B41C-DABF-4D93-B111-85B8D86ACBA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syntax_ru.web.demo", "syntax_ru.web.demo\syntax_ru.web.demo.csproj", "{7C08F0DB-8834-49D9-ABE7-1F61BD4EE41A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syntax_ru.console", "syntax_ru.console\syntax_ru.console.csproj", "{7570E71B-8ED2-45B7-8577-16E356853ED6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syntax_ru.webService", "syntax_ru.webService\syntax_ru.webService.csproj", "{F887F7ED-B4B8-4D59-B568-05ED626567A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +61,14 @@ Global
 		{7C08F0DB-8834-49D9-ABE7-1F61BD4EE41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C08F0DB-8834-49D9-ABE7-1F61BD4EE41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C08F0DB-8834-49D9-ABE7-1F61BD4EE41A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7570E71B-8ED2-45B7-8577-16E356853ED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7570E71B-8ED2-45B7-8577-16E356853ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7570E71B-8ED2-45B7-8577-16E356853ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7570E71B-8ED2-45B7-8577-16E356853ED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F887F7ED-B4B8-4D59-B568-05ED626567A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F887F7ED-B4B8-4D59-B568-05ED626567A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F887F7ED-B4B8-4D59-B568-05ED626567A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F887F7ED-B4B8-4D59-B568-05ED626567A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

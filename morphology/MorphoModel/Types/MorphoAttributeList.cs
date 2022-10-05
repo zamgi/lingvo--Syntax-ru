@@ -25,23 +25,23 @@ namespace lingvo.morphology
                 internal MorphoAttributePair Value;
             }
 
-            private int[] _Buckets;
+            private int[]  _Buckets;
             private Slot[] _Slots;
-            private int _Count;
-            private int _FreeList;
+            private int    _Count;
+            private int    _FreeList;
 
-            internal Slot[] Slots => _Slots;
-            public int Count => _Count;
+            internal Slot[] Slots { [M(O.AggressiveInlining)] get => _Slots; }
+            public int Count { [M(O.AggressiveInlining)] get => _Count; }
 
             public MorphoAttributePairSet( int capacity )
             {
-                _Buckets = new int[ capacity ];
-                _Slots = new Slot[ capacity ];
+                _Buckets  = new int[ capacity ];
+                _Slots    = new Slot[ capacity ];
                 _FreeList = -1;
             }
 
-            public bool Add( MorphoAttributePair value ) => Add( in value );
-            public bool Add( in MorphoAttributePair value )
+            //[M(O.AggressiveInlining)] public bool Add( MorphoAttributePair value ) => Add( in value );
+            [M(O.AggressiveInlining)] public bool Add( in MorphoAttributePair value )
             {
                 #region [.find exists.]
                 int hash = InternalGetHashCode( in value );
@@ -103,7 +103,7 @@ namespace lingvo.morphology
                 return (false);
                 #endregion
             }
-            [M( O.AggressiveInlining )]
+            [M(O.AggressiveInlining)]
             public bool TryGetValue( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma, ref MorphoAttributePair value )
             {
                 #region [.find exists.]
@@ -125,35 +125,33 @@ namespace lingvo.morphology
 
             private void Resize()
             {
-                int n1 = checked(_Count * 2 + 1);
-                int[] buckets = new int[ n1 ];
-                Slot[] slots = new Slot[ n1 ];
+                int new_size = checked(_Count * 2 + 1);
+                var buckets = new int[ new_size ];
+                var slots   = new Slot[ new_size ];
                 Array.Copy( _Slots, 0, slots, 0, _Count );
                 for ( int i = 0; i < _Count; i++ )
                 {
-                    int n2 = slots[ i ].HashCode % n1;
-                    slots[ i ].Next = buckets[ n2 ] - 1;
-                    buckets[ n2 ] = i + 1;
+                    int n = slots[ i ].HashCode % new_size;
+                    slots[ i ].Next = buckets[ n ] - 1;
+                    buckets[ n ] = i + 1;
                 }
                 _Buckets = buckets;
-                _Slots = slots;
+                _Slots   = slots;
             }
 
-            [M( O.AggressiveInlining )]
+            [M(O.AggressiveInlining)]
             private static bool IsEquals( in MorphoAttributePair v1, in MorphoAttributePair v2 ) => ((v1.MorphoAttributeGroup & v2.MorphoAttributeGroup) == v2.MorphoAttributeGroup &&
                                                                                                      (v1.MorphoAttribute & v2.MorphoAttribute) == v2.MorphoAttribute);
-            [M( O.AggressiveInlining )]
+            [M(O.AggressiveInlining)]
             private static bool IsEquals( in MorphoAttributePair v1, MorphoAttributeGroupEnum morphoAttributeGroup, MorphoAttributeEnum morphoAttribute )
                 => ((v1.MorphoAttributeGroup & morphoAttributeGroup) == morphoAttributeGroup && (v1.MorphoAttribute & morphoAttribute) == morphoAttribute);
 
-            [M( O.AggressiveInlining )] private static int InternalGetHashCode( in MorphoAttributePair value ) => ((value.MorphoAttributeGroup.GetHashCode() ^ value.MorphoAttribute.GetHashCode()) & 0x7fffffff);
-            [M( O.AggressiveInlining )] private static int InternalGetHashCode( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma ) => ((mag.GetHashCode() ^ ma.GetHashCode()) & 0x7fffffff);
+            [M(O.AggressiveInlining)] private static int InternalGetHashCode( in MorphoAttributePair value ) => ((value.MorphoAttributeGroup.GetHashCode() ^ value.MorphoAttribute.GetHashCode()) & 0x7fffffff);
+            [M(O.AggressiveInlining)] private static int InternalGetHashCode( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma ) => ((mag.GetHashCode() ^ ma.GetHashCode()) & 0x7fffffff);
         }
 
         /// пара тип атрибута - значение атрибута
         private MorphoAttributePairSet _Set;
-        //private MorphoAttributePair    _Pair;
-
         public MorphoAttributeList()
         {
             _Set = new MorphoAttributePairSet( 100 );
@@ -317,8 +315,8 @@ namespace lingvo.morphology
             throw (new MorphoFormatException());
         }
 
-        [M( O.AggressiveInlining )] public bool TryGetMorphoAttributePair( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma, ref MorphoAttributePair map ) => _Set.TryGetValue( mag, ma, ref map );
-        [M( O.AggressiveInlining )] public MorphoAttributePair? TryGetMorphoAttributePair( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma )
+        [M(O.AggressiveInlining)] public bool TryGetMorphoAttributePair( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma, ref MorphoAttributePair map ) => _Set.TryGetValue( mag, ma, ref map );
+        [M(O.AggressiveInlining)] public MorphoAttributePair? TryGetMorphoAttributePair( MorphoAttributeGroupEnum mag, MorphoAttributeEnum ma )
         {
             MorphoAttributePair map = default;
             if ( _Set.TryGetValue( mag, ma, ref map ) )

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -15,21 +15,12 @@ namespace lingvo.morphology
         }
 
 	    /// получение названия части речи
-        public abstract PartOfSpeechEnum PartOfSpeech
-        {
-            get; 
-        }
+        public abstract PartOfSpeechEnum PartOfSpeech { [M(O.AggressiveInlining)] get; }
 
-	    /// получение типов атрибутов
-	    public MorphoAttributeGroupEnum MorphoAttributeGroup
-        { 
-            get { return (_MorphoAttributeGroup); }
-        }
+        /// получение типов атрибутов
+        public MorphoAttributeGroupEnum MorphoAttributeGroup { [M(O.AggressiveInlining)] get => _MorphoAttributeGroup; }
 
-        public override string ToString()
-        {
-            return ("[" + PartOfSpeech + ", " + MorphoAttributeGroup + "]");
-        }
+        public override string ToString() => $"[{PartOfSpeech}, {MorphoAttributeGroup}]";
     }
 
     /// Существительное
@@ -45,10 +36,7 @@ namespace lingvo.morphology
                                      MorphoAttributeGroupEnum.NounType;
 	    }
 
-	    public override PartOfSpeechEnum PartOfSpeech
-        {
-            get { return (PartOfSpeechEnum.Noun); }
-        }
+	    public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Noun;
     }
 
     /// Прилагательное
@@ -65,10 +53,7 @@ namespace lingvo.morphology
                                      MorphoAttributeGroupEnum.DegreeOfComparison;
 	    }
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        {
-            get { return (PartOfSpeechEnum.Adjective); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Adjective;
     }
 
     /// Местоимение
@@ -86,10 +71,7 @@ namespace lingvo.morphology
                                      MorphoAttributeGroupEnum.PronounType;
         }
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Pronoun); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Pronoun;
     }
 
     /// Числительное
@@ -104,10 +86,7 @@ namespace lingvo.morphology
                                      MorphoAttributeGroupEnum.NumeralType;
 	    }
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Numeral); }
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Numeral;
     }
 
     internal abstract class Verbs : PartOfSpeechBase
@@ -132,14 +111,9 @@ namespace lingvo.morphology
     /// Глагол
     internal sealed class Verb : Verbs
     {
-        public Verb()
-        {
-        }
+        public Verb() { }
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Verb); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Verb;
     }
 
     /// Наречие
@@ -151,103 +125,62 @@ namespace lingvo.morphology
                                      MorphoAttributeGroupEnum.AdverbType;
 	    }
 
-	    public override PartOfSpeechEnum PartOfSpeech
-        { 
-            get { return (PartOfSpeechEnum.Adverb); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Adverb;
     }
 
     /// Союз
     internal sealed class Conjunction : PartOfSpeechBase
     {
-	    public Conjunction()
-	    {
-            _MorphoAttributeGroup |= MorphoAttributeGroupEnum.ConjunctionType;
-	    }
+	    public Conjunction() => _MorphoAttributeGroup |= MorphoAttributeGroupEnum.ConjunctionType;
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Conjunction); }
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Conjunction;
     }
 
     /// Предлог
     internal sealed class Preposition : PartOfSpeechBase
     {
-        public Preposition()
-	    {
-            _MorphoAttributeGroup |= MorphoAttributeGroupEnum.Case;
-	    }
+        public Preposition() => _MorphoAttributeGroup |= MorphoAttributeGroupEnum.Case;
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Preposition); }
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Preposition;
     }
 
     /// Междометие
     internal sealed class Interjection : PartOfSpeechBase
     {
-        public Interjection()
-        {
-        }
+        public Interjection() { }
 
-	    public override PartOfSpeechEnum PartOfSpeech
-        { 
-            get { return (PartOfSpeechEnum.Interjection); }
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Interjection;
     }
 
     /// Частица
     internal sealed class Particle : PartOfSpeechBase
     {
-        public Particle()
-        {
-        }
+        public Particle() { }
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Particle); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Particle;
     }
 
     /// Артикль
     internal sealed class Article : PartOfSpeechBase
     {
-        public Article()
-	    {
-            _MorphoAttributeGroup |= MorphoAttributeGroupEnum.ArticleType;
-	    }
+        public Article() => _MorphoAttributeGroup |= MorphoAttributeGroupEnum.ArticleType;
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        { 
-            get { return (PartOfSpeechEnum.Article); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Article;
     }
 
     /// Иная часть речи
     internal sealed class Other : PartOfSpeechBase
     {
-        public Other()
-        {
-        }
+        public Other() { }
 
-	    public override PartOfSpeechEnum PartOfSpeech 
-        {
-            get { return (PartOfSpeechEnum.Other); }
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Other;
     }
 
     /// Предикатив
     internal sealed class Predicate : Verbs
     {
-        public Predicate()
-        {
-        }
+        public Predicate() { }
 
-	    public override PartOfSpeechEnum PartOfSpeech
-        { 
-            get { return (PartOfSpeechEnum.Predicate); } 
-        }
+        public override PartOfSpeechEnum PartOfSpeech => PartOfSpeechEnum.Predicate;
     }
 }

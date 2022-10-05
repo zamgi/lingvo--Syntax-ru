@@ -1,5 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -10,7 +12,6 @@ namespace lingvo.morphology
     {
         /// название части речи - часть речи
         private readonly Dictionary< PartOfSpeechEnum, PartOfSpeechBase > _Dictionary;
-
 	    public PartOfSpeechList()
         {
             _Dictionary = new Dictionary< PartOfSpeechEnum, PartOfSpeechBase >( 20 );
@@ -31,20 +32,9 @@ namespace lingvo.morphology
         }
 
         /// добавление части речи
-        private void AddPartOfSpeech( PartOfSpeechBase partOfSpeech )
-        {
-            _Dictionary.Add( partOfSpeech.PartOfSpeech, partOfSpeech );
-        }
+        [M(O.AggressiveInlining)] private void AddPartOfSpeech( PartOfSpeechBase partOfSpeech ) => _Dictionary.Add( partOfSpeech.PartOfSpeech, partOfSpeech );
 
 	    /// Получение части речи по ее названию
-        public PartOfSpeechBase GetPartOfSpeech( PartOfSpeechEnum partOfSpeech )
-        {
-	        PartOfSpeechBase value;
-            if ( _Dictionary.TryGetValue( partOfSpeech, out value ) )
-            {
-                return (value);
-            }
-	        return (null);
-        }
+        [M(O.AggressiveInlining)] public PartOfSpeechBase GetPartOfSpeech( PartOfSpeechEnum partOfSpeech ) => _Dictionary.TryGetValue( partOfSpeech, out var value ) ? value : null;
     }
 }

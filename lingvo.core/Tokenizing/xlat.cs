@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
+
 namespace lingvo.core
 {
 #if XLAT_CHARTYPE_MAP || XLAT_CHARTYPE_MAP_DECLARE
@@ -51,27 +54,6 @@ namespace lingvo.core
     {
 #if XLAT_CHARTYPE_MAP
         public static readonly CharType[] CHARTYPE_MAP = new CharType[ char.MaxValue + 1 ];
-        private static readonly char[] QUOTES_LEFT  = new[] { '«', //0x00AB, 0171
-                                                              '‹', //0x2039, 8249
-                                                              '„', //0x201E, 8222
-                                                              '“', //0x201C, 8220                                                              
-                                                            };
-        private static readonly char[] QUOTES_RIGHT = new[] { '»', //0x00BB, 0187
-                                                              '›', //0x203A, 8250
-                                                              '”', //0x201D, 8221
-                                                              '‟', //0x201F, 8223
-                                                            };
-        private static readonly char   QUOTE_LEFT_RIGHT    = '"'; //0x0022, 0034
-        private static readonly char[] QUOTES_DOUBLE_SIDED = new[] { '‛', //0x201B, 8219 - не встречается
-                                                                     '‚', //0x201A, 8218 - не встречается
-                                                                     '‘', //0x2018, 8216  - не встречается
-                                                                     '’', //0x2019, 8217 - не встречается в качестве кавычки                                                                      
-                                                                     '\'',//
-                                                                     QUOTE_LEFT_RIGHT,
-                                                                   };
-        private static readonly char[] BRACKETS_LEFT  = new[] { '(', '‹', '{', '[', };
-        private static readonly char[] BRACKETS_RIGHT = new[] { ')', '›', '}', ']', };
-        private static readonly char[] HYPHENS        = new[] { '-', '—', '–', };
 #endif
 #if XLAT_UPPER_INVARIANT_MAP
         public static readonly char[] UPPER_INVARIANT_MAP = new char[ char.MaxValue + 1 ];
@@ -125,6 +107,30 @@ namespace lingvo.core
                     break;
                 }
             }
+
+            #region [.defines.]
+            var QUOTES_LEFT  = new[] { '«', //0x00AB, 0171
+                                       '‹', //0x2039, 8249
+                                       '„', //0x201E, 8222
+                                       '“', //0x201C, 8220
+                                     };
+            var QUOTES_RIGHT = new[] { '»', //0x00BB, 0187
+                                       '›', //0x203A, 8250
+                                       '”', //0x201D, 8221
+                                       '‟', //0x201F, 8223
+                                     };
+            var QUOTE_LEFT_RIGHT    = '"'; //0x0022, 0034
+            var QUOTES_DOUBLE_SIDED = new[] { '‛', //0x201B, 8219 - не встречается
+                                              '‚', //0x201A, 8218 - не встречается
+                                              '‘', //0x2018, 8216  - не встречается
+                                              '’', //0x2019, 8217 - не встречается в качестве кавычки
+                                              '\'',//
+                                              QUOTE_LEFT_RIGHT,
+                                            };
+            var BRACKETS_LEFT  = new[] { '(', '‹', '{', '[', };
+            var BRACKETS_RIGHT = new[] { ')', '›', '}', ']', };
+            var HYPHENS        = new[] { '-', '—', '–', };
+            #endregion
 
             foreach ( var c in HYPHENS )
             {
@@ -202,10 +208,8 @@ namespace lingvo.core
 #endif
         }
 
-        public static bool IsDot( char ch )
+        [M(O.AggressiveInlining)] public static bool IsDot( char ch )
         {
-            //return (ch == '.');
-            //*
             switch ( ch )
             {
                 case '.':
@@ -215,10 +219,9 @@ namespace lingvo.core
                 default:
                     return (false);
             }
-            //*/
         }
-        public static bool IsAscii( char ch ) => (0 <= ch && ch <= 127);
-        public static bool IsURIschemes( char ch )
+        [M(O.AggressiveInlining)] public static bool IsAscii( char ch ) => (0 <= ch && ch <= 127);
+        [M(O.AggressiveInlining)] public static bool IsURIschemes( char ch )
         {
             if ( ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') )
             {
@@ -232,7 +235,7 @@ namespace lingvo.core
                     return (false);
             }
         }
-        public static bool IsURIschemesPathSeparator( char ch )
+        [M(O.AggressiveInlining)] public static bool IsURIschemesPathSeparator( char ch )
         {
             switch ( ch )    
             {
@@ -243,7 +246,7 @@ namespace lingvo.core
                     return (false);
             }
         }
-        public static bool IsDegree( char ch )
+        [M(O.AggressiveInlining)] public static bool IsDegree( char ch )
         {
             switch ( ch )
             {
@@ -254,7 +257,7 @@ namespace lingvo.core
                     return (false);
             }
         }
-        public static bool IsSlash( char ch )
+        [M(O.AggressiveInlining)] public static bool IsSlash( char ch )
         {
             switch ( ch )
             {
@@ -382,16 +385,16 @@ namespace lingvo.core
 #endif	
         }
 
-        public static readonly xlat_Unsafe Inst = new xlat_Unsafe();
+        public static xlat_Unsafe Inst { [M(O.AggressiveInlining)] get; } = new xlat_Unsafe();
 
 #if XLAT_CHARTYPE_MAP
-        public bool IsUpper( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsUpper) == CharType.IsUpper);
-        public bool IsLower( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsLower) == CharType.IsLower);        
-        public bool IsLetter( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsLetter) == CharType.IsLetter);        
-        public bool IsDigit( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsDigit) == CharType.IsDigit);        
-        public bool IsWhiteSpace( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsWhiteSpace) == CharType.IsWhiteSpace);
-        public bool IsPunctuation( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsPunctuation) == CharType.IsPunctuation);
-        public bool IsHyphen( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsHyphen) == CharType.IsHyphen);
+        [M(O.AggressiveInlining)] public bool IsUpper( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsUpper) == CharType.IsUpper);
+        [M(O.AggressiveInlining)] public bool IsLower( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsLower) == CharType.IsLower);        
+        [M(O.AggressiveInlining)] public bool IsLetter( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsLetter) == CharType.IsLetter);        
+        [M(O.AggressiveInlining)] public bool IsDigit( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsDigit) == CharType.IsDigit);        
+        [M(O.AggressiveInlining)] public bool IsWhiteSpace( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsWhiteSpace) == CharType.IsWhiteSpace);
+        [M(O.AggressiveInlining)] public bool IsPunctuation( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsPunctuation) == CharType.IsPunctuation);
+        [M(O.AggressiveInlining)] public bool IsHyphen( char ch ) => ((_CHARTYPE_MAP[ ch ] & CharType.IsHyphen) == CharType.IsHyphen);
 #endif		
     }
 }

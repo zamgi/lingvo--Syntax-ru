@@ -24,7 +24,7 @@ namespace lingvo.morphology
 		/// получение значения атрибута
         public MorphoAttributeEnum MorphoAttribute { [M(O.AggressiveInlining)] get => _MorphoAttribute; }
 
-        public override string ToString() => (_MorphoAttributeGroup + " : " + _MorphoAttribute);
+        public override string ToString() => $"{_MorphoAttributeGroup} : {_MorphoAttribute}";
 
         /// получение морфологической информации по форме слова
         /// pWordFormInfo - морфологическая информация о форме слова
@@ -64,7 +64,7 @@ namespace lingvo.morphology
 
             return (result);
         }
-        unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, MorphoFormNative morphoForm, ref MorphoAttributePair? nounType )
+        unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, in MorphoFormNative morphoForm, ref MorphoAttributePair? nounType )
         {
             var result = default(MorphoAttributeEnum);
 
@@ -104,7 +104,7 @@ namespace lingvo.morphology
             return (result);
         }
 
-        unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, MorphoFormNative morphoForm )
+        unsafe public static MorphoAttributeEnum GetMorphoAttribute( MorphoTypeNative morphoType, in MorphoFormNative morphoForm )
         {
             var result = default(MorphoAttributeEnum);
 

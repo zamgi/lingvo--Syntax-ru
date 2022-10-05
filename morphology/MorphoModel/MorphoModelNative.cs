@@ -93,7 +93,7 @@ namespace lingvo.morphology
                 }
             }
 
-            public IntPtr this[ PartOfSpeechEnum partOfSpeech ] => _Dictionary[ partOfSpeech ];
+            public IntPtr this[ PartOfSpeechEnum partOfSpeech ] { [M(O.AggressiveInlining)] get => _Dictionary[ partOfSpeech ]; }
         }
 
         /// <summary>

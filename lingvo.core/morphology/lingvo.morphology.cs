@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 
 using lingvo.core;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -29,7 +31,7 @@ namespace lingvo.morphology
 	/// </summary>
 	public struct WordForm_t
 	{
-        public WordForm_t( string form, PartOfSpeechEnum partOfSpeech )
+        [M(O.AggressiveInlining)] public WordForm_t( string form, PartOfSpeechEnum partOfSpeech )
         {
             Form         = form;
             PartOfSpeech = partOfSpeech;

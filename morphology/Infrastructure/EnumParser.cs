@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime;
+using System.Text;
 
 using lingvo.core;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
     /// <summary>
     /// 
     /// </summary>
-    unsafe internal sealed class EnumParser< T >
-        where T : struct
+    unsafe internal sealed class EnumParser< T > where T : struct
     {
         #region [.commented. slower. WordTrieNode_v1.]
         ///// <summary>
@@ -209,10 +210,10 @@ namespace lingvo.morphology
             /// </summary>
 		    internal struct Slot
 		    {
-			    internal int  hashCode;			    
-			    internal int  next;
-                internal X    value;
-                internal char key;
+			    internal int  HashCode;			    
+			    internal int  Next;
+                internal X    Value;
+                internal char Key;
 		    }
 
             private const int DEFAULT_CAPACITY = 20;
@@ -222,18 +223,9 @@ namespace lingvo.morphology
 		    private int    _Count;
 		    private int    _FreeList;
 
-            internal Slot[] Slots
-            {
-                [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-                get { return (_Slots); }
-            }
-            public int Count
-            {
-                [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-                get { return (_Count); }
-            }
-
-		    [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
+            internal Slot[] Slots { [M(O.AggressiveInlining)] get  => _Slots; }
+            public int Count { [M(O.AggressiveInlining)] get => _Count; }
+            
             public CharKeyedSet( int? capacity = null )
 		    {
 			    _Buckets  = new int [ capacity.GetValueOrDefault( DEFAULT_CAPACITY ) ];
@@ -244,15 +236,15 @@ namespace lingvo.morphology
             public bool Add( char key, X value )
 		    {
                 #region [.find exists.]
-                int hash = (key.GetHashCode() & 0x7fffffff); //---InternalGetHashCode( key );
+                var hash = InternalGetHashCode( key );
                 for ( int i = _Buckets[ hash % _Buckets.Length ] - 1; 0 <= i; /*i = _Slots[ i ].next*/ )
                 {
-                    var slot = _Slots[ i ];
-                    if ( /*(slot.hashCode == hash) &&*/ (slot.key == key) )
+                    ref readonly var slot = ref _Slots[ i ];
+                    if ( /*(slot.hashCode == hash) &&*/ (slot.Key == key) )
                     {
                         return (false);
                     }
-                    i = slot.next;
+                    i = slot.Next;
                 } 
                 #endregion
 
@@ -261,7 +253,7 @@ namespace lingvo.morphology
                 if ( 0 <= _FreeList )
                 {
                     n1 = _FreeList;
-                    _FreeList = _Slots[ n1 ].next;
+                    _FreeList = _Slots[ n1 ].Next;
                 }
                 else
                 {
@@ -275,78 +267,64 @@ namespace lingvo.morphology
                 int n2 = hash % _Buckets.Length;
                 _Slots[ n1 ] = new Slot() 
                 {
-                    hashCode = hash,
-                    key      = key,
-                    value    = value,
-                    next     = _Buckets[ n2 ] - 1,
+                    HashCode = hash,
+                    Key      = key,
+                    Value    = value,
+                    Next     = _Buckets[ n2 ] - 1,
                 };
                 _Buckets[ n2 ] = n1 + 1;
 
                 return (true);
                 #endregion
             }
-
-		    [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public bool Contains( char key )
             {
-                #region [.find exists.]
-                int hash = (key.GetHashCode() & 0x7fffffff); //---InternalGetHashCode( key );
+                var hash = InternalGetHashCode( key );
                 for ( int i = _Buckets[ hash % _Buckets.Length ] - 1; 0 <= i; /*i = _Slots[ i ].next*/ )
                 {
-                    var slot = _Slots[ i ];
-                    if ( /*(slot.hashCode == hash) &&*/ (slot.key == key) )
+                    ref readonly var slot = ref _Slots[ i ];
+                    if ( /*(slot.hashCode == hash) &&*/ (slot.Key == key) )
                     {
                         return (true);
                     }
-                    i = slot.next;
+                    i = slot.Next;
                 }
-
                 return (false);
-                #endregion
             }
-
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public bool TryGetValue( char key, ref X value )
             {
-                #region [.find exists.]
-                int hash = (key.GetHashCode() & 0x7fffffff); //---InternalGetHashCode( key );
+                var hash = InternalGetHashCode( key );
                 for ( int i = _Buckets[ hash % _Buckets.Length ] - 1; 0 <= i; /*i = _Slots[ i ].next*/ )
                 {
-                    var slot = _Slots[ i ];
-                    if ( /*(slot.hashCode == hash) &&*/ (slot.key == key) )
+                    ref readonly var slot = ref _Slots[ i ];
+                    if ( /*(slot.hashCode == hash) &&*/ (slot.Key == key) )
                     {
-                        value = slot.value;
+                        value = slot.Value;
                         return (true);
                     }
-                    i = slot.next;
+                    i = slot.Next;
                 }
-
                 return (false);
-                #endregion
             }
 
 		    private void Resize()
 		    {
-                int n1 = checked( _Count * 2 + 1 );
-                int[]  buckets = new int [ n1 ];
-                Slot[] slots   = new Slot[ n1 ];
+                int new_size = checked( _Count * 2 + 1 );
+                var buckets = new int [ new_size ];
+                var slots   = new Slot[ new_size ];
                 Array.Copy( _Slots, 0, slots, 0, _Count );
                 for ( int i = 0; i < _Count; i++ )
                 {
-                    int n2 = slots[ i ].hashCode % n1;
-                    slots[ i ].next = buckets[ n2 ] - 1;
-                    buckets[ n2 ] = i + 1;
+                    int n = slots[ i ].HashCode % new_size;
+                    slots[ i ].Next = buckets[ n ] - 1;
+                    buckets[ n ] = i + 1;
                 }
                 _Buckets = buckets;
                 _Slots   = slots;
 		    }
 
-            /*[TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
-		    private static int InternalGetHashCode( char key )
-		    {
-                return (key.GetHashCode() & 0x7fffffff);
-		    }*/
-	    }
+            [M(O.AggressiveInlining)] private static int InternalGetHashCode( char key ) => (key.GetHashCode() & 0x7fffffff);
+        }
 
         /// <summary>
         /// 
@@ -354,24 +332,17 @@ namespace lingvo.morphology
         private sealed class WordTrieNode_v2 //: IWordTrieNode
         {
             private static char* _UPPER_INVARIANT_MAP;
-
-            static WordTrieNode_v2()
-            {
-                _UPPER_INVARIANT_MAP = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
-            }
+            static WordTrieNode_v2() => _UPPER_INVARIANT_MAP = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
 
             private CharKeyedSet< WordTrieNode_v2 > _CurrentLevel;
             private T? _TValue;
             private WordTrieNode_v2 _this_next;
 
-            private WordTrieNode_v2()
-            {
-                _CurrentLevel = new CharKeyedSet< WordTrieNode_v2 >( 20 );
-            }
+            private WordTrieNode_v2() => _CurrentLevel = new CharKeyedSet< WordTrieNode_v2 >( 20 );
 
             public void Add( string s, T t )
             {
-                if ( !string.IsNullOrEmpty( s ) )
+                if ( !s.IsNullOrEmpty() )
                 {                    
                     var ch = _UPPER_INVARIANT_MAP[ s[ 0 ] ];
                     if ( !_CurrentLevel.TryGetValue( ch, ref _this_next ) )
@@ -442,7 +413,6 @@ namespace lingvo.morphology
                 }
             }*/
 
-            [TargetedPatchingOptOut("Performance critical to inline this type of method across NGen image boundaries")]
             public bool TryGetValueUnwrapRecursion( char* ptr, char* endPtr, ref T value )
             {
                 for ( var _this = this; ; )
@@ -462,43 +432,40 @@ namespace lingvo.morphology
                 }
             }
 
-            private IEnumerable< Tuple< string, T? > > GetAllInternal( Tuple< string, T? > t )
+            private IEnumerable< (string, T?) > GetAllInternal( (string, T?) t )
             {
                 if ( _TValue.HasValue )
                 {
-                    yield return (Tuple.Create( t.Item1, _TValue ));
+                    yield return (t.Item1, _TValue);
                 }
 
                 for ( var i = 0; i < _CurrentLevel.Count; i++ )
                 {
                     var slot = _CurrentLevel.Slots[ i ];
-                    var nt = new Tuple< string, T? >( t.Item1 + slot.key, null );
+                    var nt   = (t.Item1 + slot.Key, (T?) null);
 
-                    foreach ( var nnt in slot.value.GetAllInternal( nt ) )
+                    foreach ( var nnt in slot.Value.GetAllInternal( nt ) )
                     {
                         yield return (nnt);
                     }
                 }
             }
-            public IEnumerable< Tuple< string, T > > GetAll()
+            public IEnumerable< (string, T) > GetAll()
             {
-                foreach ( var t in GetAllInternal( new Tuple< string, T? >( string.Empty, null ) ) )
+                foreach ( var t in GetAllInternal( (string.Empty, null) ) )
                 {
                     if ( t.Item2.HasValue )
                     {
-                        yield return (Tuple.Create( t.Item1, t.Item2.Value ));
+                        yield return (t.Item1, t.Item2.Value);
                     }
                 }
             }
 
-            public int MaxCharsOnLevel()
-            {
-                return (Math.Max( _CurrentLevel.Count, (0 < _CurrentLevel.Count) ? _CurrentLevel.Slots.Where( sl => sl.value != null ).Max( sl => sl.value.MaxCharsOnLevel() ) : 0 ));
-            }
+            public int MaxCharsOnLevel() => Math.Max( _CurrentLevel.Count, (0 < _CurrentLevel.Count) ? _CurrentLevel.Slots.Where( sl => sl.Value != null ).Max( sl => sl.Value.MaxCharsOnLevel() ) : 0 );
 #if DEBUG
             public override string ToString()
             {
-                var sb = new System.Text.StringBuilder();
+                var sb = new StringBuilder();
                 foreach ( var t in GetAll() )
                 {
                     sb.Append( '\'' ).Append( t.Item1 ).Append( "' => " ).Append( t.Item2 ).Append( "\r\n" );
@@ -523,11 +490,7 @@ namespace lingvo.morphology
 
 
         private WordTrieNode_v2 _FirstWordTrieNode;
-
-        public EnumParser()
-        {
-            _FirstWordTrieNode = WordTrieNode_v2.Create();
-        }
+        public EnumParser() => _FirstWordTrieNode = WordTrieNode_v2.Create();
 
         /*public bool TryParse( string s, ref T t )
         {
@@ -559,21 +522,15 @@ namespace lingvo.morphology
             }
             return (false);
         }*/
-        public bool TryParse( char* ptr, int len, ref T t )
-        {
-            return (_FirstWordTrieNode.TryGetValueUnwrapRecursion( ptr, ptr + len, ref t ));
-        }
+        [M(O.AggressiveInlining)] public bool TryParse( char* ptr, int len, ref T t ) => _FirstWordTrieNode.TryGetValueUnwrapRecursion( ptr, ptr + len, ref t );
 
-        public IEnumerable< Tuple< string, T > > GetAll()
+        public IEnumerable< (string, T) > GetAll()
         {
             foreach ( var t in _FirstWordTrieNode.GetAll() )
             {
                 yield return (t);
             }
         }
-        public override string ToString()
-        {
-            return (_FirstWordTrieNode.ToString());
-        }
+        public override string ToString() => _FirstWordTrieNode.ToString();
     }
 }

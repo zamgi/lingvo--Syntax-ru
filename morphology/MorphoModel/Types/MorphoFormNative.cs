@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 using lingvo.core;
 
@@ -34,10 +32,6 @@ namespace lingvo.morphology
         /// морфо-атрибуты
         public readonly MorphoAttributePair[] MorphoAttributePairs;
 
-
-        public override string ToString()
-        {
-            return ("[" + StringsHelper.ToString( Ending ) + ", {" + string.Join( ",", (IEnumerable< MorphoAttributePair >) MorphoAttributePairs ) + "}]");
-        }
+        public override string ToString() => $"[{StringsHelper.ToString( Ending )}, {{{string.Join( ",", MorphoAttributePairs )}}}]";
     }
 }

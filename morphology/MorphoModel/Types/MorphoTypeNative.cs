@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 using lingvo.core;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.morphology
 {
@@ -31,7 +33,7 @@ namespace lingvo.morphology
             public IntPtr                EndingUpper;
             public MorphoAttributeEnum[] MorphoAttributes;
 
-            public override string ToString() => ("[" + StringsHelper.ToString( EndingUpper ) + ", {" + string.Join( ",", MorphoAttributes ) + "}]");
+            public override string ToString() => $"[{StringsHelper.ToString( EndingUpper )}, {{{string.Join( ",", MorphoAttributes )}}}]";
         }
 
         /// <summary>
@@ -44,10 +46,10 @@ namespace lingvo.morphology
             /// </summary>
 		    internal struct Slot
 		    {                
-                internal int    hashCode;
-			    internal int    next;
-                internal IntPtr key;
-                internal TValue value;
+                internal int    HashCode;
+			    internal int    Next;
+                internal IntPtr Key;
+                internal TValue Value;
 		    }
 
             /// <summary>
@@ -59,16 +61,16 @@ namespace lingvo.morphology
                 private int           _Index;
                 private KeyValuePair< IntPtr, TValue > _Current;
 
-                public IntPtr Current_IntPtr => _Current.Key;
-                public TValue Current_Value => _Current.Value;
-                public KeyValuePair< IntPtr, TValue > Current => _Current;
-                object IEnumerator.Current => _Current;
+                public IntPtr Current_IntPtr { [M(O.AggressiveInlining)] get => _Current.Key; }
+                public TValue Current_Value { [M(O.AggressiveInlining)] get => _Current.Value; }
+                public KeyValuePair< IntPtr, TValue > Current { [M(O.AggressiveInlining)] get => _Current; }
+                object IEnumerator.Current { [M(O.AggressiveInlining)] get => _Current; }
 
                 internal Enumerator( Set< TValue > set )
 	            {
-		            this._Set     = set;
-		            this._Index   = 0;
-		            this._Current = default(KeyValuePair< IntPtr, TValue >);
+		            _Set     = set;
+		            _Index   = 0;
+		            _Current = default;
 	            }
                 public void Dispose() { }
 
@@ -78,13 +80,13 @@ namespace lingvo.morphology
 		            {
                         var slot = _Set._Slots[ _Index ];
                         _Index++;
-                        if ( slot.value != null )
+                        if ( slot.Value != null )
                         {
-                            _Current = new KeyValuePair< IntPtr, TValue >( slot.key, slot.value );
+                            _Current = new KeyValuePair< IntPtr, TValue >( slot.Key, slot.Value );
                             return (true);
                         }
                     }
-                    _Index = _Set._Count + 1;
+                    _Index   = _Set._Count + 1;
 		            _Current = default;
 		            return (false);
 	            }
@@ -100,8 +102,8 @@ namespace lingvo.morphology
 		    private int    _Count;
 		    private int    _FreeList;
 
-            internal Slot[] Slots => _Slots;
-            public int Count => _Count;
+            internal Slot[] Slots { [M(O.AggressiveInlining)] get => _Slots; }
+            public int Count { [M(O.AggressiveInlining)] get => _Count; }
 
 
             public Set( int capacity )
@@ -121,11 +123,11 @@ namespace lingvo.morphology
                 for ( int i = _Buckets[ hash % _Buckets.Length ] - 1; 0 <= i; )
                 {
                     var slot = _Slots[ i ];
-                    if ( /*(slot.hashCode == hash) &&*/ (slot.key == key) )
+                    if ( /*(slot.hashCode == hash) &&*/ (slot.Key == key) )
                     {
                         return (false);
                     }
-                    i = slot.next;
+                    i = slot.Next;
                 }
                 #endregion
 
@@ -134,7 +136,7 @@ namespace lingvo.morphology
                 if ( 0 <= _FreeList )
                 {
                     n1 = _FreeList;
-                    _FreeList = _Slots[ n1 ].next;
+                    _FreeList = _Slots[ n1 ].Next;
                 }
                 else
                 {
@@ -148,10 +150,10 @@ namespace lingvo.morphology
                 int n2 = hash % _Buckets.Length;
                 _Slots[ n1 ] = new Slot() 
                 {
-                    hashCode = hash,
-                    key      = key,
-                    value    = value,
-                    next     = _Buckets[ n2 ] - 1,
+                    HashCode = hash,
+                    Key      = key,
+                    Value    = value,
+                    Next     = _Buckets[ n2 ] - 1,
                 };
                 _Buckets[ n2 ] = n1 + 1;
 
@@ -166,12 +168,12 @@ namespace lingvo.morphology
                 for ( int i = _Buckets[ hash % _Buckets.Length ] - 1; 0 <= i; )
                 {
                     var slot = _Slots[ i ];
-                    if ( /*(slot.hashCode == hash) &&*/ (slot.key == key) )
+                    if ( /*(slot.hashCode == hash) &&*/ (slot.Key == key) )
                     {
-                        existsValue = slot.value;
+                        existsValue = slot.Value;
                         return (true);
                     }
-                    i = slot.next;
+                    i = slot.Next;
                 }
 
                 return (false);
@@ -191,15 +193,15 @@ namespace lingvo.morphology
 
 		    private void Resize()
 		    {
-                int n1 = checked( _Count * 2 + 1 );
-                int[]  buckets = new int [ n1 ];
-                Slot[] slots   = new Slot[ n1 ];
+                int new_size = checked( _Count * 2 + 1 );
+                var buckets = new int [ new_size ];
+                var slots   = new Slot[ new_size ];
                 Array.Copy( _Slots, 0, slots, 0, _Count );
                 for ( int i = 0; i < _Count; i++ )
                 {
-                    int n2 = slots[ i ].hashCode % n1;
-                    slots[ i ].next = buckets[ n2 ] - 1;
-                    buckets[ n2 ] = i + 1;
+                    int n = slots[ i ].HashCode % new_size;
+                    slots[ i ].Next = buckets[ n ] - 1;
+                    buckets[ n ] = i + 1;
                 }
                 _Buckets = buckets;
                 _Slots   = slots;
@@ -363,47 +365,23 @@ namespace lingvo.morphology
         }
 
         /// группа морфо-атрибутов
-        public MorphoAttributeGroupEnum MorphoAttributeGroup
-        {
-            get { return (_MorphoAttributeGroup); }
-        }
+        public MorphoAttributeGroupEnum MorphoAttributeGroup { [M(O.AggressiveInlining)] get => _MorphoAttributeGroup; }
         /// часть речи
-        public PartOfSpeechEnum PartOfSpeech
-        {
-            get { return (_PartOfSpeech); }
-        }
+        public PartOfSpeechEnum PartOfSpeech{ [M(O.AggressiveInlining)] get => _PartOfSpeech; }
 
         /// морфо-формы
-        /*public MorphoFormNative[] MorphoForms
-        {
-            get { return (_MorphoForms); }
-        }*/
+        //public MorphoFormNative[] MorphoForms { [M(O.AggressiveInlining)] get => _MorphoForms; }
 
-        public bool  HasMorphoForms
-        {
-            get { return (MorphoFormEndings.Length != 0/*MorphoForms.Length != 0*/); }
-        }
-        public char* FirstEnding
-        {
-            get { return (MorphoFormEndings[ 0 ]/*_MorphoForms[ 0 ].Ending*/); }
-        }
+        public bool  HasMorphoForms { [M(O.AggressiveInlining)] get => (MorphoFormEndings.Length != 0/*MorphoForms.Length != 0*/); }
+        public char* FirstEnding { [M(O.AggressiveInlining)] get => MorphoFormEndings[ 0 ]/*_MorphoForms[ 0 ].Ending*/; }
 
         /// кортежи uppercase-окончаний морфо-форма и морфо-атрибутов
-        public MorphoFormEndingUpperAndMorphoAttribute[] MorphoFormEndingUpperAndMorphoAttributes
-        {
-            get { return (_MorphoFormEndingUpperAndMorphoAttributes); }
-        }
+        public MorphoFormEndingUpperAndMorphoAttribute[] MorphoFormEndingUpperAndMorphoAttributes { [M(O.AggressiveInlining)] get => _MorphoFormEndingUpperAndMorphoAttributes; }
         /// окончания морфо-форм
-        public char*[] MorphoFormEndings
-        {
-            get { return (_MorphoFormEndings); }
-        }
+        public char*[] MorphoFormEndings { [M(O.AggressiveInlining)] get => _MorphoFormEndings; }
 
-        public override string ToString()
-        {
-            return ("[" + PartOfSpeech + ", " + MorphoAttributeGroup + ", {" + 
-                    /*string.Join( ",", (IEnumerable< MorphoFormNative >) MorphoForms )*/
-                    string.Join( ",", MorphoFormEndingUpperAndMorphoAttributes ) + "}]");
-        }
+        public override string ToString() => ("[" + PartOfSpeech + ", " + MorphoAttributeGroup + ", {" + 
+                                              /*string.Join( ",", (IEnumerable< MorphoFormNative >) MorphoForms )*/
+                                              string.Join( ",", MorphoFormEndingUpperAndMorphoAttributes ) + "}]");
     }
 }

@@ -6,6 +6,8 @@ using System.Text;
 
 using lingvo.core;
 using lingvo.urls;
+using M = System.Runtime.CompilerServices.MethodImplAttribute;
+using O = System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace lingvo.sentsplitting
 {    
@@ -30,38 +32,20 @@ namespace lingvo.sentsplitting
             length     = _length;
         }
 
-        public void Set4ModelBuilder( int _startIndex, int _length, List< url_t > _urls )
+        [M(O.AggressiveInlining)] public void Set4ModelBuilder( int _startIndex, int _length, List< url_t > _urls )
         {
             startIndex = _startIndex;
             length     = _length;
             urls       = _urls;
         }
-        public static sent_t CreateEmpty()
-        {
-            return (new sent_t());
-        }
+        [M(O.AggressiveInlining)] public static sent_t CreateEmpty() => new sent_t();
 
-        public int           startIndex
-        {
-            get;
-            private set;
-        }
-        public int           length
-        {
-            get;
-            private set;
-        }
-        public List< url_t > urls
-        {
-            get;
-            private set;
-        }
+        public int           startIndex { [M(O.AggressiveInlining)] get; private set; }
+        public int           length     { [M(O.AggressiveInlining)] get; private set; }
+        public List< url_t > urls       { [M(O.AggressiveInlining)] get; private set; }
 
-        internal void SetLength( int _length )
-        {
-            length = _length;
-        }
-        internal void AppendUrl( url_t url )
+        [M(O.AggressiveInlining)] internal void SetLength( int _length ) => length = _length;
+        [M(O.AggressiveInlining)] internal void AppendUrl( url_t url )
         {
             if ( urls == null )
             {
@@ -69,23 +53,20 @@ namespace lingvo.sentsplitting
             }
             urls.Add( url );
         }
-        internal void SetAsFirst()
+        [M(O.AggressiveInlining)] internal void SetAsFirst()
         {
             startIndex = 0;
             length     = 0;
             urls       = null;
         }
-        internal void Reset( int _startIndex )
+        [M(O.AggressiveInlining)] internal void Reset( int _startIndex )
         {
             startIndex = _startIndex;
             length     = 0;
             urls       = null;
         }
 
-        public string GetValue( string originalText )
-        {
-            return (originalText.Substring( startIndex, length ));
-        }
+        public string GetValue( string originalText ) => originalText.Substring( startIndex, length );
         public sent_t CreateCopy()
         {
             var sent = new sent_t( this.startIndex, this.length );
@@ -121,26 +102,25 @@ namespace lingvo.sentsplitting
         /// <summary>
         /// 
         /// </summary>
-        private class dot_vicinity_t
+        public delegate void ProcessSentCallbackDelegate( sent_t sent );
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private sealed class dot_vicinity_t
         {
-            /*public dot_vicinity_t( int DEFAULT_WORDS_CAPACITY )
-            {
-                _Words = new DirectAccessList< word_t >( DEFAULT_WORDS_CAPACITY );
-            }*/
+            //public dot_vicinity_t( int DEFAULT_WORDS_CAPACITY ) => _Words = new DirectAccessList< word_t >( DEFAULT_WORDS_CAPACITY );
 
             public  ss_word_t _HeadWord;   //head-word (in vicinity of dot)
             private ss_word_t _EndWord;    //current end-word 
             public  ss_word_t _LeftWord;   //left-word  (from dot)
             public  ss_word_t _RightWord;  //right-word (from dot)
-            public  int    _WordsCount; //total count of words
+            public  int       _WordsCount; //total count of words
             //public readonly DirectAccessList< word_t > _Words;
 
-            public bool HasWords
-            {
-                get { return (_HeadWord != null); }
-            }
+            public bool HasWords { [M(O.AggressiveInlining)] get => (_HeadWord != null); }
 
-            public void Insert2Head( ss_word_t word )
+            [M(O.AggressiveInlining)] public void Insert2Head( ss_word_t word )
             {
                 if ( _HeadWord == null )
                 {
@@ -156,7 +136,7 @@ namespace lingvo.sentsplitting
                 _WordsCount++;
                 //_Words.Insert2Head( word );
             }
-            public void Add( ss_word_t word )
+            [M(O.AggressiveInlining)] public void Add( ss_word_t word )
             {
                 if ( _HeadWord == null )
                 {
@@ -173,11 +153,8 @@ namespace lingvo.sentsplitting
                 //_Words.Add( word );
             }
 
-            public void FixupLeftWord()
-            {
-                _LeftWord = _EndWord;
-            }
-            public void FixupRightWord()
+            [M(O.AggressiveInlining)] public void FixupLeftWord() => _LeftWord = _EndWord;
+            [M(O.AggressiveInlining)] public void FixupRightWord()
             {
                 if ( _LeftWord != null )
                 {
@@ -188,25 +165,11 @@ namespace lingvo.sentsplitting
                     _RightWord = _HeadWord;
                 }
             }
-            public bool HasWordAfterLeftWord
-            {
-                get { return (_LeftWord != null && _LeftWord.next != null); }
-            }
-            public bool HasLeftWord
-            {
-                get { return (_LeftWord != null); }
-            }
-            public bool HasRightWord
-            {
-                get { return (_RightWord != null); }
-            }
+            public bool HasWordAfterLeftWord { [M(O.AggressiveInlining)] get => (_LeftWord != null && _LeftWord.next != null); }
+            public bool HasLeftWord { [M(O.AggressiveInlining)] get => (_LeftWord != null); }
+            public bool HasRightWord { [M(O.AggressiveInlining)] get => (_RightWord != null); }
 
-            /*public word_t this[ int index ]
-            {
-                get { return (_Words._Items[ index ]); }
-            }*/
-
-            public void Reset()
+            [M(O.AggressiveInlining)] public void Reset()
             {
                 _HeadWord   = null;
                 _EndWord    = null;
@@ -217,11 +180,22 @@ namespace lingvo.sentsplitting
             }
         }
 
+        #region [.cctor().]
+        private static readonly char* MAX_PTR = (char*) (0xffffffffFFFFFFFF);
+        private static readonly char* MIN_PTR = (char*) (0x0);
+
+        private static CharType* _CTM;
+        private static char*     _UIM;
+        static SentSplitter()
+        {
+            _CTM = xlat_Unsafe.Inst._CHARTYPE_MAP;
+            _UIM = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
+        }
+        #endregion
+
         #region [.private field's.]
         private const int DEFAULT_LIST_CAPACITY   = 100;
         private const int NGRAM_MIN_LENGTH_2_LEFT = 3;
-        private static readonly char* MAX_PTR = (char*) (0xffffffffFFFFFFFF);
-        private static readonly char* MIN_PTR = (char*) (0x0);
         private readonly SentSplitterModel     _Model;         //model 
         private /*readonly*/ bool              _SplitBySmiles; //split sent's by smile's
         private readonly int                   _NgramMaxLength2Left;  //max ngram's length to left
@@ -234,8 +208,6 @@ namespace lingvo.sentsplitting
         private readonly char[]                _Buffer;    //buffer for smile's & etc.
         private readonly GCHandle              _BufferGCHandle;
         private char*                          _BufferPtrBase; //pointer to buffer
-        private readonly CharType*             _CTM;  //xlat.CHARTYPE_MAP
-        private readonly char*                 _UIM;  //xlat.UPPER_INVARIANT_MAP
         private readonly SentCharType*         _SCTM; //_Model.SENTCHARTYPE_MAP
         private sent_t                         _Sent; //current open sent
         private char*                          _BASE; //start pointer into text
@@ -248,12 +220,6 @@ namespace lingvo.sentsplitting
         private char*                          _EndUrlPtr;
         private ProcessSentCallbackDelegate    _OuterProcessSentCallback_Delegate;
         #endregion
-
-        public bool SplitBySmiles
-        {
-            get => _SplitBySmiles;
-            set => _SplitBySmiles = value;
-        }
 
         #region [.ctor().]
         public SentSplitter( SentSplitterConfig config )
@@ -271,8 +237,6 @@ namespace lingvo.sentsplitting
             _NgramMaxLength2Right = _Model.GetNgramMaxLength() - 1;
             _DotVicinity          = new dot_vicinity_t( /*_NgramMaxLength*/ );
 
-            _CTM  = xlat_Unsafe.Inst._CHARTYPE_MAP;
-            _UIM  = xlat_Unsafe.Inst._UPPER_INVARIANT_MAP;
             _SCTM = _Model._SENTCHARTYPE_MAP;
 
             _Buffer         = new char[ _Model.GetValuesMaxLength() + 1 ];
@@ -296,7 +260,11 @@ namespace lingvo.sentsplitting
         }
         #endregion
 
-        public delegate void ProcessSentCallbackDelegate( sent_t sent );
+        public bool SplitBySmiles
+        {
+            get => _SplitBySmiles;
+            set => _SplitBySmiles = value;
+        }
 
         public void AllocateSents( string text, ProcessSentCallbackDelegate processSentCallback )
         {
@@ -901,7 +869,7 @@ namespace lingvo.sentsplitting
         /// <summary>
         /// 
         /// </summary>
-        private void CreateSentAndPut2List()
+        [M(O.AggressiveInlining)] private void CreateSentAndPut2List()
         {
             var startIndex = _Sent.startIndex + _Sent.length;
             var length     = (int) (_Ptr - _BASE - startIndex);
@@ -920,7 +888,7 @@ namespace lingvo.sentsplitting
             _OpenQuotas  = 0;
             _OpenQuotaDoubleSided = false;
         }
-        private void CreateLastSentAndPut2List( int text_length )
+        [M(O.AggressiveInlining)] private void CreateLastSentAndPut2List( int text_length )
         {
             var startIndex = _Sent.startIndex + _Sent.length;
             var length     = text_length - startIndex;
@@ -937,7 +905,7 @@ namespace lingvo.sentsplitting
             //_OpenBrakets = 0;
             //_OpenQuotas  = false;
         }
-        private void SetSentAndCallback()
+        [M(O.AggressiveInlining)] private void SetSentAndCallback()
         {
             var startIndex = _Sent.startIndex + _Sent.length;
             var length     = (int) (_Ptr - _BASE - startIndex);
@@ -955,7 +923,7 @@ namespace lingvo.sentsplitting
             _OpenQuotas  = 0;
             _OpenQuotaDoubleSided = false;
         }
-        private void SetLastSentAndCallback( int text_length )
+        [M(O.AggressiveInlining)] private void SetLastSentAndCallback( int text_length )
         {
             var startIndex = _Sent.startIndex + _Sent.length;
             var length     = text_length - startIndex;
@@ -973,7 +941,7 @@ namespace lingvo.sentsplitting
             //_OpenQuotas  = false;
         }
 
-        private bool IsEndOfSentTDQMEP( SentCharType sct )
+        [M(O.AggressiveInlining)] private bool IsEndOfSentTDQMEP( SentCharType sct )
         {
             //- '…' -//
             if ( (sct & SentCharType.ThreeDot) == SentCharType.ThreeDot )
@@ -1171,7 +1139,7 @@ namespace lingvo.sentsplitting
             }
             return (false);
         }*/
-        private int  TryGetSmileLength()
+        [M(O.AggressiveInlining)] private int  TryGetSmileLength()
         {
             #region [.sent-not-end if has opened left bracket's and this right bracket.]
             if ( (0 < _OpenBrakets) &&
@@ -1237,7 +1205,7 @@ namespace lingvo.sentsplitting
             return (0);
             #endregion
         }
-        private int  TryCheckSmileInBuffer( int buffer_index )
+        [M(O.AggressiveInlining)] private int  TryCheckSmileInBuffer( int buffer_index )
         {
             smile_t smile;
             if ( _Model.Smiles.Values.TryGetValue(
@@ -1274,7 +1242,7 @@ namespace lingvo.sentsplitting
 
             return (0);
         }
-        private bool IsPreviousCharWhitespace()
+        [M(O.AggressiveInlining)] private bool IsPreviousCharWhitespace()
         {
             if ( _Ptr == _BASE )
                 return (true);
@@ -1285,7 +1253,7 @@ namespace lingvo.sentsplitting
 
             return (false);
         }
-        private void SkipFollowPunctuation()
+        [M(O.AggressiveInlining)] private void SkipFollowPunctuation()
         {
             for ( _Ptr++; ; _Ptr++ )
             {
@@ -1300,7 +1268,7 @@ namespace lingvo.sentsplitting
             }
         }
 
-        private bool IsPreviousAndNextCharDigit()
+        [M(O.AggressiveInlining)] private bool IsPreviousAndNextCharDigit()
         {
             if ( (*(_CTM + *(_Ptr + 1)) & CharType.IsDigit) == CharType.IsDigit )
             {
@@ -1316,7 +1284,7 @@ namespace lingvo.sentsplitting
             return (false);
         }
 
-        private bool TokenizeVicinityOfDot()
+        [M(O.AggressiveInlining)] private bool TokenizeVicinityOfDot()
         {
             //(*_Ptr == '.')
             _DotVicinity.Reset();
@@ -1669,7 +1637,7 @@ namespace lingvo.sentsplitting
             }
             return (null);
         }*/
-        private int? TryGetThreeDotsLength()
+        [M(O.AggressiveInlining)] private int? TryGetThreeDotsLength()
         {
             /*
             многоточие
@@ -1727,7 +1695,7 @@ namespace lingvo.sentsplitting
             }
             return (null);
         }
-        private int? Try_BeforeProperOrNumber_BeforeNoProper()
+        [M(O.AggressiveInlining)] private int? Try_BeforeProperOrNumber_BeforeNoProper()
         {
             var sr_pon = default(SearchResultOfHead2Left< before_proper_or_number_t >?);
             /*
@@ -1803,7 +1771,7 @@ namespace lingvo.sentsplitting
 
             return (null);
         }
-        private int? TryGetSingleUpperChar()
+        [M(O.AggressiveInlining)] private int? TryGetSingleUpperChar()
         {
             /*
             Одна большая буква с точкой – не конец.
@@ -1923,7 +1891,7 @@ namespace lingvo.sentsplitting
 
             return (null);
         }
-        private int? TryOtherSituation()
+        [M(O.AggressiveInlining)] private int? TryOtherSituation()
         {
             /*
             слева сочетание букв (любых), заканчивающихся на цифру, справа:
@@ -2013,7 +1981,7 @@ namespace lingvo.sentsplitting
             }
             return (null);
         }
-        private bool IsInterjection()
+        [M(O.AggressiveInlining)] private bool IsInterjection()
         {
             //междометия (interjections) с точкой (регистр не важен) – конец
             if ( _DotVicinity.HasLeftWord )
@@ -2063,7 +2031,7 @@ namespace lingvo.sentsplitting
             }
             return (false);
         }
-        private int  TryGetFileExtensionLength()
+        [M(O.AggressiveInlining)] private int  TryGetFileExtensionLength()
         {
             const long ONE_LONG = 1L;
 
@@ -2098,7 +2066,7 @@ namespace lingvo.sentsplitting
             }
             return (0);
         }
-        private int  TryGetYandexCombinationsLength()
+        [M(O.AggressiveInlining)] private int  TryGetYandexCombinationsLength()
         {
             //Яндекс.сочетания (точка вплотную к яндексу, регистр не важен) – не конец
             if ( _DotVicinity.HasLeftWord && _DotVicinity.HasRightWord )
@@ -2153,7 +2121,7 @@ namespace lingvo.sentsplitting
             }
             return (0);
         }
-        private int  TryEndOfQuotingLength()
+        [M(O.AggressiveInlining)] private int  TryEndOfQuotingLength()
         {
             //сочетание символов .“ – (справа символы пунктуации “ –) или любой из символов ,;:   –  не конец
             if ( _DotVicinity.HasRightWord )
@@ -2194,7 +2162,7 @@ namespace lingvo.sentsplitting
             }
             return (0);
         }
-        private int  TryListLength()
+        [M(O.AggressiveInlining)] private int  TryListLength()
         {
             /*
             списки:
@@ -2211,14 +2179,14 @@ namespace lingvo.sentsplitting
             return (0);
         }
 
-        private bool IsDigitsOnlyOrRomanDigitsOnly( string value )
+        [M(O.AggressiveInlining)] private bool IsDigitsOnlyOrRomanDigitsOnly( string value )
         {
             fixed ( char* _base = value )
             {
                 return (IsDigitsOnly( _base ) || IsRomanDigitsOnly( _base ));
             }
         }
-        private bool IsDigitsOnlyWithoutLastDot( string value )
+        [M(O.AggressiveInlining)] private bool IsDigitsOnlyWithoutLastDot( string value )
         {
             fixed ( char* _base = value )
             {
@@ -2233,21 +2201,21 @@ namespace lingvo.sentsplitting
                 return (true);
             }
         }
-        private bool IsUpperCharsAfterFirstChar( string value )
+        [M(O.AggressiveInlining)] private bool IsUpperCharsAfterFirstChar( string value )
         {
             fixed ( char* _base = value )
             {
                 return (IsUpperChars( _base + 1 ));
             }
         }
-        private bool IsLowerCharsAfterFirstChar( string value )
+        [M(O.AggressiveInlining)] private bool IsLowerCharsAfterFirstChar( string value )
         {
             fixed ( char* _base = value )
             {
                 return (IsLowerChars( _base + 1 ));
             }
         }
-        unsafe private bool IsDigitsOnly( char* ptr )
+        [M(O.AggressiveInlining)] unsafe private bool IsDigitsOnly( char* ptr )
         {
             for ( ; *ptr != '\0'; ptr++ )
             {
@@ -2258,7 +2226,7 @@ namespace lingvo.sentsplitting
             }
             return (true);
         }
-        unsafe private bool IsRomanDigitsOnly( char* ptr )
+        [M(O.AggressiveInlining)] unsafe private bool IsRomanDigitsOnly( char* ptr )
         {
             for ( ; *ptr != '\0'; ptr++ )
             {
@@ -2282,7 +2250,7 @@ namespace lingvo.sentsplitting
             }
             return (false);
         }*/
-        unsafe private bool IsUpperChars( char* ptr )
+        [M(O.AggressiveInlining)] unsafe private bool IsUpperChars( char* ptr )
         {
             for ( ; ; ptr++ )
             {
@@ -2305,7 +2273,7 @@ namespace lingvo.sentsplitting
             }
             return (true);
         }
-        unsafe private bool IsLowerChars( char* ptr )
+        [M(O.AggressiveInlining)] unsafe private bool IsLowerChars( char* ptr )
         {
             for ( ; ; ptr++ )
             {
@@ -2328,7 +2296,7 @@ namespace lingvo.sentsplitting
             }
             return (true);
         }
-        private int LengthWithoutStartEndPunctuation( string value )
+        [M(O.AggressiveInlining)] private int LengthWithoutStartEndPunctuation( string value )
         {
             fixed ( char* _base = value )
             {                
@@ -2362,6 +2330,10 @@ namespace lingvo.sentsplitting
                 return (int) (end + 1 - start);
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Flags] private enum chars_set_type
         {
             __UNDEFINE__ = 0,
@@ -2369,7 +2341,7 @@ namespace lingvo.sentsplitting
             CyrillicOnly = 0x1,
             LatinOnly    = 1 << 1,
         }
-        private chars_set_type GetCharsSetType( string value )
+        [M(O.AggressiveInlining)] private chars_set_type GetCharsSetType( string value )
         {
             var cst = default(chars_set_type);
             fixed ( char* _base = value )
@@ -2394,7 +2366,7 @@ namespace lingvo.sentsplitting
             }
             return (cst);
         }
-        private bool IsLettersEndsWithDigit( string value )
+        [M(O.AggressiveInlining)] private bool IsLettersEndsWithDigit( string value )
         {
             fixed ( char* _base = value )
             {
@@ -2413,7 +2385,7 @@ namespace lingvo.sentsplitting
                 return (false);
             }
         }
-        private bool IsCurrentSentContainsPunctuationOrWhitespace()
+        [M(O.AggressiveInlining)] private bool IsCurrentSentContainsPunctuationOrWhitespace()
         {
             switch ( _Sent.length )
             {
@@ -2534,7 +2506,7 @@ namespace lingvo.sentsplitting
                 #endregion
             }
         }
-        private bool IsFirstWordInSent( ss_word_t word )
+        [M(O.AggressiveInlining)] private bool IsFirstWordInSent( ss_word_t word )
         {
             if ( word.hasPrev )
             {
@@ -2554,8 +2526,8 @@ namespace lingvo.sentsplitting
             }
             return (true);
         }
-        unsafe private static char* GetMaxPtr( char* p1, char* p2 ) => (p1 > p2 ? p1 : p2);
-        private static bool IsNoHasNextWordOrHasNotInRow( ss_word_t word )
+        [M(O.AggressiveInlining)] unsafe private static char* GetMaxPtr( char* p1, char* p2 ) => (p1 > p2 ? p1 : p2);
+        [M(O.AggressiveInlining)] private static bool IsNoHasNextWordOrHasNotInRow( ss_word_t word )
         {
                         //---?!---(word.next.startPtr - word.endPtr() [-?!-]=[-?!-]> 1)---?!---//
             if ( !word.hasNext || (word.next.startPtr - word.next.endPtr() > 1) )
