@@ -76,20 +76,17 @@ namespace lingvo.morphology
 
             foreach ( var morphoTypesFilename in config.MorphoTypesFilenames )
             {
-                var filename = GetFullFilename( config.BaseDirectory, morphoTypesFilename );
-                ReadMorphoTypes( filename );
+                ReadMorphoTypes( morphoTypesFilename );
             }
 
             foreach ( var properNamesFilename in config.ProperNamesFilenames )
             {
-                var filename = GetFullFilename( config.BaseDirectory, properNamesFilename );
-                ReadWords( filename, MorphoAttributeEnum.Proper );
+                ReadWords( properNamesFilename, MorphoAttributeEnum.Proper );
             }
 
             foreach ( var commonFilename in config.CommonFilenames )
             {
-                var filename = GetFullFilename( config.BaseDirectory, commonFilename );
-                ReadWords( filename, MorphoAttributeEnum.Common );
+                ReadWords( commonFilename, MorphoAttributeEnum.Common );
             }
 
             #region [.uninit field's.]

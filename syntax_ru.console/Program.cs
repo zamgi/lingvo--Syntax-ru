@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+
 using lingvo.morphology;
 using lingvo.postagger;
 using lingvo.tokenizing;
@@ -15,11 +17,13 @@ namespace lingvo.syntax
     /// </summary>
     internal static class Program
     {
-        private static void Main( string[] args )
+        private static async Task Main( string[] args )
         {
             try
             {
-                Run_1();
+                using var env = await SyntaxEnvironment.CreateAsync().CAX();
+
+                Run_1( env );
                 //Run_2( "C:\\" );
             }
             catch ( Exception ex )
@@ -33,71 +37,25 @@ namespace lingvo.syntax
             Console.ReadLine();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private sealed class environment : IDisposable
+        private static void Run_1( SyntaxEnvironment env )
         {
-            private IMorphoModel _MorphoModel;
-            private MorphoAmbiguityResolverModel _MorphoAmbiguityModel;
-            public void Dispose()
-            {
-                SyntaxProcessor.Dispose();
-                _MorphoModel.Dispose();
-                _MorphoAmbiguityModel.Dispose();                
-            }            
-
-            public SyntaxProcessor SyntaxProcessor { get; init; }
-            public static environment Create( bool print2Console = true )
-            {
-                var sw = default(Stopwatch);
-                if ( print2Console ) 
-                {
-                    sw = Stopwatch.StartNew();
-                    Console.Write( "init syntax-processor..." ); 
-                }
-
-                var posTaggerConfig = Config.CreatePosTaggerProcessorConfig();
-
-                var morphoModelConfig = Config.CreateMorphoModelConfig();
-                var morphoModel = MorphoModelFactory.Create( morphoModelConfig );
-
-                var morphoAmbiguityResolverConfig = Config.CreateMorphoAmbiguityConfig();
-                var morphoAmbiguityModel = Config.CreateMorphoAmbiguityResolverModel( morphoAmbiguityResolverConfig );
-
-                var config = Config.CreateSyntaxProcessorConfig( posTaggerConfig, morphoModel, morphoAmbiguityModel );
-
-                var syntaxProcessor = new SyntaxProcessor( config );
-
-                if ( print2Console )
-                {
-                    sw.Stop();
-                    Console.WriteLine( $"end, (elapsed: {sw.Elapsed}).\r\n----------------------------------------------------\r\n" );
-                }
-
-                return (new environment() { _MorphoModel = morphoModel, _MorphoAmbiguityModel = morphoAmbiguityModel, SyntaxProcessor = syntaxProcessor });
-            }
-        }
-
-        private static void Run_1()
-        {
-            using var env = environment.Create();
+            using var syntaxProcessor = env.CreateSyntaxProcessor();
 
             var text = "Напомню, что, как правило, поисковые системы работают с так называемым обратным индексом, отличной метафорой которого будет алфавитный указатель в конце книги: все использованные термины приведены в нормальной форме и упорядочены лексикографически — проще говоря, по алфавиту, и после каждого указан номер страницы, на которой этот термин встречается. Разница только в том, что такая координатная информация в поисковиках, как правило, значительно подробнее. Например, корпоративный поиск МойОфис (рабочее название — baalbek), для каждого появления слова в документе хранит, кроме порядкового номера, ещё и его грамматическую форму и привязку к разметке.";
-            var sents = env.SyntaxProcessor.Run_Details( text, splitBySmiles: true );
+            var sents = syntaxProcessor.Run_Details( text, splitBySmiles: true );
 
             sents.Print2Console( text );
         }
-        private static void Run_2( string path )
+        private static void Run_2( SyntaxEnvironment env, string path )
         {
-            using var env = environment.Create();
+            using var syntaxProcessor = env.CreateSyntaxProcessor();
 
             var n = 0;
             foreach ( var fn in EnumerateAllFiles( path ) )
             {
                 var text = File.ReadAllText( fn );
 
-                var sents = env.SyntaxProcessor.Run_Details( text, splitBySmiles: true );
+                var sents = syntaxProcessor.Run_Details( text, splitBySmiles: true );
 
                 Console_Write( $"{++n}.) ", ConsoleColor.DarkGray );
                 sents.Print2Console( text );
@@ -168,6 +126,9 @@ namespace lingvo.syntax
             Console.WriteLine( msg );
             Console.ForegroundColor = fc;
         }
+
+        private static ConfiguredTaskAwaitable< T > CAX< T >( this Task< T > t ) => t.ConfigureAwait( false );
+        private static ConfiguredTaskAwaitable CAX( this Task t ) => t.ConfigureAwait( false );
     }
 
     /// <summary>

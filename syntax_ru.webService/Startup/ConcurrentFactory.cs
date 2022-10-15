@@ -16,7 +16,7 @@ namespace lingvo.syntax.webService
 		private readonly SemaphoreSlim                      _Semaphore;
         private readonly ConcurrentStack< SyntaxProcessor > _Stack;
 
-        public ConcurrentFactory( in SyntaxProcessorConfig config, IConfig opts )
+        internal ConcurrentFactory( SyntaxEnvironment env, Config opts )
 		{
 			var instanceCount = opts.CONCURRENT_FACTORY_INSTANCE_COUNT;
             if ( instanceCount <= 0 ) throw (new ArgumentException( nameof(instanceCount) ));
@@ -26,7 +26,7 @@ namespace lingvo.syntax.webService
             _Stack     = new ConcurrentStack< SyntaxProcessor >();
             for ( int i = 0; i < instanceCount; i++ )
 			{
-                _Stack.Push( new SyntaxProcessor( config ) );
+                _Stack.Push( env.CreateSyntaxProcessor() );
 			}			
 		}
         public void Dispose()
@@ -38,7 +38,7 @@ namespace lingvo.syntax.webService
 			_Stack.Clear();
         }
 
-		public IConfig Config { get; }
+        internal Config Config { get; }
 
         public async Task< List< word_t[] > > Run_Details( string text, bool splitBySmiles )
         {

@@ -233,37 +233,34 @@ namespace lingvo.morphology
 # endif
                 foreach ( var morphoTypesFilename in _Config.MorphoTypesFilenames )
                 {
-                    var filename = GetFullFilename( _Config.BaseDirectory, morphoTypesFilename );
 #if DEBUG
                     sw.Restart(); 
 #endif
-                    ReadMorphoTypes( filename );
+                    ReadMorphoTypes( morphoTypesFilename );
 #if DEBUG
-                    sw.Stop(); Console.WriteLine( $"morphology: '{filename}', elapsed: {sw.Elapsed}" ); 
+                    sw.Stop(); Console.WriteLine( $"morphology: '{morphoTypesFilename}', elapsed: {sw.Elapsed}" ); 
 #endif
                 }
 
                 foreach ( var properNamesFilename in _Config.ProperNamesFilenames )
                 {
-                    var filename = GetFullFilename( _Config.BaseDirectory, properNamesFilename );
 #if DEBUG
                     sw.Restart(); 
 #endif
-                    ReadWords( filename, MorphoAttributeEnum.Proper );
+                    ReadWords( properNamesFilename, MorphoAttributeEnum.Proper );
 #if DEBUG
-                    sw.Stop(); Console.WriteLine( $"morphology: '{filename}', elapsed: {sw.Elapsed}" ); 
+                    sw.Stop(); Console.WriteLine( $"morphology: '{properNamesFilename}', elapsed: {sw.Elapsed}" ); 
 #endif
                 }
 
                 foreach ( var commonFilename in _Config.CommonFilenames )
                 {
-                    var filename = GetFullFilename( _Config.BaseDirectory, commonFilename );
 #if DEBUG
                     sw.Restart(); 
 #endif
-                    ReadWords( filename, MorphoAttributeEnum.Common );
+                    ReadWords( commonFilename, MorphoAttributeEnum.Common );
 #if DEBUG
-                    sw.Stop(); Console.WriteLine( $"morphology: '{filename}', elapsed: {sw.Elapsed}" ); 
+                    sw.Stop(); Console.WriteLine( $"morphology: '{commonFilename}', elapsed: {sw.Elapsed}" ); 
 #endif
                 }
 
